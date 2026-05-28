@@ -2,16 +2,20 @@
    NEXUS LAYOUT & HEADER
    ============================================================================ */
 
-/* 🔹 ШАПКА & НАВИГАЦИЯ */
+/* 🔹 HEADER & NAVIGATION */
 .main-header {
   margin-bottom: 20px;
   position: sticky;
   top: 0;
   z-index: 100;
   background: var(--bg-deep);
-  padding-top: 10px;
+  padding: 10px 20px 0 20px;
   border-bottom: 1px solid var(--border-glow);
   overflow: visible;
+  
+  .header-left, .header-right {
+    padding: 0 20px;
+  }
 }
 
 /* Aurora Wind анимация хедера */
@@ -78,14 +82,67 @@
   flex: 1;
   position: relative;
   z-index: 1;
+  
+  .nexus-title {
+    font-size: 2.2rem;
+    font-weight: 800;
+    color: #fff;
+    text-transform: uppercase;
+    letter-spacing: 4px;
+    position: relative;
+    background: linear-gradient(90deg, var(--neon-cyan), var(--neon-blue), var(--neon-purple), var(--neon-cyan));
+    background-size: 300% 100%;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    animation: gradient-shift 3s ease infinite, glow-pulse 2s ease-in-out infinite alternate;
+    text-shadow: none;
+    
+    &::before {
+      content: attr(data-text);
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, var(--neon-cyan), var(--neon-blue), var(--neon-purple), var(--neon-cyan));
+      background-size: 300% 100%;
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      filter: blur(15px);
+      opacity: 0.5;
+      z-index: -1;
+      animation: gradient-shift 3s ease infinite;
+    }
+  }
+}
+
+@keyframes gradient-shift {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+@keyframes glow-pulse {
+  from { 
+    filter: drop-shadow(0 0 5px var(--neon-cyan));
+  }
+  to { 
+    filter: drop-shadow(0 0 20px var(--neon-cyan)) drop-shadow(0 0 30px var(--neon-blue));
+  }
 }
 
 .header-left {
-  padding-left: 20px;
+  padding-left: 0;
+  display: flex;
+  align-items: center;
 }
 
 .header-right {
-  padding-right: 20px;
+  padding-right: 0;
+  display: flex;
+  align-items: center;
 }
 
 .user-header {
