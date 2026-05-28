@@ -55,32 +55,32 @@ body.theme-red-protocol {
   --border-glow: rgba(255, 42, 109, 0.3);
 }
 
-/* 🔹 ТЕМА ARCTIC - светлая, ледяная */
-body.theme-arctic {
-  --bg-deep: #f0f8ff;
-  --bg-panel: #ffffff;
-  --neon-cyan: #00b8d4;
-  --neon-blue: #0077e6;
-  --neon-green: #00a86b;
-  --neon-red: #ff6b6b;
-  --neon-purple: #9d4edd;
-  --neon-yellow: #ffb700;
-  --text-main: #1a202c;
-  --text-muted: #4a5568;
-  --border-glow: rgba(0, 184, 212, 0.4);
-  --glass: rgba(255, 255, 255, 0.9);
-  --shadow-card: 0 4px 20px rgba(0, 184, 212, 0.15);
+/* 🔹 ТЕМА HELLO KITTY - розовая, пастельная */
+body.theme-hellokitty {
+  --bg-deep: #fff0f5;
+  --bg-panel: #ffe4f0;
+  --neon-cyan: #ff69b4;
+  --neon-blue: #ff85c2;
+  --neon-green: #ffb6c1;
+  --neon-red: #ff1493;
+  --neon-purple: #da70d6;
+  --neon-yellow: #ffd700;
+  --text-main: #4a2c3a;
+  --text-muted: #8b6f82;
+  --border-glow: rgba(255, 105, 180, 0.5);
+  --glass: rgba(255, 228, 240, 0.95);
+  --shadow-card: 0 4px 20px rgba(255, 105, 180, 0.25);
 }
 
-/* Arctic тема для календаря и событий - голубое свечение */
-body.theme-arctic .cal-day.has-event {
-  border-color: #00b8d4 !important;
-  box-shadow: 0 0 20px #00b8d4, inset 0 1px 0 rgba(255, 255, 255, 0.15), inset 0 -2px 5px rgba(0, 0, 0, 0.15) !important;
+/* Hello Kitty тема для календаря и событий - розовое неоновое свечение */
+body.theme-hellokitty .cal-day.has-event {
+  border-color: #ff69b4 !important;
+  box-shadow: 0 0 20px #ff69b4, inset 0 1px 0 rgba(255, 255, 255, 0.3), inset 0 -2px 5px rgba(74, 44, 58, 0.1) !important;
 }
 
-body.theme-arctic .cal-day.has-event::after {
-  background: #00b8d4 !important;
-  box-shadow: 0 0 15px #00b8d4, 0 0 30px #00b8d4 !important;
+body.theme-hellokitty .cal-day.has-event::after {
+  background: #ff69b4 !important;
+  box-shadow: 0 0 15px #ff69b4, 0 0 30px #ff69b4 !important;
 }
 
 /* ============================================================================
@@ -273,15 +273,8 @@ input, select, textarea, .wysiwyg-editor, .code-block,
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
-  animation: gradient-shift 3s ease infinite, glow-pulse 2s ease-in-out infinite alternate, glitch-effect 3s infinite;
+  animation: gradient-shift 3s ease infinite, glow-pulse 2s ease-in-out infinite alternate;
   text-shadow: none;
-}
-.header-center .nexus-title::after {
-  content: "▋";
-  display: inline-block;
-  color: var(--neon-cyan);
-  animation: blink-cursor 1s step-end infinite;
-  margin-left: 2px;
 }
 .header-center .nexus-title::before {
   content: attr(data-text);
@@ -1932,6 +1925,19 @@ body:not(.knowledge-active) .knowledge-sidebar-panel {
   color: var(--neon-cyan);
   letter-spacing: 1px;
   text-transform: uppercase;
+  position: relative;
+  display: inline-block;
+}
+.theme-selector-rotator .theme-label-container .theme-name::after {
+  content: "▋";
+  display: inline-block;
+  color: var(--neon-cyan);
+  animation: blink-cursor 1s step-end infinite;
+  margin-left: 2px;
+}
+.theme-selector-rotator .theme-label-container .theme-name.glitching {
+  animation: glitch-effect 0.3s infinite;
+  text-shadow: -2px 0 var(--neon-red), 2px 0 var(--neon-cyan), -2px -2px var(--neon-purple), 2px 2px var(--neon-blue);
 }
 .theme-selector-rotator:hover .label-line {
   width: 40px;
@@ -2060,6 +2066,7 @@ body:not(.knowledge-active) .knowledge-sidebar-panel {
 }
 .calendar-grid .cal-day {
   aspect-ratio: 1;
+  min-height: 80px;
   background: linear-gradient(145deg, rgba(11, 16, 26, 0.95), rgba(8, 12, 20, 0.85));
   border: 1px solid rgba(136, 146, 176, 0.2);
   border-radius: 10px;
@@ -2091,8 +2098,8 @@ body:not(.knowledge-active) .knowledge-sidebar-panel {
   text-shadow: 0 0 12px rgba(0, 255, 157, 0.7);
 }
 .calendar-grid .cal-day.has-event {
-  border-color: var(--neon-purple);
-  box-shadow: 0 0 25px var(--neon-purple), inset 0 1px 0 rgba(255, 255, 255, 0.15), inset 0 -2px 8px rgba(0, 0, 0, 0.2);
+  border-color: var(--neon-cyan);
+  box-shadow: 0 0 25px var(--neon-cyan), inset 0 1px 0 rgba(255, 255, 255, 0.15), inset 0 -2px 8px rgba(0, 0, 0, 0.2);
 }
 .calendar-grid .cal-day.has-event::after {
   content: "";
@@ -2102,9 +2109,9 @@ body:not(.knowledge-active) .knowledge-sidebar-panel {
   transform: translateX(-50%);
   width: 12px;
   height: 12px;
-  background: var(--neon-purple);
+  background: var(--neon-cyan);
   border-radius: 50%;
-  box-shadow: 0 0 20px var(--neon-purple), 0 0 40px var(--neon-purple);
+  box-shadow: 0 0 20px var(--neon-cyan), 0 0 40px var(--neon-cyan);
   animation: pulse-event 2s ease-in-out infinite;
 }
 .calendar-grid .cal-day .day-num {

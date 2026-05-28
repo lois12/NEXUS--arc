@@ -789,11 +789,11 @@
           icon: "🚨",
         },
         {
-          name: "ARCTIC",
-          key: "arctic",
-          color: "linear-gradient(135deg, #ffffff 0%, #38bdf8 100%)",
-          icon: "❄️",
-          glow: "#38bdf8",
+          name: "HELLO KITTY",
+          key: "hellokitty",
+          color: "linear-gradient(135deg, #ff69b4 0%, #ffb6c1 100%)",
+          icon: "🎀",
+          glow: "#ff69b4",
         },
       ];
 
@@ -818,7 +818,7 @@
           "theme-matrix",
           "theme-solar",
           "theme-red-protocol",
-          "theme-arctic",
+          "theme-hellokitty",
         );
         document.body.classList.add("theme-" + key);
       }
@@ -832,10 +832,10 @@
 
         const glowColor = theme.glow || theme.color;
         document.querySelectorAll(".card-face").forEach((face) => {
-          if (theme.key === "arctic") {
-            face.style.background = theme.color;
-            face.style.borderColor = "#fff";
-            face.style.color = "#05080f";
+          if (theme.key === "hellokitty") {
+            face.style.background = "linear-gradient(135deg, rgba(255, 105, 180, 0.2), rgba(255, 182, 193, 0.2))";
+            face.style.borderColor = "#ff69b4";
+            face.style.color = "#ff69b4";
           } else {
             face.style.background = "rgba(5, 8, 15, 0.85)";
             face.style.borderColor = theme.color;

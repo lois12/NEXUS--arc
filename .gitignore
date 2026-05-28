@@ -1,12 +1,50 @@
 ```
-# Compiled CSS
-NEXUS/css/style.css
-
-# Cache directories
-.sass-cache/
-NEXUS/.sass-cache/
-
 # Build artifacts
+css/style.css
 dist/
 build/
+*.css.map
+
+# Dependencies
+node_modules/
+
+# Editors
+.vscode/
+.idea/
+
+# Logs and temp files
+*.log
+*.tmp
+*.swp
+
+# Environment
+.env
+.env.local
+*.env.*
+
+# Python
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+
+# Compression
+*.zip
+*.gz
+*.tar
+*.tgz
+*.bz2
+*.xz
+*.7z
+*.rar
+*.zst
+*.lz4
+*.lzh
+*.cab
+*.arj
+*.rpm
+*.deb
+*.Z
+*.lz
+*.lzo
 ```

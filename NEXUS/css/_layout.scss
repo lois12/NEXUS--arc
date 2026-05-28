@@ -95,16 +95,8 @@
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
-    animation: gradient-shift 3s ease infinite, glow-pulse 2s ease-in-out infinite alternate, glitch-effect 3s infinite;
+    animation: gradient-shift 3s ease infinite, glow-pulse 2s ease-in-out infinite alternate;
     text-shadow: none;
-    
-    &::after {
-      content: "▋";
-      display: inline-block;
-      color: var(--neon-cyan);
-      animation: blink-cursor 1s step-end infinite;
-      margin-left: 2px;
-    }
     
     &::before {
       content: attr(data-text);
