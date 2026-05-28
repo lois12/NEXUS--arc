@@ -3,6 +3,14 @@
    ============================================================================ */
 
 /* 🔹 ЗНАНИЯ & САЙДБАР */
+#knowledge-page {
+  max-width: 1200px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
 .knowledge-header {
   display: flex;
   justify-content: space-between;
@@ -10,18 +18,22 @@
   margin-bottom: 15px;
   flex-wrap: wrap;
   gap: 10px;
+  width: 100%;
 }
 
 .knowledge-controls {
   display: flex;
   gap: 10px;
   flex-wrap: wrap;
+  justify-content: center;
 }
 
 .knowledge-list {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
   gap: 15px;
+  width: 100%;
+  max-width: 1000px;
 }
 
 .knowledge-item {

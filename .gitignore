@@ -1,7 +1,10 @@
 ```
-# Logs and temp files
-*.log
+# Dependencies
+node_modules/
 
-# Server log file
-NEXUS/server.log
+# Compiled and build artifacts
+*.css.map
+
+# Editors
+.vscode/
 ```

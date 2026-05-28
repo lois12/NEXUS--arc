@@ -262,6 +262,61 @@
   }
 }
 
+/* 🔹 EVENT MODAL & EDITOR */
+.event-modal-content input[type="text"],
+.event-modal-content textarea,
+.event-modal-content .wysiwyg-editor {
+  background: rgba(15, 20, 30, 0.8) !important;
+  color: var(--text-main) !important;
+  border: 1px solid var(--border-glow) !important;
+  padding: 10px 12px !important;
+  border-radius: 6px !important;
+  font-size: 14px !important;
+}
+
+.event-modal-content input[type="text"]::placeholder,
+.event-modal-content textarea::placeholder,
+.event-modal-content .wysiwyg-editor::placeholder {
+  color: var(--text-muted) !important;
+}
+
+.wysiwyg-toolbar {
+  display: flex;
+  gap: 6px;
+  flex-wrap: wrap;
+  padding: 8px;
+  background: rgba(0, 0, 0, 0.3);
+  border-radius: 6px;
+  border: 1px solid var(--border-glow);
+}
+
+.fmt-btn {
+  width: 32px;
+  height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(15, 20, 30, 0.6);
+  border: 1px solid var(--border-glow);
+  border-radius: 4px;
+  color: var(--text-main);
+  font-weight: 700;
+  font-size: 14px;
+  cursor: pointer;
+  transition: 0.2s;
+}
+
+.fmt-btn:hover {
+  border-color: var(--neon-cyan);
+  background: rgba(0, 240, 255, 0.1);
+  color: var(--neon-cyan);
+  box-shadow: 0 0 8px rgba(0, 240, 255, 0.2);
+}
+
+.voice-toolbar-btn {
+  font-size: 16px !important;
+}
+
 /* 🔹 CALENDAR STYLES */
 .calendar-container {
   background: var(--bg-panel);
@@ -270,6 +325,9 @@
   padding: 20px;
   margin-bottom: 20px;
   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+  max-width: 900px;
+  margin-left: auto;
+  margin-right: auto;
 }
 
 .calendar-header {
@@ -307,58 +365,70 @@
 .calendar-grid {
   display: grid;
   grid-template-columns: repeat(7, 1fr);
-  gap: 8px;
+  gap: 10px;
 
   .cal-day-name {
     font-family: var(--font-mono);
     font-size: 11px;
     color: var(--text-muted);
     text-align: center;
-    padding: 8px;
+    padding: 10px 5px;
     text-transform: uppercase;
     letter-spacing: 1px;
+    border-bottom: 1px solid var(--border-glow);
   }
 
   .cal-day {
     aspect-ratio: 1;
     background: rgba(15, 20, 30, 0.6);
-    border: 1px solid rgba(136, 146, 176, 0.1);
+    border: 1px solid rgba(136, 146, 176, 0.15);
     border-radius: 8px;
-    padding: 8px;
+    padding: 10px;
     cursor: pointer;
     transition: 0.2s;
     position: relative;
     overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
 
     &:hover {
       border-color: var(--neon-cyan);
-      background: rgba(0, 240, 255, 0.05);
-      transform: translateY(-2px);
+      background: rgba(0, 240, 255, 0.08);
+      transform: translateY(-3px);
+      box-shadow: 0 5px 15px rgba(0, 240, 255, 0.15);
     }
 
     &.today {
       border-color: var(--neon-green);
-      box-shadow: 0 0 15px rgba(0, 255, 157, 0.2);
+      background: rgba(0, 255, 157, 0.08);
+      box-shadow: 0 0 20px rgba(0, 255, 157, 0.25);
+      
+      .day-num {
+        color: var(--neon-green);
+        text-shadow: 0 0 8px rgba(0, 255, 157, 0.5);
+      }
     }
 
     &.has-event {
       &::after {
         content: "";
         position: absolute;
-        bottom: 6px;
+        bottom: 8px;
         left: 50%;
         transform: translateX(-50%);
-        width: 6px;
-        height: 6px;
+        width: 8px;
+        height: 8px;
         background: var(--neon-purple);
         border-radius: 50%;
-        box-shadow: 0 0 8px var(--neon-purple);
+        box-shadow: 0 0 10px var(--neon-purple);
       }
     }
 
     .day-num {
       font-family: var(--font-mono);
-      font-size: 14px;
+      font-size: 16px;
       color: var(--text-main);
       font-weight: 700;
     }
@@ -383,7 +453,22 @@
   }
 }
 
-/* 🔹 STORAGE STYLES */
+/* 🔹 ХРАНИЛИЩЕ & САЙДБАР */
+#logo-page {
+  max-width: 1200px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.storage-content-wrapper {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
 .storage-tabs {
   display: flex;
   gap: 8px;
@@ -391,6 +476,8 @@
   margin-bottom: 15px;
   padding-bottom: 15px;
   border-bottom: 1px solid var(--border-glow);
+  width: 100%;
+  justify-content: center;
 }
 
 .storage-tab-btn {
@@ -432,18 +519,22 @@
   align-items: center;
   margin-bottom: 15px;
   flex-wrap: wrap;
+  width: 100%;
+  max-width: 800px;
+  justify-content: center;
 }
 
 .storage-search-input {
   flex: 1;
   min-width: 200px;
-  padding: 10px 14px;
+  max-width: 300px;
+  padding: 8px 12px;
   background: rgba(15, 20, 30, 0.8);
   border: 1px solid var(--border-glow);
   border-radius: 6px;
   color: var(--text-main);
   font-family: var(--font-mono);
-  font-size: 14px;
+  font-size: 0.85rem;
 
   &:focus {
     border-color: var(--neon-cyan);
