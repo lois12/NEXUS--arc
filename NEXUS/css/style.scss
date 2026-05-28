@@ -1,5 +1,5 @@
 /* ============================================================================
-   NEXUS CORE | style.scss (v9 - MODULAR SASS)
+   NEXUS CORE | style.scss (v10 - MODULAR SASS)
    ============================================================================ */
 
 // Import modules
@@ -10,6 +10,7 @@
 @import 'components';
 @import 'tasks';
 @import 'knowledge';
+@import 'extras';
 
 /* 🔹 ФОН */
 #bg-canvas {

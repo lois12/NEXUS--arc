@@ -41,6 +41,7 @@ const app = express();
 app.use(express.json({ limit: "10mb" }));
 app.use(express.urlencoded({ extended: true, limit: "10mb" }));
 app.use("/nexus-js", express.static(path.join(__dirname, "nexus-js")));
+app.use("/css", express.static(path.join(__dirname, "css")));
 
 // ============================================================================
 // 🔹 УТИЛИТЫ
@@ -1252,9 +1253,6 @@ app.get("/admin.html", (req, res) => {
 });
 app.get("/script.js", (req, res) => {
   if (!res.headersSent) res.sendFile(path.join(__dirname, "script.js"));
-});
-app.get("/style.css", (req, res) => {
-  if (!res.headersSent) res.sendFile(path.join(__dirname, "style.css"));
 });
 app.get("/sw.js", (req, res) => {
   if (!res.headersSent) res.sendFile(path.join(__dirname, "sw.js"));
