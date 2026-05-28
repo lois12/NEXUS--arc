@@ -291,26 +291,35 @@
 }
 
 .fmt-btn {
-  width: 32px;
-  height: 32px;
+  width: 36px;
+  height: 36px;
   display: flex;
   align-items: center;
   justify-content: center;
-  background: rgba(15, 20, 30, 0.6);
+  background: rgba(15, 20, 30, 0.8);
   border: 1px solid var(--border-glow);
-  border-radius: 4px;
+  border-radius: 6px;
   color: var(--text-main);
   font-weight: 700;
-  font-size: 14px;
+  font-size: 15px;
   cursor: pointer;
-  transition: 0.2s;
+  transition: all 0.2s ease;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
 }
 
 .fmt-btn:hover {
   border-color: var(--neon-cyan);
-  background: rgba(0, 240, 255, 0.1);
+  background: rgba(0, 240, 255, 0.15);
   color: var(--neon-cyan);
-  box-shadow: 0 0 8px rgba(0, 240, 255, 0.2);
+  box-shadow: 0 0 12px rgba(0, 240, 255, 0.4);
+  transform: translateY(-2px);
+}
+
+.fmt-btn.active {
+  background: rgba(0, 240, 255, 0.2);
+  border-color: var(--neon-cyan);
+  color: var(--neon-cyan);
+  box-shadow: 0 0 15px rgba(0, 240, 255, 0.5);
 }
 
 .voice-toolbar-btn {
@@ -380,58 +389,92 @@
 
   .cal-day {
     aspect-ratio: 1;
-    background: rgba(15, 20, 30, 0.6);
-    border: 1px solid rgba(136, 146, 176, 0.15);
-    border-radius: 8px;
-    padding: 10px;
+    background: linear-gradient(145deg, rgba(11, 16, 26, 0.95), rgba(8, 12, 20, 0.85));
+    border: 1px solid rgba(136, 146, 176, 0.2);
+    border-radius: 10px;
+    padding: 12px;
     cursor: pointer;
-    transition: 0.2s;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
     position: relative;
     overflow: hidden;
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: flex-start;
+    
+    /* 3D объемный эффект */
+    box-shadow: 
+      0 4px 8px rgba(0, 0, 0, 0.3),
+      inset 0 1px 0 rgba(255, 255, 255, 0.1),
+      inset 0 -2px 5px rgba(0, 0, 0, 0.2);
 
     &:hover {
       border-color: var(--neon-cyan);
-      background: rgba(0, 240, 255, 0.08);
-      transform: translateY(-3px);
-      box-shadow: 0 5px 15px rgba(0, 240, 255, 0.15);
+      background: linear-gradient(145deg, rgba(0, 240, 255, 0.12), rgba(0, 180, 200, 0.08));
+      transform: translateY(-4px) scale(1.02);
+      box-shadow: 
+        0 8px 25px rgba(0, 240, 255, 0.25),
+        inset 0 1px 0 rgba(255, 255, 255, 0.15),
+        inset 0 -2px 5px rgba(0, 0, 0, 0.15);
     }
 
     &.today {
       border-color: var(--neon-green);
-      background: rgba(0, 255, 157, 0.08);
-      box-shadow: 0 0 20px rgba(0, 255, 157, 0.25);
-      
+      background: linear-gradient(145deg, rgba(0, 255, 157, 0.12), rgba(0, 200, 130, 0.08));
+      box-shadow: 
+        0 0 25px rgba(0, 255, 157, 0.35),
+        inset 0 1px 0 rgba(255, 255, 255, 0.2),
+        inset 0 -2px 5px rgba(0, 0, 0, 0.15);
+
       .day-num {
         color: var(--neon-green);
-        text-shadow: 0 0 8px rgba(0, 255, 157, 0.5);
+        text-shadow: 0 0 10px rgba(0, 255, 157, 0.6);
       }
     }
 
     &.has-event {
+      border-color: var(--neon-purple);
+      box-shadow: 
+        0 0 20px var(--neon-purple),
+        inset 0 1px 0 rgba(255, 255, 255, 0.15),
+        inset 0 -2px 5px rgba(0, 0, 0, 0.15);
+      
       &::after {
         content: "";
         position: absolute;
-        bottom: 8px;
+        bottom: 10px;
         left: 50%;
         transform: translateX(-50%);
-        width: 8px;
-        height: 8px;
+        width: 10px;
+        height: 10px;
         background: var(--neon-purple);
         border-radius: 50%;
-        box-shadow: 0 0 10px var(--neon-purple);
+        box-shadow: 
+          0 0 15px var(--neon-purple),
+          0 0 30px var(--neon-purple);
+        animation: pulse-event 2s ease-in-out infinite;
       }
     }
 
     .day-num {
-      font-family: var(--font-mono);
-      font-size: 16px;
+      font-family: var(--font-heading);
+      font-size: 18px;
       color: var(--text-main);
       font-weight: 700;
+      letter-spacing: 1px;
     }
+  }
+}
+
+/* Анимация пульсации для событий */
+@keyframes pulse-event {
+  0%, 100% { 
+    opacity: 1;
+    transform: translateX(-50%) scale(1);
+  }
+  50% { 
+    opacity: 0.8;
+    transform: translateX(-50%) scale(1.15);
   }
 }
 

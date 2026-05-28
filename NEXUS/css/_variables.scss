@@ -75,3 +75,20 @@ body.theme-red-protocol {
   --neon-blue: #ff5252;
   --border-glow: rgba(255, 42, 109, 0.3);
 }
+
+/* 🔹 ТЕМА ARCTIC - светлая, ледяная */
+body.theme-arctic {
+  --bg-deep: #f0f8ff;
+  --bg-panel: #ffffff;
+  --neon-cyan: #00b8d4;
+  --neon-blue: #0077e6;
+  --neon-green: #00a86b;
+  --neon-red: #ff6b6b;
+  --neon-purple: #9d4edd;
+  --neon-yellow: #ffb700;
+  --text-main: #1a202c;
+  --text-muted: #4a5568;
+  --border-glow: rgba(0, 184, 212, 0.4);
+  --glass: rgba(255, 255, 255, 0.9);
+  --shadow-card: 0 4px 20px rgba(0, 184, 212, 0.15);
+}
