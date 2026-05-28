@@ -86,7 +86,7 @@ export function setTheme(th) {
 
 // Инициализация темы при загрузке
 export function initTheme() {
-  const saved = localStorage.getItem("nexus_theme") || "cyberpunk";
+  const saved = localStorage.getItem("nexus_theme") || "hellokitty"; // По умолчанию Hello Kitty
   applyTheme(saved);
 }
 

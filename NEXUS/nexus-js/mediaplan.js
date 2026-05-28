@@ -315,8 +315,15 @@ export function renderCalendar() {
         if (isCurrentMonth && d === t.getDate()) el.classList.add("today");
         const dow = new Date(calYear, calMonth, d).getDay();
         if (dow === 0 || dow === 6) el.classList.add("is-weekend");
-        if (notesCache.some((n) => n.date === ds))
+        
+        // Проверяем события и добавляем атрибут для тултипа
+        const dayEvents = notesCache.filter((n) => n.date === ds);
+        if (dayEvents.length > 0) {
           el.classList.add("has-event");
+          // Добавляем название первого события для тултипа
+          el.setAttribute("data-event-title", dayEvents[0].title || "Событие");
+        }
+        
         el.onclick = () => openEventModal(ds);
         calendarGrid.appendChild(el);
       }

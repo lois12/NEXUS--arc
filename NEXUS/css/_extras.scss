@@ -408,7 +408,7 @@
 
   .cal-day {
     aspect-ratio: 1;
-    min-height: 80px;
+    min-height: 100px; /* Увеличено с 80px */
     background: linear-gradient(145deg, rgba(11, 16, 26, 0.95), rgba(8, 12, 20, 0.85));
     border: 1px solid rgba(136, 146, 176, 0.2);
     border-radius: 10px;
@@ -416,7 +416,7 @@
     cursor: pointer;
     transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
     position: relative;
-    overflow: hidden;
+    overflow: visible; /* Изменено для тултипа */
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -474,16 +474,66 @@
           0 0 40px var(--neon-cyan);
         animation: pulse-event 2s ease-in-out infinite;
       }
+      
+      /* Киберпанк-тултип с названием события */
+      &::before {
+        content: attr(data-event-title);
+        position: absolute;
+        bottom: 120%;
+        left: 50%;
+        transform: translateX(-50%) translateY(10px);
+        background: rgba(5, 8, 15, 0.95);
+        border: 1px solid var(--neon-cyan);
+        border-radius: 6px;
+        padding: 8px 12px;
+        font-family: var(--font-mono);
+        font-size: 12px;
+        color: var(--neon-cyan);
+        white-space: nowrap;
+        opacity: 0;
+        visibility: hidden;
+        transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        box-shadow: 
+          0 0 20px rgba(0, 240, 255, 0.3),
+          inset 0 0 10px rgba(0, 240, 255, 0.1);
+        z-index: 100;
+        letter-spacing: 1px;
+        
+        /* Эффект глитча при появлении */
+        &::after {
+          content: "";
+          position: absolute;
+          top: 0;
+          left: 0;
+          right: 0;
+          bottom: 0;
+          background: linear-gradient(90deg, transparent, rgba(0, 240, 255, 0.1), transparent);
+          animation: glitch-scan 2s linear infinite;
+          pointer-events: none;
+        }
+      }
+      
+      &:hover::before {
+        opacity: 1;
+        visibility: visible;
+        transform: translateX(-50%) translateY(0);
+      }
     }
 
     .day-num {
       font-family: var(--font-heading);
-      font-size: 20px;
+      font-size: 22px; /* Увеличено */
       color: var(--text-main);
       font-weight: 700;
       letter-spacing: 1.5px;
     }
   }
+}
+
+/* Анимация сканирования для тултипа */
+@keyframes glitch-scan {
+  0% { transform: translateY(-100%); }
+  100% { transform: translateY(100%); }
 }
 
 /* Анимация пульсации для событий */
@@ -698,17 +748,25 @@
   .storage-item {
     position: relative;
     aspect-ratio: 1;
-    background: rgba(15, 20, 30, 0.6);
-    border: 1px solid var(--border-glow);
+    /* Эффект жидкого стекла с блюром */
+    background: rgba(255, 255, 255, 0.05);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
     border-radius: 8px;
     overflow: hidden;
     cursor: pointer;
     transition: 0.2s;
+    box-shadow: 
+      0 4px 15px rgba(0, 0, 0, 0.3),
+      inset 0 1px 0 rgba(255, 255, 255, 0.1);
 
     &:hover {
       border-color: var(--neon-cyan);
       transform: translateY(-3px);
-      box-shadow: 0 6px 20px rgba(0, 240, 255, 0.2);
+      box-shadow: 
+        0 6px 20px rgba(0, 240, 255, 0.2),
+        inset 0 1px 0 rgba(255, 255, 255, 0.15);
     }
 
     img {

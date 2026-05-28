@@ -76,9 +76,9 @@ body.theme-red-protocol {
   --border-glow: rgba(255, 42, 109, 0.3);
 }
 
-/* 🔹 ТЕМА HELLO KITTY - розовая, пастельная, но с темным фоном */
+/* 🔹 ТЕМА HELLO KITTY - розовая, пастельная, НО с темным фоном для контраста */
 body.theme-hellokitty {
-  --bg-deep: #0f111a; /* Темный фон */
+  --bg-deep: #0f111a; /* Темный фон как у всех */
   --bg-panel: #1a1d29;
   --neon-cyan: #ff6b9d; /* Розовый акцент */
   --neon-blue: #ff8fb3;
