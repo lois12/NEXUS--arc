@@ -56,6 +56,23 @@ export function applyTheme(th) {
   document
     .querySelectorAll(".theme-btn")
     .forEach((b) => b.classList.toggle("active", b.dataset.theme === th));
+  
+  // Обновляем название темы с глитч-эффектом
+  const themeNames = {
+    "cyberpunk": "CYBERPUNK",
+    "vaporwave": "VAPORWAVE",
+    "matrix": "MATRIX",
+    "solar": "SOLAR",
+    "red-protocol": "RED PROTOCOL",
+    "hellokitty": "HELLO KITTY"
+  };
+  const textEl = document.getElementById("theme-name-text");
+  if (textEl) {
+    textEl.textContent = themeNames[th] || "CYBERPUNK";
+    // Добавляем класс glitching для анимации
+    textEl.classList.add("glitching");
+    setTimeout(() => textEl.classList.remove("glitching"), 300);
+  }
 }
 
 // Переключает тему с уведомлением и пульсацией
