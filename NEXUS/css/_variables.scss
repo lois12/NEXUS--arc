@@ -92,3 +92,19 @@ body.theme-arctic {
   --glass: rgba(255, 255, 255, 0.9);
   --shadow-card: 0 4px 20px rgba(0, 184, 212, 0.15);
 }
+
+/* Arctic тема для календаря и событий - голубое свечение */
+body.theme-arctic .cal-day.has-event {
+  border-color: #00b8d4 !important;
+  box-shadow: 
+    0 0 20px #00b8d4,
+    inset 0 1px 0 rgba(255, 255, 255, 0.15),
+    inset 0 -2px 5px rgba(0, 0, 0, 0.15) !important;
+}
+
+body.theme-arctic .cal-day.has-event::after {
+  background: #00b8d4 !important;
+  box-shadow: 
+    0 0 15px #00b8d4,
+    0 0 30px #00b8d4 !important;
+}

@@ -11,6 +11,12 @@
   align-items: center;
 }
 
+/* Скрываем знания на всех страницах кроме страницы знаний */
+body:not(.knowledge-active) #knowledge-section,
+body:not(.knowledge-active) .knowledge-sidebar-panel {
+  display: none !important;
+}
+
 .knowledge-header {
   display: flex;
   justify-content: space-between;
