@@ -98,7 +98,7 @@ function applyPageState(page) {
   if (landing) landing.style.display = page === "home" ? "flex" : "none";
   
   // Скрываем ВСЕ страницы кроме активной
-  const allPages = ["home", "main", "archive", "mediaplan", "logo", "knowledge", "decision"];
+  const allPages = ["home", "main", "archive", "mediaplan", "logo", "knowledge", "decision", "qr-generator"];
   allPages.forEach((p) => {
     const el = document.getElementById(`${p}-page`);
     if (el) {
