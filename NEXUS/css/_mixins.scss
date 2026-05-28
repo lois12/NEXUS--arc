@@ -49,20 +49,20 @@
 
 /* 🔹 SCROLLBAR */
 @mixin custom-scrollbar {
-  &::-webkit-scrollbar {
+  ::-webkit-scrollbar {
     width: 8px;
     height: 8px;
   }
-  &::-webkit-scrollbar-track {
+  ::-webkit-scrollbar-track {
     background: rgba(0, 0, 0, 0.2);
     border-radius: 4px;
   }
-  &::-webkit-scrollbar-thumb {
+  ::-webkit-scrollbar-thumb {
     background: var(--neon-cyan);
     border-radius: 4px;
     border: 2px solid var(--bg-deep);
   }
-  &::-webkit-scrollbar-thumb:hover {
+  ::-webkit-scrollbar-thumb:hover {
     background: var(--neon-blue);
   }
 }
