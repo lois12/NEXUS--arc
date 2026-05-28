@@ -1,4 +1,16 @@
 ```
 # Compiled and build artifacts
 *.css.map
+
+# Dependencies
+node_modules/
+
+# Editors
+.vscode/
+.idea/
+
+# Environment
+.env
+.env.local
+*.env.*
 ```
