@@ -31,7 +31,7 @@ window.openResourceModal = openResourceModal;
 
 // 🔹 СОСТОЯНИЕ
 let currentPage = localStorage.getItem("nexus_current_page") || "home";
-const pages = ["home", "main", "archive", "mediaplan", "logo", "knowledge"];
+const pages = ["home", "main", "archive", "mediaplan", "logo", "knowledge", "qr-generator"];
 
 // ============================================================================
 // 🔹 ВСПОМОГАТЕЛЬНЫЕ ФУНКЦИИ
@@ -140,6 +140,9 @@ function loadPageData(page) {
       break;
     case "decision":
       // Decision page doesn't need data loading
+      break;
+    case "qr-generator":
+      // QR Generator page doesn't need data loading
       break;
   }
 }
