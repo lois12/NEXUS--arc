@@ -95,8 +95,16 @@
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
-    animation: gradient-shift 3s ease infinite, glow-pulse 2s ease-in-out infinite alternate;
+    animation: gradient-shift 3s ease infinite, glow-pulse 2s ease-in-out infinite alternate, glitch-effect 3s infinite;
     text-shadow: none;
+    
+    &::after {
+      content: "▋";
+      display: inline-block;
+      color: var(--neon-cyan);
+      animation: blink-cursor 1s step-end infinite;
+      margin-left: 2px;
+    }
     
     &::before {
       content: attr(data-text);
@@ -250,4 +258,28 @@
 @keyframes blink-cursor {
   0%, 100% { opacity: 1; }
   50% { opacity: 0; }
+}
+
+/* 🔹 ГЛИТЧ-ЭФФЕКТ ДЛЯ ЗАГОЛОВКА */
+@keyframes glitch-effect {
+  0%, 100% { 
+    text-shadow: 0 0 5px var(--neon-cyan), 0 0 10px var(--neon-blue);
+    transform: translate(0);
+  }
+  20% { 
+    text-shadow: -2px 0 var(--neon-red), 2px 0 var(--neon-cyan);
+    transform: translate(-2px, 2px);
+  }
+  40% { 
+    text-shadow: 2px 0 var(--neon-purple), -2px 0 var(--neon-blue);
+    transform: translate(2px, -2px);
+  }
+  60% { 
+    text-shadow: -2px 0 var(--neon-green), 2px 0 var(--neon-purple);
+    transform: translate(-1px, 1px);
+  }
+  80% { 
+    text-shadow: 2px 0 var(--neon-yellow), -2px 0 var(--neon-red);
+    transform: translate(1px, -1px);
+  }
 }

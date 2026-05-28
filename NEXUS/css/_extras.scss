@@ -404,40 +404,40 @@
     
     /* 3D объемный эффект */
     box-shadow: 
-      0 4px 8px rgba(0, 0, 0, 0.3),
+      0 6px 12px rgba(0, 0, 0, 0.4),
       inset 0 1px 0 rgba(255, 255, 255, 0.1),
-      inset 0 -2px 5px rgba(0, 0, 0, 0.2);
+      inset 0 -2px 8px rgba(0, 0, 0, 0.3);
 
     &:hover {
       border-color: var(--neon-cyan);
       background: linear-gradient(145deg, rgba(0, 240, 255, 0.12), rgba(0, 180, 200, 0.08));
       transform: translateY(-4px) scale(1.02);
       box-shadow: 
-        0 8px 25px rgba(0, 240, 255, 0.25),
+        0 12px 30px rgba(0, 240, 255, 0.3),
         inset 0 1px 0 rgba(255, 255, 255, 0.15),
-        inset 0 -2px 5px rgba(0, 0, 0, 0.15);
+        inset 0 -2px 8px rgba(0, 0, 0, 0.2);
     }
 
     &.today {
       border-color: var(--neon-green);
       background: linear-gradient(145deg, rgba(0, 255, 157, 0.12), rgba(0, 200, 130, 0.08));
       box-shadow: 
-        0 0 25px rgba(0, 255, 157, 0.35),
+        0 0 30px rgba(0, 255, 157, 0.4),
         inset 0 1px 0 rgba(255, 255, 255, 0.2),
-        inset 0 -2px 5px rgba(0, 0, 0, 0.15);
+        inset 0 -2px 8px rgba(0, 0, 0, 0.2);
 
       .day-num {
         color: var(--neon-green);
-        text-shadow: 0 0 10px rgba(0, 255, 157, 0.6);
+        text-shadow: 0 0 12px rgba(0, 255, 157, 0.7);
       }
     }
 
     &.has-event {
       border-color: var(--neon-purple);
       box-shadow: 
-        0 0 20px var(--neon-purple),
+        0 0 25px var(--neon-purple),
         inset 0 1px 0 rgba(255, 255, 255, 0.15),
-        inset 0 -2px 5px rgba(0, 0, 0, 0.15);
+        inset 0 -2px 8px rgba(0, 0, 0, 0.2);
       
       &::after {
         content: "";
@@ -445,23 +445,23 @@
         bottom: 10px;
         left: 50%;
         transform: translateX(-50%);
-        width: 10px;
-        height: 10px;
+        width: 12px;
+        height: 12px;
         background: var(--neon-purple);
         border-radius: 50%;
         box-shadow: 
-          0 0 15px var(--neon-purple),
-          0 0 30px var(--neon-purple);
+          0 0 20px var(--neon-purple),
+          0 0 40px var(--neon-purple);
         animation: pulse-event 2s ease-in-out infinite;
       }
     }
 
     .day-num {
       font-family: var(--font-heading);
-      font-size: 18px;
+      font-size: 20px;
       color: var(--text-main);
       font-weight: 700;
-      letter-spacing: 1px;
+      letter-spacing: 1.5px;
     }
   }
 }
