@@ -314,14 +314,30 @@ export function renderCalendar() {
         el.style.animationDelay = `${d * 0.012}s`;
         if (isCurrentMonth && d === t.getDate()) el.classList.add("today");
         const dow = new Date(calYear, calMonth, d).getDay();
-        if (dow === 0 || dow === 6) el.classList.add("is-weekend");
+        
+        // Выделение выходных и добавление canvas
+        if (dow === 0 || dow === 6) {
+          el.classList.add("is-weekend", "weekend-canvas");
+          // Добавляем canvas для анимации
+          const canvas = document.createElement("canvas");
+          canvas.className = "weekend-canvas-bg";
+          canvas.style.position = "absolute";
+          canvas.style.top = "0";
+          canvas.style.left = "0";
+          canvas.style.width = "100%";
+          canvas.style.height = "100%";
+          canvas.style.pointerEvents = "none";
+          canvas.style.zIndex = "0";
+          el.insertBefore(canvas, el.firstChild);
+          initWeekendCanvas(canvas);
+        }
         
         // Проверяем события и добавляем атрибут для тултипа
         const dayEvents = notesCache.filter((n) => n.date === ds);
         if (dayEvents.length > 0) {
           el.classList.add("has-event");
-          // Добавляем название первого события для тултипа
-          el.setAttribute("data-event-title", dayEvents[0].title || "Событие");
+          // Добавляем название первого события для тултипа (используем name вместо title)
+          el.setAttribute("data-event-title", dayEvents[0].name || "Событие");
         }
         
         el.onclick = () => openEventModal(ds);
@@ -329,6 +345,7 @@ export function renderCalendar() {
       }
       setTimeout(() => calendarGrid.classList.remove("fading"), 50);
       renderNextPost();
+      updateEventsCounter(); // Обновляем счетчик событий
     }, 150);
   });
 }
@@ -683,4 +700,113 @@ export function initVoiceInputs() {
       document.getElementById(id)?.addEventListener("click", stopAll);
     },
   );
+}
+
+// ============================================================================
+// 🔹 CANVAS АНИМАЦИЯ ДЛЯ ВЫХОДНЫХ ДНЕЙ
+// ============================================================================
+function initWeekendCanvas(canvas) {
+  if (!canvas) return;
+  
+  const ctx = canvas.getContext("2d");
+  const dpr = window.devicePixelRatio || 1;
+  
+  function resize() {
+    const rect = canvas.parentElement.getBoundingClientRect();
+    canvas.width = rect.width * dpr;
+    canvas.height = rect.height * dpr;
+    canvas.style.width = rect.width + "px";
+    canvas.style.height = rect.height + "px";
+    ctx.scale(dpr, dpr);
+  }
+  
+  resize();
+  
+  // Получаем цвет акцента из CSS переменных
+  const getAccentColor = () => {
+    const styles = getComputedStyle(document.documentElement);
+    return styles.getPropertyValue("--neon-pink").trim() || "#ff6b9d";
+  };
+  
+  const particles = [];
+  const particleCount = 8;
+  
+  class Particle {
+    constructor() {
+      this.reset();
+    }
+    
+    reset() {
+      this.x = Math.random() * canvas.width / dpr;
+      this.y = Math.random() * canvas.height / dpr;
+      this.vx = (Math.random() - 0.5) * 0.3;
+      this.vy = (Math.random() - 0.5) * 0.3;
+      this.radius = Math.random() * 1.5 + 0.5;
+      this.alpha = Math.random() * 0.5 + 0.3;
+    }
+    
+    update() {
+      this.x += this.vx;
+      this.y += this.vy;
+      
+      if (this.x < 0 || this.x > canvas.width / dpr) this.vx *= -1;
+      if (this.y < 0 || this.y > canvas.height / dpr) this.vy *= -1;
+    }
+    
+    draw() {
+      ctx.beginPath();
+      ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2);
+      ctx.fillStyle = getAccentColor().replace(")", `, ${this.alpha})`).replace("rgb", "rgba");
+      ctx.fill();
+    }
+  }
+  
+  for (let i = 0; i < particleCount; i++) {
+    particles.push(new Particle());
+  }
+  
+  function animate() {
+    ctx.clearRect(0, 0, canvas.width / dpr, canvas.height / dpr);
+    
+    const color = getAccentColor();
+    
+    particles.forEach((p, idx) => {
+      p.update();
+      p.draw();
+      
+      // Рисуем линии между близкими частицами
+      for (let j = idx + 1; j < particles.length; j++) {
+        const p2 = particles[j];
+        const dx = p.x - p2.x;
+        const dy = p.y - p2.y;
+        const dist = Math.sqrt(dx * dx + dy * dy);
+        
+        if (dist < 40) {
+          ctx.beginPath();
+          ctx.moveTo(p.x, p.y);
+          ctx.lineTo(p2.x, p2.y);
+          ctx.strokeStyle = color.replace(")", `, ${0.2 * (1 - dist / 40)})`).replace("rgb", "rgba");
+          ctx.lineWidth = 0.5;
+          ctx.stroke();
+        }
+      }
+    });
+    
+    requestAnimationFrame(animate);
+  }
+  
+  animate();
+  
+  // Перерисовка при изменении размера
+  window.addEventListener("resize", resize);
+}
+
+// ============================================================================
+// 🔹 СЧЕТЧИК СОБЫТИЙ
+// ============================================================================
+function updateEventsCounter() {
+  const counterEl = document.getElementById("events-total-count");
+  if (counterEl && notesCache) {
+    counterEl.textContent = notesCache.length;
+  }
 }

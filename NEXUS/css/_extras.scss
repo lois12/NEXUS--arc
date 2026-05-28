@@ -361,7 +361,8 @@
 .calendar-header {
   display: flex;
   align-items: center;
-  justify-content: space-between;
+  justify-content: center;
+  gap: 15px;
   margin-bottom: 20px;
   padding-bottom: 15px;
   border-bottom: 1px solid var(--border-glow);
@@ -373,7 +374,8 @@
     letter-spacing: 2px;
   }
 
-  button {
+  button#cal-prev,
+  button#cal-next {
     background: rgba(0, 240, 255, 0.1);
     border: 1px solid var(--border-glow);
     color: var(--neon-cyan);
@@ -382,6 +384,7 @@
     font-size: 16px;
     cursor: pointer;
     transition: 0.2s;
+    margin: 0 8px;
 
     &:hover {
       background: rgba(0, 240, 255, 0.2);
