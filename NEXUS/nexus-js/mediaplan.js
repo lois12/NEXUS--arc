@@ -320,8 +320,8 @@ export function renderCalendar() {
         const dayEvents = notesCache.filter((n) => n.date === ds);
         if (dayEvents.length > 0) {
           el.classList.add("has-event");
-          // Добавляем название первого события для тултипа
-          el.setAttribute("data-event-title", dayEvents[0].title || "Событие");
+          // Добавляем название первого события для тултипа (используем name вместо title)
+          el.setAttribute("data-event-title", dayEvents[0].name || "Событие");
         }
         
         el.onclick = () => openEventModal(ds);

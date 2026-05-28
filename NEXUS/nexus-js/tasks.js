@@ -403,9 +403,10 @@ export async function loadTasks() {
     if (!tasks.length) {
       taskList.innerHTML =
         '<div style="text-align:center;color:var(--text-muted);padding:20px">Нет задач</div>';
-      return;
+    } else {
+      tasks.forEach((t) => taskList.appendChild(renderTask(t, false)));
     }
-    tasks.forEach((t) => taskList.appendChild(renderTask(t, false)));
+    updateTaskStats(tasks); // Обновляем счетчики
   } catch (e) {
     console.error("[LOAD TASKS ERR]", e);
     if (taskList)
@@ -423,12 +424,62 @@ export async function loadArchive() {
     if (!tasks.length) {
       archiveList.innerHTML =
         '<div style="text-align:center;color:var(--text-muted);padding:20px">Архив пуст</div>';
-      return;
+    } else {
+      tasks.forEach((t) => archiveList.appendChild(renderTask(t, true)));
     }
-    tasks.forEach((t) => archiveList.appendChild(renderTask(t, true)));
+    updateArchiveStats(tasks); // Обновляем счетчики архива
   } catch (e) {
     console.error("[LOAD ARCHIVE ERR]", e);
   }
+}
+
+// 🔹 Обновление статистики задач
+function updateTaskStats(tasks) {
+  const activeCount = document.getElementById("dash-count");
+  const dashProgress = document.getElementById("dash-progress");
+  const dashCritical = document.getElementById("dash-critical");
+  
+  if (!activeCount || !dashProgress || !dashCritical) return;
+  
+  const total = tasks.length;
+  const critical = tasks.filter(t => t.priority === "critical").length;
+  const avgProgress = total > 0 
+    ? Math.round(tasks.reduce((sum, t) => sum + (t.progress || 0), 0) / total)
+    : 0;
+  
+  activeCount.textContent = total;
+  dashProgress.textContent = avgProgress + "%";
+  dashCritical.textContent = critical;
+  
+  // Анимация чисел
+  animateValue(activeCount, parseInt(activeCount.textContent) || 0, total, 500);
+  animateValue(dashCritical, parseInt(dashCritical.textContent) || 0, critical, 500);
+}
+
+function updateArchiveStats(tasks) {
+  const archiveCount = document.querySelector(".archive-count");
+  const archiveTotal = document.getElementById("archive-total");
+  
+  if (!archiveCount || !archiveTotal) return;
+  
+  const completed = tasks.filter(t => t.progress === 100).length;
+  
+  archiveCount.textContent = tasks.length;
+  archiveTotal.textContent = completed;
+}
+
+function animateValue(el, start, end, duration) {
+  if (start === end) return;
+  const range = end - start;
+  let current = start;
+  const increment = end > start ? 1 : -1;
+  const stepTime = Math.abs(Math.floor(duration / range)) || 50;
+  
+  const timer = setInterval(() => {
+    current += increment;
+    el.textContent = current;
+    if (current === end) clearInterval(timer);
+  }, stepTime);
 }
 
 // 🔹 Инициализация событий
