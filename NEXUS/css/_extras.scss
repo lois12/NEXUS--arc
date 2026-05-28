@@ -254,6 +254,25 @@
       color: var(--neon-cyan);
       letter-spacing: 1px;
       text-transform: uppercase;
+      position: relative;
+      display: inline-block;
+      
+      &::after {
+        content: "▋";
+        display: inline-block;
+        color: var(--neon-cyan);
+        animation: blink-cursor 1s step-end infinite;
+        margin-left: 2px;
+      }
+      
+      &.glitching {
+        animation: glitch-effect 0.3s infinite;
+        text-shadow: 
+          -2px 0 var(--neon-red),
+          2px 0 var(--neon-cyan),
+          -2px -2px var(--neon-purple),
+          2px 2px var(--neon-blue);
+      }
     }
   }
 
@@ -389,6 +408,7 @@
 
   .cal-day {
     aspect-ratio: 1;
+    min-height: 80px;
     background: linear-gradient(145deg, rgba(11, 16, 26, 0.95), rgba(8, 12, 20, 0.85));
     border: 1px solid rgba(136, 146, 176, 0.2);
     border-radius: 10px;
@@ -433,9 +453,9 @@
     }
 
     &.has-event {
-      border-color: var(--neon-purple);
+      border-color: var(--neon-cyan);
       box-shadow: 
-        0 0 25px var(--neon-purple),
+        0 0 25px var(--neon-cyan),
         inset 0 1px 0 rgba(255, 255, 255, 0.15),
         inset 0 -2px 8px rgba(0, 0, 0, 0.2);
       
@@ -447,11 +467,11 @@
         transform: translateX(-50%);
         width: 12px;
         height: 12px;
-        background: var(--neon-purple);
+        background: var(--neon-cyan);
         border-radius: 50%;
         box-shadow: 
-          0 0 20px var(--neon-purple),
-          0 0 40px var(--neon-purple);
+          0 0 20px var(--neon-cyan),
+          0 0 40px var(--neon-cyan);
         animation: pulse-event 2s ease-in-out infinite;
       }
     }

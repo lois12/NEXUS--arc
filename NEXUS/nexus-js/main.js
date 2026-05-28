@@ -93,14 +93,22 @@ function applyPageState(page) {
     .querySelectorAll(".nav-btn")
     .forEach((b) => b.classList.toggle("active", b.dataset.page === page));
 
+  // Скрываем лендинг если не главная
   document.getElementById("landing-page").style.display =
     page === "home" ? "flex" : "none";
-  pages
-    .filter((p) => p !== "home")
-    .forEach((p) => {
-      const el = document.getElementById(`${p}-page`);
-      if (el) el.classList.toggle("hidden", p !== page);
-    });
+  
+  // Скрываем ВСЕ страницы кроме активной
+  const allPages = ["home", "main", "archive", "mediaplan", "logo", "knowledge"];
+  allPages.forEach((p) => {
+    const el = document.getElementById(`${p}-page`);
+    if (el) {
+      if (p === "home") {
+        el.style.display = p === page ? "flex" : "none";
+      } else {
+        el.classList.toggle("hidden", p !== page);
+      }
+    }
+  });
 
   loadPageData(page);
 }

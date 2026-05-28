@@ -49,7 +49,7 @@ export function renderMarkdown(t) {
 
 // Применяет тему без уведомлений (для инициализации)
 export function applyTheme(th) {
-  const themes = ["cyberpunk", "vaporwave", "matrix", "solar", "red-protocol"];
+  const themes = ["cyberpunk", "vaporwave", "matrix", "solar", "red-protocol", "hellokitty"];
   if (!themes.includes(th)) th = "cyberpunk";
   document.body.classList.remove(...themes.map((t) => `theme-${t}`));
   if (th !== "cyberpunk") document.body.classList.add(`theme-${th}`);
