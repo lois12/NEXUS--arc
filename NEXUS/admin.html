@@ -1,0 +1,1240 @@
+<!doctype html>
+<html lang="ru">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>NEXUS | ADMIN PANEL</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&family=Orbitron:wght@400;700;900&family=Rajdhani:wght@300;400;500;600;700&subset=cyrillic,cyrillic-ext&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="style.css" />
+    <style>
+      /* 🔹 БАЗА АДМИНКИ */
+      body {
+        background: var(--bg-deep);
+        padding: 20px;
+        font-family: var(--font-body);
+        color: var(--text-main);
+      }
+
+      .admin-top {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        max-width: 1400px;
+        margin: 0 auto 20px;
+        padding: 0 10px;
+      }
+      .admin-title {
+        color: var(--neon-red);
+        font-size: 1.8rem;
+        font-weight: 900;
+        text-shadow: 0 0 15px var(--neon-red);
+        letter-spacing: 2px;
+        margin: 0;
+        font-family: var(--font-heading) !important;
+      }
+      .logout-btn {
+        background: transparent;
+        border: 1px solid var(--neon-red);
+        color: var(--neon-red);
+        padding: 8px 16px;
+        border-radius: 6px;
+        cursor: pointer;
+        font-weight: 600;
+        transition: 0.2s;
+      }
+      .logout-btn:hover {
+        background: var(--neon-red);
+        color: #fff;
+      }
+
+      /* 🔹 СТАТИСТИКА */
+      .stats-bar {
+        max-width: 1400px;
+        margin: 0 auto 20px;
+        padding: 15px;
+        background: var(--glass);
+        border: 1px solid var(--border-glow);
+        border-radius: 10px;
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+        gap: 15px;
+      }
+      .stat-item {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+      }
+      .stat-label {
+        font-size: 10px;
+        color: var(--text-muted);
+        text-transform: uppercase;
+        letter-spacing: 1px;
+        font-family: var(--font-mono);
+      }
+      .stat-value {
+        font-size: 16px;
+        font-weight: 700;
+        color: var(--neon-cyan);
+        margin-top: 4px;
+        font-family: var(--font-mono);
+      }
+      #ping-chart {
+        width: 100%;
+        height: 100px;
+        background: rgba(0, 0, 0, 0.2);
+        border: 1px solid var(--border-glow);
+        border-radius: 8px;
+        margin-top: 10px;
+      }
+
+      /* 🔹 ЛОГИ */
+      .logs-section {
+        max-width: 1400px;
+        margin: 20px auto;
+        background: var(--glass);
+        border: 1px solid var(--border-glow);
+        border-radius: 10px;
+        padding: 15px;
+      }
+      .logs-table {
+        width: 100%;
+        border-collapse: collapse;
+        font-size: 13px;
+      }
+      .logs-table th {
+        background: rgba(0, 240, 255, 0.1);
+        color: var(--neon-cyan);
+        padding: 10px;
+        text-align: left;
+        font-size: 11px;
+        text-transform: uppercase;
+        position: sticky;
+        top: 0;
+      }
+      .logs-table td {
+        padding: 10px;
+        border-bottom: 1px solid rgba(136, 146, 176, 0.15);
+        color: var(--text-main);
+      }
+      .logs-table tr:hover td {
+        background: rgba(0, 240, 255, 0.05);
+      }
+      .log-time {
+        color: var(--neon-cyan);
+        font-family: var(--font-mono);
+      }
+      .log-action {
+        color: var(--neon-green);
+      }
+      .log-target {
+        color: var(--text-muted);
+        word-break: break-all;
+        max-width: 300px;
+      }
+
+      /* 🔹 НОВАЯ СЕТКА: ПОЛЬЗОВАТЕЛИ + ЗАМЕТКИ */
+      .admin-grid {
+        display: grid;
+        grid-template-columns: 1fr;
+        gap: 20px;
+        max-width: 1400px;
+        margin: 0 auto;
+        padding: 0 10px;
+      }
+      @media (min-width: 1100px) {
+        .admin-grid {
+          grid-template-columns: 1.3fr 0.7fr;
+          align-items: start;
+        }
+      }
+
+      .admin-section {
+        background: var(--glass);
+        border: 1px solid var(--border-glow);
+        border-radius: 12px;
+        padding: 20px;
+        position: relative;
+        overflow: hidden;
+      }
+      .admin-section::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        height: 3px;
+        opacity: 0.8;
+      }
+      .users-section::before {
+        background: linear-gradient(90deg, var(--neon-cyan), var(--neon-green));
+      }
+      .notes-section::before {
+        background: linear-gradient(
+          90deg,
+          var(--neon-purple),
+          var(--neon-yellow)
+        );
+      }
+
+      .section-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 15px;
+        padding-bottom: 10px;
+        border-bottom: 1px dashed rgba(136, 146, 176, 0.2);
+      }
+      .section-title {
+        font-family: var(--font-heading) !important;
+        font-size: 1.2rem;
+        margin: 0;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+      }
+      .users-section .section-title {
+        color: var(--neon-cyan);
+      }
+      .notes-section .section-title {
+        color: var(--neon-purple);
+      }
+
+      /* 🔹 ПОЛЬЗОВАТЕЛИ */
+      .user-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+        gap: 16px;
+      }
+      .user-card {
+        background: rgba(15, 20, 30, 0.6);
+        border: 1px solid rgba(136, 146, 176, 0.15);
+        border-radius: 10px;
+        padding: 16px;
+        cursor: pointer;
+        transition: 0.2s;
+      }
+      .user-card:hover {
+        transform: translateY(-3px);
+        border-color: var(--neon-cyan);
+        box-shadow: 0 4px 12px rgba(0, 240, 255, 0.15);
+      }
+      .user-card h3 {
+        margin: 0 0 6px;
+        color: var(--neon-cyan);
+        font-size: 16px;
+      }
+      .user-card p {
+        margin: 4px 0;
+        font-size: 12px;
+        color: var(--text-muted);
+      }
+      .role-badge {
+        display: inline-block;
+        padding: 3px 8px;
+        border-radius: 4px;
+        font-size: 10px;
+        font-weight: 700;
+        text-transform: uppercase;
+        margin-top: 8px;
+      }
+      .role-user {
+        background: rgba(136, 146, 176, 0.15);
+        color: var(--text-muted);
+      }
+      .role-editor {
+        background: rgba(0, 240, 255, 0.15);
+        color: var(--neon-cyan);
+      }
+      .role-moderator {
+        background: rgba(0, 255, 157, 0.15);
+        color: var(--neon-green);
+      }
+      .role-manager {
+        background: rgba(189, 0, 255, 0.15);
+        color: var(--neon-purple);
+      }
+
+      /* 🔹 ЗАМЕТКИ */
+      .notes-grid {
+        display: grid;
+        grid-template-columns: 1fr;
+        gap: 12px;
+      }
+      .note-card {
+        background: rgba(15, 20, 30, 0.6);
+        border: 1px solid rgba(136, 146, 176, 0.15);
+        border-left: 3px solid var(--neon-purple);
+        border-radius: 8px;
+        padding: 14px;
+        cursor: pointer;
+        transition: 0.2s;
+      }
+      .note-card:hover {
+        transform: translateY(-2px);
+        border-color: var(--neon-purple);
+        box-shadow: 0 4px 12px rgba(189, 0, 255, 0.15);
+      }
+      .note-badge {
+        display: inline-block;
+        padding: 3px 8px;
+        border-radius: 4px;
+        font-size: 10px;
+        font-weight: 700;
+        margin: 6px 0;
+        text-transform: uppercase;
+      }
+      .note-planned {
+        background: rgba(255, 204, 0, 0.15);
+        color: var(--neon-yellow);
+        border: 1px solid rgba(255, 204, 0, 0.3);
+      }
+      .note-done {
+        background: rgba(0, 255, 157, 0.15);
+        color: var(--neon-green);
+        border: 1px solid rgba(0, 255, 157, 0.3);
+      }
+      .note-meta {
+        font-size: 10px;
+        color: var(--text-muted);
+        margin-top: 8px;
+        font-family: var(--font-mono);
+        display: flex;
+        justify-content: space-between;
+      }
+
+      /* 🔹 АВТОРИЗАЦИЯ */
+      #admin-auth {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100vw;
+        height: 100vh;
+        background: rgba(5, 8, 15, 0.95);
+        z-index: 10000;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        backdrop-filter: blur(5px);
+      }
+      #admin-auth.hidden {
+        display: none;
+      }
+      .admin-login-card {
+        background: var(--bg-panel);
+        padding: 30px;
+        border-radius: 12px;
+        border: 1px solid var(--neon-red);
+        max-width: 400px;
+        width: 90%;
+        box-shadow: 0 0 30px rgba(255, 42, 109, 0.2);
+      }
+      .admin-login-card h2 {
+        color: var(--neon-red);
+        text-align: center;
+        margin-bottom: 20px;
+      }
+      .admin-form input {
+        width: 100%;
+        padding: 12px;
+        margin-bottom: 12px;
+        background: rgba(15, 20, 30, 0.8);
+        border: 1px solid var(--border-glow);
+        color: var(--text-main);
+        border-radius: 6px;
+        font-size: 14px;
+        box-sizing: border-box;
+      }
+      .admin-form button {
+        width: 100%;
+        padding: 12px;
+        background: var(--neon-red);
+        color: #fff;
+        border: none;
+        border-radius: 6px;
+        cursor: pointer;
+        font-weight: 700;
+        font-size: 14px;
+        transition: 0.2s;
+      }
+      .admin-form button:hover {
+        background: #d01a50;
+      }
+      #admin-error {
+        color: var(--neon-red);
+        text-align: center;
+        margin-bottom: 10px;
+        font-size: 12px;
+        min-height: 15px;
+      }
+
+      /* 🔹 OFFLINE OVERLAY */
+      .offline-overlay {
+        position: fixed;
+        top: 10px;
+        left: 50%;
+        transform: translateX(-50%);
+        background: var(--neon-red);
+        color: #fff;
+        padding: 8px 16px;
+        border-radius: 20px;
+        font-weight: 600;
+        z-index: 9999;
+        display: none;
+        box-shadow: 0 4px 15px rgba(255, 42, 109, 0.4);
+      }
+
+      /* 🔹 МОДАЛКИ */
+      .nexus-modal {
+        display: none;
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(0, 0, 0, 0.7);
+        backdrop-filter: blur(4px);
+        z-index: 9000;
+        align-items: center;
+        justify-content: center;
+      }
+      .nexus-modal.active {
+        display: flex;
+      }
+      .modal-content {
+        background: var(--bg-panel);
+        border: 1px solid var(--border-glow);
+        border-radius: 12px;
+        padding: 20px;
+        max-width: 650px;
+        width: 90%;
+        position: relative;
+        color: var(--text-main);
+        max-height: 90vh;
+        overflow-y: auto;
+      }
+      .note-modal-content {
+        max-width: 550px;
+      }
+      .modal-content h3 {
+        margin-bottom: 15px;
+      }
+      #modal-details {
+        background: rgba(10, 15, 25, 0.5);
+        padding: 15px;
+        border-radius: 8px;
+        border: 1px solid var(--border-glow);
+        margin-bottom: 15px;
+      }
+      #modal-details div {
+        display: flex;
+        justify-content: space-between;
+        padding: 6px 0;
+        border-bottom: 1px dashed rgba(136, 146, 176, 0.1);
+        font-size: 13px;
+      }
+      #modal-details div:last-child {
+        border-bottom: none;
+      }
+      .role-select,
+      #note-status-select,
+      #note-title-input,
+      #note-content-input {
+        width: 100%;
+        padding: 10px;
+        background: rgba(15, 20, 30, 0.8);
+        border: 1px solid var(--border-glow);
+        color: var(--text-main);
+        border-radius: 6px;
+        font-size: 14px;
+        margin-top: 5px;
+        box-sizing: border-box;
+      }
+      #save-role-btn,
+      #save-note-btn {
+        width: 100%;
+        margin-top: 15px;
+        padding: 12px;
+        background: var(--neon-green);
+        color: #05080f;
+        border: none;
+        border-radius: 6px;
+        cursor: pointer;
+        font-weight: 700;
+        font-size: 14px;
+      }
+      #save-role-btn:hover,
+      #save-note-btn:hover {
+        background: #00cc7d;
+      }
+      #save-role-btn:disabled,
+      #save-note-btn:disabled {
+        opacity: 0.6;
+        cursor: not-allowed;
+      }
+      #note-content-input {
+        min-height: 120px;
+        resize: vertical;
+        font-family: var(--font-mono);
+        margin-bottom: 15px;
+      }
+      #delete-note-btn {
+        background: var(--neon-red);
+        color: #fff;
+        border: none;
+        padding: 10px 16px;
+        border-radius: 6px;
+        cursor: pointer;
+        display: none;
+        margin-right: 10px;
+      }
+      #delete-note-btn:hover {
+        background: #d01a50;
+      }
+      .btn-actions {
+        display: flex;
+        gap: 10px;
+        justify-content: flex-end;
+        margin-top: 15px;
+
+        /* 🔹 МОДАЛКА ПОЛЬЗОВАТЕЛЯ — ПРАВЫЙ ВЕРХНИЙ УГОЛ */
+        #user-modal {
+          align-items: flex-start !important;
+          justify-content: flex-end !important;
+          padding: 20px 20px 0 0 !important;
+        }
+        #user-modal .modal-content {
+          width: 420px !important;
+          max-width: 90vw !important;
+          margin: 0 !important;
+          box-shadow: 0 0 25px rgba(0, 240, 255, 0.2) !important;
+          border-color: var(--neon-cyan) !important;
+        }
+
+        /* 🔹 БЕЙДЖ "ПРОСМОТР: ..." */
+        .viewing-badge {
+          display: inline-flex;
+          align-items: center;
+          gap: 6px;
+          background: rgba(0, 240, 255, 0.1);
+          border: 1px solid var(--border-glow);
+          color: var(--neon-cyan);
+          padding: 4px 10px;
+          border-radius: 20px;
+          font-size: 11px;
+          font-family: var(--font-mono);
+          margin-bottom: 12px;
+          text-transform: uppercase;
+          letter-spacing: 1px;
+        }
+        .viewing-badge::before {
+          content: "👁️";
+          font-size: 12px;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div id="offline-msg" class="offline-overlay">⚠️ СЕРВЕР НЕ ОТВЕЧАЕТ</div>
+
+    <div id="admin-auth">
+      <div class="admin-login-card">
+        <h2>🔐 ADMIN ACCESS</h2>
+        <div id="admin-error"></div>
+        <form id="admin-login-form" class="admin-form">
+          <input
+            type="text"
+            id="admin-user"
+            placeholder="Login"
+            required
+            autocomplete="off"
+          />
+          <input
+            type="password"
+            id="admin-pass"
+            placeholder="Password"
+            required
+          />
+          <button type="submit">ВОЙТИ В СИСТЕМУ</button>
+        </form>
+      </div>
+    </div>
+
+    <div id="admin-dashboard" style="display: none">
+      <header class="admin-top">
+        <h1 class="admin-title">⚡ NEXUS ADMIN ⚡</h1>
+        <button class="logout-btn" onclick="logoutAdmin()">🚪 ВЫЙТИ</button>
+      </header>
+
+      <div class="stats-bar">
+        <div class="stat-item">
+          <span class="stat-label">СТАТУС</span
+          ><span
+            id="stat-status"
+            class="stat-value"
+            style="color: var(--neon-green)"
+            >● ONLINE</span
+          >
+        </div>
+        <div class="stat-item">
+          <span class="stat-label">ПИНГ</span
+          ><span id="stat-ping" class="stat-value">0 ms</span>
+        </div>
+        <div class="stat-item">
+          <span class="stat-label">СКОРОСТЬ</span
+          ><span id="stat-speed" class="stat-value">0 Мбит/с</span>
+        </div>
+        <div class="stat-item">
+          <span class="stat-label">ФАЙЛОВ</span
+          ><span id="stat-files" class="stat-value">0</span>
+        </div>
+        <div class="stat-item">
+          <span class="stat-label">ЮЗЕРОВ</span
+          ><span id="stat-users" class="stat-value">0</span>
+        </div>
+        <div class="stat-item" style="grid-column: 1 / -1">
+          <canvas id="ping-chart" width="800" height="100"></canvas>
+        </div>
+      </div>
+
+      <div class="logs-section">
+        <h3 style="margin: 0 0 10px; color: var(--text-muted); font-size: 14px">
+          📜 ЛОГИ УДАЛЕНИЯ ФАЙЛОВ
+        </h3>
+        <div style="max-height: 200px; overflow-y: auto">
+          <table class="logs-table">
+            <thead>
+              <tr>
+                <th>Время</th>
+                <th>Пользователь</th>
+                <th>Действие</th>
+                <th>Цель</th>
+              </tr>
+            </thead>
+            <tbody id="logs-body">
+              <tr>
+                <td
+                  colspan="4"
+                  style="text-align: center; color: var(--text-muted)"
+                >
+                  Загрузка...
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- 🔹 ЛОГИЧЕСКИ РАЗДЕЛЁННЫЕ БЛОКИ -->
+      <div class="admin-grid">
+        <!-- 👥 УПРАВЛЕНИЕ ПОЛЬЗОВАТЕЛЯМИ -->
+        <section class="admin-section users-section">
+          <div class="section-header">
+            <h2 class="section-title">👥 Пользователи</h2>
+            <span
+              id="users-count"
+              style="
+                font-size: 12px;
+                color: var(--text-muted);
+                font-family: var(--font-mono);
+              "
+              >0</span
+            >
+          </div>
+          <div id="user-grid" class="user-grid"></div>
+        </section>
+
+        <!-- 📝 АДМИН-ЗАМЕТКИ -->
+        <section class="admin-section notes-section">
+          <div class="section-header">
+            <h2 class="section-title">📝 Заметки</h2>
+            <button
+              id="add-admin-note-btn"
+              class="cyber-btn"
+              style="padding: 6px 12px; font-size: 12px"
+            >
+              + Новая
+            </button>
+          </div>
+          <div id="admin-notes-grid" class="notes-grid"></div>
+        </section>
+      </div>
+    </div>
+
+    <!-- МОДАЛКА ПОЛЬЗОВАТЕЛЯ -->
+    <
+    <div id="user-modal" class="nexus-modal">
+      <div class="modal-content">
+        <button
+          onclick="
+            document.getElementById('user-modal').classList.remove('active')
+          "
+          style="
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            background: transparent;
+            border: none;
+            color: var(--text-muted);
+            font-size: 24px;
+            cursor: pointer;
+            z-index: 10;
+          "
+        >
+          ✕
+        </button>
+
+        <!-- 🔹 НОВЫЙ БЕЙДЖ: Кого смотрим -->
+        <div id="viewing-indicator" class="viewing-badge">Загрузка...</div>
+
+        <h3
+          id="modal-username"
+          style="color: var(--neon-cyan); margin-bottom: 15px; font-size: 20px"
+        ></h3>
+        <div id="modal-details"></div>
+        <div
+          style="
+            background: rgba(0, 0, 0, 0.2);
+            padding: 15px;
+            border-radius: 8px;
+            border: 1px solid var(--border-glow);
+          "
+        >
+          <label
+            style="
+              font-size: 12px;
+              color: var(--text-muted);
+              display: block;
+              margin-bottom: 8px;
+            "
+            >🛡️ НАЗНАЧИТЬ РОЛЬ:</label
+          >
+          <select
+            id="role-select"
+            class="role-select"
+            onclick="event.stopPropagation()"
+          >
+            <option value="user">👤 Пользователь</option>
+            <option value="editor">✏️ Редактор</option>
+            <option value="moderator">🛡️ Модератор</option>
+            <option value="manager">📊 Менеджер</option>
+            <option value="admin">👑 Администратор</option>
+          </select>
+          <button id="save-role-btn">💾 Сохранить роль</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- МОДАЛКА ЗАМЕТКИ -->
+    <div id="admin-note-modal" class="nexus-modal">
+      <div class="modal-content note-modal-content">
+        <button
+          onclick="
+            document
+              .getElementById('admin-note-modal')
+              .classList.remove('active')
+          "
+          style="
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            background: transparent;
+            border: none;
+            color: var(--text-muted);
+            font-size: 24px;
+            cursor: pointer;
+          "
+        >
+          ✕
+        </button>
+        <h3
+          id="note-modal-title"
+          style="color: var(--neon-cyan); margin-bottom: 15px; font-size: 20px"
+        >
+          📝 Заметка
+        </h3>
+        <input type="text" id="note-title-input" placeholder="Заголовок" />
+        <select id="note-status-select">
+          <option value="Запланировано">📅 Запланировано</option>
+          <option value="Реализовано">✅ Реализовано</option>
+        </select>
+        <textarea
+          id="note-content-input"
+          placeholder="Текст заметки (шифруется)..."
+        ></textarea>
+        <div class="btn-actions">
+          <button id="delete-note-btn">🗑️ Удалить</button>
+          <button id="save-note-btn">💾 Сохранить</button>
+        </div>
+      </div>
+    </div>
+
+    <script>
+      const ADMIN_API = "http://localhost:5000/api/admin";
+      let currentUserId = null,
+        isOnline = true,
+        pingHistory = [];
+      let statsInterval, networkInterval;
+      let adminNotesCache = [];
+      let currentNoteId = null;
+
+      if ("serviceWorker" in navigator)
+        navigator.serviceWorker.register("/sw.js").catch(console.error);
+
+      const checkAuth = () => {
+        if (localStorage.getItem("nexus_admin_token")) {
+          document.getElementById("admin-auth").classList.add("hidden");
+          document.getElementById("admin-dashboard").style.display = "block";
+          return true;
+        }
+        return false;
+      };
+
+      document.getElementById("admin-login-form").onsubmit = async (e) => {
+        e.preventDefault();
+        const btn = e.target.querySelector("button");
+        const err = document.getElementById("admin-error");
+        btn.disabled = true;
+        btn.textContent = "ПРОВЕРКА...";
+        err.textContent = "";
+        try {
+          const res = await fetch(`${ADMIN_API}/login`, {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({
+              username: document.getElementById("admin-user").value,
+              password: document.getElementById("admin-pass").value,
+            }),
+          });
+          const data = await res.json();
+          if (!res.ok) throw new Error(data.error);
+          localStorage.setItem("nexus_admin_token", data.token);
+          checkAuth();
+          startAdminMonitoring();
+        } catch (err) {
+          err.textContent = err.message;
+        } finally {
+          btn.disabled = false;
+          btn.textContent = "ВОЙТИ В СИСТЕМУ";
+        }
+      };
+
+      function setOffline() {
+        if (isOnline) {
+          isOnline = false;
+          document.getElementById("offline-msg").style.display = "block";
+          document.getElementById("stat-status").textContent = "● OFFLINE";
+          document.getElementById("stat-status").style.color =
+            "var(--neon-red)";
+          document.getElementById("stat-ping").textContent = "---";
+          document.getElementById("stat-speed").textContent = "---";
+          document.getElementById("user-grid").innerHTML =
+            '<p style="grid-column:1/-1;text-align:center;color:var(--text-muted);">⚠️ Связь с сервером потеряна.</p>';
+        }
+      }
+
+      function setOnline() {
+        isOnline = true;
+        document.getElementById("offline-msg").style.display = "none";
+        document.getElementById("stat-status").textContent = "● ONLINE";
+        document.getElementById("stat-status").style.color =
+          "var(--neon-green)";
+      }
+
+      function startAdminMonitoring() {
+        updateServerStats();
+        loadFileLogs();
+        loadAdminNotes();
+        statsInterval = setInterval(() => {
+          updateServerStats();
+          loadFileLogs();
+          loadAdminNotes();
+        }, 15000);
+        checkNetwork();
+        networkInterval = setInterval(checkNetwork, 5000);
+      }
+
+      async function updateServerStats() {
+        try {
+          const res = await fetch(`${ADMIN_API}/stats`, {
+            headers: {
+              Authorization:
+                "Bearer " + localStorage.getItem("nexus_admin_token"),
+            },
+          });
+          if (!res.ok) throw new Error();
+          const d = await res.json();
+          document.getElementById("stat-files").textContent =
+            d.files.toLocaleString();
+          document.getElementById("stat-users").textContent = d.users;
+          setOnline();
+        } catch {
+          setOffline();
+        }
+      }
+
+      async function loadFileLogs() {
+        try {
+          const res = await fetch(`${ADMIN_API}/file-logs`, {
+            headers: {
+              Authorization:
+                "Bearer " + localStorage.getItem("nexus_admin_token"),
+            },
+          });
+          if (!res.ok) throw new Error();
+          const logs = await res.json();
+          const tbody = document.getElementById("logs-body");
+          tbody.innerHTML = "";
+          if (!logs.length) {
+            tbody.innerHTML =
+              '<tr><td colspan="4" style="text-align:center;color:var(--text-muted)">Нет записей</td></tr>';
+            return;
+          }
+          logs.forEach((l) => {
+            const tr = document.createElement("tr");
+            tr.innerHTML = `<td class="log-time">${new Date(l.timestamp).toLocaleString()}</td><td>${l.username}</td><td class="log-action">${l.action}</td><td class="log-target">${l.target}</td>`;
+            tbody.appendChild(tr);
+          });
+        } catch {
+          /* Игнорируем оффлайн */
+        }
+      }
+
+      async function checkNetwork() {
+        const token = localStorage.getItem("nexus_admin_token");
+        if (!token) return;
+        try {
+          const pStart = Date.now();
+          const pRes = await fetch("http://localhost:5000/api/auth/me", {
+            method: "HEAD",
+            headers: { Authorization: "Bearer " + token },
+            cache: "no-store",
+            signal: AbortSignal.timeout(3000),
+          });
+          const ping = Date.now() - pStart;
+          document.getElementById("stat-ping").textContent = `${ping} ms`;
+          pingHistory.push(ping);
+          if (pingHistory.length > 30) pingHistory.shift();
+          drawPingChart();
+
+          const sStart = Date.now();
+          const sRes = await fetch(
+            "http://localhost:5000/api/diagnostics/speed-test",
+            {
+              headers: { Authorization: "Bearer " + token },
+              cache: "no-store",
+              signal: AbortSignal.timeout(5000),
+            },
+          );
+          if (sRes.ok) {
+            const blob = await sRes.blob();
+            const mbps = (
+              (blob.size * 8) /
+              1048576 /
+              ((Date.now() - sStart) / 1000)
+            ).toFixed(2);
+            document.getElementById("stat-speed").textContent =
+              `${mbps} Мбит/с`;
+          }
+          setOnline();
+        } catch (e) {
+          setOffline();
+          pingHistory.push(0);
+          if (pingHistory.length > 30) pingHistory.shift();
+          drawPingChart();
+        }
+      }
+
+      function drawPingChart() {
+        const canvas = document.getElementById("ping-chart");
+        const ctx = canvas.getContext("2d");
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        if (pingHistory.length < 2) return;
+        const max = Math.max(...pingHistory, 50),
+          w = canvas.width,
+          h = canvas.height,
+          step = w / (pingHistory.length - 1);
+        ctx.beginPath();
+        ctx.strokeStyle = getComputedStyle(document.body)
+          .getPropertyValue("--neon-cyan")
+          .trim();
+        ctx.lineWidth = 2;
+        pingHistory.forEach((val, i) => {
+          const x = i * step;
+          const y = h - (val / max) * (h - 10);
+          i === 0 ? ctx.moveTo(x, y) : ctx.lineTo(x, y);
+        });
+        ctx.stroke();
+        ctx.strokeStyle = "rgba(255,255,255,0.1)";
+        ctx.lineWidth = 1;
+        ctx.beginPath();
+        ctx.moveTo(0, h / 2);
+        ctx.lineTo(w, h / 2);
+        ctx.stroke();
+      }
+
+      async function loadUsers() {
+        const grid = document.getElementById("user-grid");
+        if (!isOnline) return;
+        grid.innerHTML =
+          '<p style="grid-column:1/-1;text-align:center;color:var(--text-muted);">Загрузка...</p>';
+        try {
+          const res = await fetch(`${ADMIN_API}/users`, {
+            headers: {
+              Authorization:
+                "Bearer " + localStorage.getItem("nexus_admin_token"),
+            },
+          });
+          if (!res.ok) throw new Error("Нет доступа");
+          const users = await res.json();
+          grid.innerHTML = "";
+          document.getElementById("users-count").textContent = users.length;
+          users.forEach((u) => {
+            const card = document.createElement("div");
+            card.className = "user-card";
+            const r = u.role || "user";
+            const rLabel =
+              {
+                user: "Пользователь",
+                editor: "Редактор",
+                moderator: "Модератор",
+                manager: "Руководитель",
+                admin: "Администратор",
+              }[r] || r;
+            card.innerHTML = `<h3>${u.username}</h3><p>📧 ${u.email}</p><p>📅 ${new Date(u.createdAt).toLocaleDateString()}</p><span class="role-badge role-${r}">${rLabel}</span>`;
+            // 🔹 ФИКС: Клик по карточке открывает модалку, но не по select
+            card.onclick = (e) => {
+              if (!e.target.closest("select")) {
+                openModal(u);
+              }
+            };
+            grid.appendChild(card);
+          });
+        } catch (e) {
+          setOffline();
+        }
+      }
+
+      const openModal = (user) => {
+        currentUserId = user.id;
+
+        // 🔹 Обновляем бейдж "Просмотр: ..."
+        const badge = document.getElementById("viewing-indicator");
+        if (badge) badge.textContent = `ПРОСМОТР: ${user.username}`;
+
+        document.getElementById("modal-username").textContent =
+          `👤 ${user.username}`;
+        const p = user.profile || {};
+        document.getElementById("modal-details").innerHTML = `
+    <div><span>Email</span><b style="color:#fff">${user.email}</b></div>
+    <div><span>Имя</span><b style="color:#fff">${p.firstName || "-"}</b></div>
+    <div><span>Фамилия</span><b style="color:#fff">${p.lastName || "-"}</b></div>
+    <div><span>Должность</span><b style="color:#fff">${p.position || "-"}</b></div>
+    <div><span>Телефон</span><b style="color:#fff">${p.phone || "-"}</b></div>`;
+        document.getElementById("role-select").value = user.role || "user";
+        document.getElementById("user-modal").classList.add("active");
+      };
+
+      // 🔹 ЕДИНАЯ ФУНКЦИЯ СМЕНЫ РОЛИ + ТОСТ
+      async function updateUserRole(userId, newRole) {
+        const btn = document.getElementById("save-role-btn");
+        if (btn) {
+          btn.disabled = true;
+          btn.textContent = "Сохранение...";
+        }
+        try {
+          const token = localStorage.getItem("nexus_admin_token");
+          const res = await fetch(`${ADMIN_API}/users/${userId}`, {
+            method: "PATCH",
+            headers: {
+              "Content-Type": "application/json",
+              Authorization: `Bearer ${token}`,
+            },
+            body: JSON.stringify({ role: newRole }),
+          });
+          if (!res.ok) {
+            const err = await res
+              .json()
+              .catch(() => ({ error: "Ошибка сервера" }));
+            throw new Error(err.error);
+          }
+          // ✅ ТОСТ УСПЕХА
+          showAdminToast(`✅ Права изменены: ${newRole}`, "success");
+          // Обновляем список пользователей
+          loadUsers();
+          // Если модалка открыта — обновляем роль в ней
+          const roleBadge = document.querySelector("#user-modal .role-badge");
+          if (roleBadge) {
+            const labels = {
+              user: "Пользователь",
+              editor: "Редактор",
+              moderator: "Модератор",
+              manager: "Руководитель",
+              admin: "Администратор",
+            };
+            roleBadge.textContent = labels[newRole] || newRole;
+            roleBadge.className = `role-badge role-${newRole}`;
+          }
+        } catch (e) {
+          showAdminToast(`❌ Ошибка: ${e.message}`, "error");
+        } finally {
+          if (btn) {
+            btn.disabled = false;
+            btn.textContent = "💾 Сохранить роль";
+          }
+        }
+      }
+
+      document.getElementById("save-role-btn").onclick = async () => {
+        const role = document.getElementById("role-select").value;
+        if (currentUserId) {
+          await updateUserRole(currentUserId, role);
+        }
+      };
+
+      // 🔹 ВСТРОЕННЫЙ ТОСТ ДЛЯ АДМИНКИ
+      function showAdminToast(msg, type = "success") {
+        const t = document.createElement("div");
+        const col = type === "success" ? "#00ff9d" : "#ff2a6d";
+        t.style.cssText = `position:fixed;bottom:24px;right:24px;padding:12px 18px;background:rgba(11,16,26,0.95);border-left:4px solid ${col};color:#fff;font-family:monospace;font-size:13px;border-radius:6px;z-index:10000;box-shadow:0 4px 15px rgba(0,0,0,0.4);animation:slideIn 0.3s forwards;pointer-events:none;`;
+        t.textContent = msg;
+        document.body.appendChild(t);
+        setTimeout(() => {
+          t.style.opacity = "0";
+          setTimeout(() => t.remove(), 300);
+        }, 3000);
+      }
+
+      // 🔹 АДМИН-ЗАМЕТКИ
+      function loadAdminNotes() {
+        fetch(`${ADMIN_API}/notes`, {
+          headers: {
+            Authorization:
+              "Bearer " + localStorage.getItem("nexus_admin_token"),
+          },
+        })
+          .then((r) => r.json())
+          .then((notes) => {
+            adminNotesCache = notes;
+            renderAdminNotes();
+          })
+          .catch(console.error);
+      }
+
+      function renderAdminNotes() {
+        const grid = document.getElementById("admin-notes-grid");
+        grid.innerHTML = "";
+        if (!adminNotesCache.length) {
+          grid.innerHTML =
+            '<p style="text-align:center;color:var(--text-muted);padding:20px 0;">Нет заметок</p>';
+          return;
+        }
+        adminNotesCache.forEach((n) => {
+          const cls = n.status === "Реализовано" ? "note-done" : "note-planned";
+          const card = document.createElement("div");
+          card.className = "note-card";
+          const preview =
+            (n.content || "").slice(0, 70) +
+            ((n.content || "").length > 70 ? "..." : "");
+          card.innerHTML = `<h3 style="margin:0 0 4px;font-size:15px;color:#fff;">${n.title}</h3>
+            <div class="note-badge ${cls}">${n.status}</div>
+            <p style="color:var(--text-muted);font-size:12px;margin:0;">${preview}</p>
+            <div class="note-meta"><span>🕒 ${new Date(n.updatedAt).toLocaleDateString()}</span></div>`;
+          card.onclick = () => openNoteModal(n);
+          grid.appendChild(card);
+        });
+      }
+
+      function openNoteModal(note = null) {
+        currentNoteId = note ? note.id : null;
+        document.getElementById("note-modal-title").textContent = note
+          ? "✏️ Редактирование"
+          : "📝 Новая заметка";
+        document.getElementById("note-title-input").value = note
+          ? note.title
+          : "";
+        document.getElementById("note-status-select").value = note
+          ? note.status
+          : "Запланировано";
+        document.getElementById("note-content-input").value = note
+          ? note.content
+          : "";
+        document.getElementById("delete-note-btn").style.display = note
+          ? "inline-block"
+          : "none";
+        document.getElementById("admin-note-modal").classList.add("active");
+      }
+
+      document.getElementById("add-admin-note-btn").onclick = () =>
+        openNoteModal();
+      document.getElementById("delete-note-btn").onclick = () => {
+        if (!confirm("Удалить заметку?")) return;
+        fetch(`${ADMIN_API}/notes/${currentNoteId}`, {
+          method: "DELETE",
+          headers: {
+            Authorization:
+              "Bearer " + localStorage.getItem("nexus_admin_token"),
+          },
+        })
+          .then((r) => r.json())
+          .then(() => {
+            document
+              .getElementById("admin-note-modal")
+              .classList.remove("active");
+            loadAdminNotes();
+          });
+      };
+      document.getElementById("save-note-btn").onclick = async () => {
+        const btn = document.getElementById("save-note-btn");
+        btn.disabled = true;
+        btn.textContent = "Сохранение...";
+        try {
+          const data = {
+            title: document.getElementById("note-title-input").value,
+            status: document.getElementById("note-status-select").value,
+            content: document.getElementById("note-content-input").value,
+          };
+          const method = currentNoteId ? "PATCH" : "POST";
+          const url = currentNoteId
+            ? `${ADMIN_API}/notes/${currentNoteId}`
+            : `${ADMIN_API}/notes`;
+          const res = await fetch(url, {
+            method,
+            headers: {
+              "Content-Type": "application/json",
+              Authorization:
+                "Bearer " + localStorage.getItem("nexus_admin_token"),
+            },
+            body: JSON.stringify(data),
+          });
+          if (!res.ok) throw new Error("Ошибка сохранения");
+          document
+            .getElementById("admin-note-modal")
+            .classList.remove("active");
+          loadAdminNotes();
+        } catch (e) {
+          alert(e.message);
+        } finally {
+          btn.disabled = false;
+          btn.textContent = "💾 Сохранить";
+        }
+      };
+
+      window.logoutAdmin = () => {
+        clearInterval(statsInterval);
+        clearInterval(networkInterval);
+        localStorage.removeItem("nexus_admin_token");
+        location.reload();
+      };
+
+      if (checkAuth()) {
+        loadUsers();
+        startAdminMonitoring();
+      }
+    </script>
+  </body>
+</html>
