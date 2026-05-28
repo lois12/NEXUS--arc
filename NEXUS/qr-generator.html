@@ -3,136 +3,61 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>NEXUS | QR GENERATOR</title>
-    <link rel="stylesheet" href="css/style.css?v=9" />
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;700;900&family=Rajdhani:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <title>QR GENERATOR - NEXUS</title>
+    <link rel="stylesheet" href="css/style.css">
 </head>
-<body class="theme-hello-kitty">
-    <!-- Header -->
-    <header class="main-header">
-        <div class="header-left">
-            <a href="index.html" class="logo-link">
-                <h1 class="nexus-title">NEXUS <span class="core-text">CORE</span></h1>
-            </a>
-        </div>
-        <div class="header-right">
-            <div class="theme-switcher">
-                <span class="theme-label">ТЕМА:</span>
-                <span class="theme-name" id="current-theme">HELLO KITTY</span>
-            </div>
-            <div class="user-profile">
-                <span class="user-rank">ADMIN</span>
-                <div class="avatar-circle">A</div>
-            </div>
-        </div>
-    </header>
-
-    <!-- Main Content -->
-    <div id="qr-generator-page" class="hidden">
-    <main class="page-container">
-        <section class="qr-section active">
-            <div class="section-header">
-                <h2 class="section-title">ГЕНЕРАТОР <span class="highlight">QR КОДОВ</span></h2>
-                <div class="deco-line"></div>
+<body class="page-body">
+    <div class="qr-container">
+        <h2 class="section-title glitch-text" data-text="QR GENERATOR">QR GENERATOR</h2>
+        
+        <div class="qr-panel glass-panel">
+            <div class="input-group">
+                <label for="qr-text">Введите ссылку или текст:</label>
+                <textarea id="qr-text" placeholder="https://nexus-core.com..." rows="3"></textarea>
             </div>
 
-            <div class="qr-workspace">
-                <!-- Left Panel: Controls -->
-                <div class="qr-controls-panel glass-panel">
-                    <div class="control-group">
-                        <label class="control-label">СОДЕРЖИМОЕ</label>
-                        <textarea id="qr-content" class="cyber-input" placeholder="Введите ссылку, текст или данные..." rows="4"></textarea>
-                    </div>
-
-                    <div class="control-row">
-                        <div class="control-group half">
-                            <label class="control-label">ЦВЕТ QR</label>
-                            <input type="color" id="qr-color" class="color-input" value="#ff6b9d">
-                        </div>
-                        <div class="control-group half">
-                            <label class="control-label">ЦВЕТ ФОНА</label>
-                            <input type="color" id="qr-bg-color" class="color-input" value="#ffffff">
-                        </div>
-                    </div>
-
-                    <div class="control-group">
-                        <label class="control-label">УРОВЕНЬ КОРРЕКЦИИ</label>
-                        <select id="qr-error-level" class="cyber-select">
-                            <option value="L">Low (7%)</option>
-                            <option value="M" selected>Medium (15%)</option>
-                            <option value="Q">Quartile (25%)</option>
-                            <option value="H">High (30%)</option>
-                        </select>
-                    </div>
-
-                    <div class="control-group">
-                        <label class="control-label">РАЗМЕР (px)</label>
-                        <input type="range" id="qr-size" class="cyber-range" min="100" max="800" value="400" step="50">
-                        <span id="size-value" class="range-value">400</span>
-                    </div>
-
-                    <div class="control-group">
-                        <label class="control-label">ОТСТУПЫ (Margin)</label>
-                        <input type="range" id="qr-margin" class="cyber-range" min="0" max="10" value="1" step="1">
-                        <span id="margin-value" class="range-value">1</span>
-                    </div>
-
-                    <button id="generate-btn" class="cyber-btn primary-btn">
-                        <span class="btn-text">ГЕНЕРИРОВАТЬ</span>
-                        <span class="btn-glitch"></span>
-                    </button>
+            <div class="settings-grid">
+                <div class="setting-item">
+                    <label>Цвет QR:</label>
+                    <input type="color" id="qr-color" value="#ff6b9d">
                 </div>
-
-                <!-- Right Panel: Preview -->
-                <div class="qr-preview-panel glass-panel">
-                    <div class="preview-header">
-                        <h3 class="preview-title">ПРЕДПРОСМОТР</h3>
-                        <div class="status-indicator" id="qr-status">ОЖИДАНИЕ</div>
-                    </div>
-                    
-                    <div class="qr-canvas-wrapper">
-                        <canvas id="qr-canvas"></canvas>
-                        <div id="qr-placeholder" class="qr-placeholder">
-                            <div class="placeholder-icon">⟁</div>
-                            <span>НАЖМИТЕ "ГЕНЕРИРОВАТЬ"</span>
-                        </div>
-                    </div>
-
-                    <div class="action-buttons">
-                        <button id="download-png" class="cyber-btn secondary-btn" disabled>
-                            <span class="btn-text">СКАЧАТЬ PNG</span>
-                        </button>
-                        <button id="download-svg" class="cyber-btn secondary-btn" disabled>
-                            <span class="btn-text">СКАЧАТЬ SVG</span>
-                        </button>
-                    </div>
+                <div class="setting-item">
+                    <label>Цвет фона:</label>
+                    <input type="color" id="qr-bg-color" value="#ffffff">
+                </div>
+                <div class="setting-item">
+                    <label>Размер (px):</label>
+                    <input type="number" id="qr-size" value="300" min="100" max="1000">
+                </div>
+                <div class="setting-item">
+                    <label>Отступы:</label>
+                    <input type="number" id="qr-margin" value="2" min="0" max="10">
                 </div>
             </div>
 
-            <!-- History Section -->
-            <div class="qr-history glass-panel">
-                <h3 class="history-title">ПОСЛЕДНИЕ ГЕНЕРАЦИИ</h3>
-                <div class="history-list" id="history-list">
-                    <div class="history-empty">История пуста</div>
+            <button id="generate-btn" class="cyber-btn">
+                <span>ГЕНЕРИРОВАТЬ</span>
+                <div class="glitch-layer"></div>
+            </button>
+
+            <div id="qr-result" class="qr-result hidden">
+                <canvas id="qr-canvas"></canvas>
+                <div class="qr-actions">
+                    <button id="download-png" class="action-btn">Скачать PNG</button>
+                    <button id="download-svg" class="action-btn">Скачать SVG</button>
                 </div>
             </div>
-        </section>
-    </main>
 
-    <!-- Footer -->
-    <footer class="main-footer">
-        <div class="footer-content">
-            <span>NEXUS CORE v2.0</span>
-            <span class="separator">|</span>
-            <span>QR MODULE ACTIVE</span>
+            <div id="status-message" class="status-message"></div>
         </div>
-    </footer>
+
+        <div class="history-panel glass-panel">
+            <h3>История генераций</h3>
+            <div id="history-list" class="history-list"></div>
+        </div>
     </div>
 
-    <!-- Scripts -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+    <script src="nexus-js/lib/qrcode.min.js"></script>
     <script src="nexus-js/utils.js"></script>
     <script src="nexus-js/main.js"></script>
     <script src="nexus-js/qr-generator.js"></script>

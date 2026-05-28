@@ -11,7 +11,7 @@
 @import 'tasks';
 @import 'knowledge';
 @import 'extras';
-@import '../sass/pages/decision';
+@import 'pages/decision';
 @import '../sass/pages/qr-generator';
 
 /* 🔹 ФОН */
@@ -101,3 +101,4 @@
     padding: 15px;
   }
 }
+@import 'pages/qr-generator';
