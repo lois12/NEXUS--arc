@@ -12,7 +12,7 @@
 @import 'knowledge';
 @import 'extras';
 @import 'pages/decision';
-@import '../sass/pages/qr-generator';
+@import 'pages/qr-generator';
 
 /* 🔹 ФОН */
 #bg-canvas {
@@ -101,4 +101,3 @@
     padding: 15px;
   }
 }
-@import 'pages/qr-generator';
