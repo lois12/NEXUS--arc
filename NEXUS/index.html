@@ -127,6 +127,7 @@
         <button class="nav-btn" data-page="mediaplan">📅 Медиаплан</button>
         <button class="nav-btn" data-page="logo">🖼 Хранилище</button>
         <button class="nav-btn" data-page="knowledge">📚 Знания</button>
+        <button class="nav-btn" data-page="decision">🎲 Решение</button>
       </nav>
     </header>
 
@@ -149,19 +150,19 @@
           <div class="card-icon">⚡</div>
           <h3 class="card-title">ЗАДАЧИ</h3>
           <p class="card-desc">Персональные процессы</p>
-          <img src="https://images.unsplash.com/photo-1550751827-4bd374c3f58b?w=600&h=400&fit=crop" alt="Tasks" class="card-bg-img" />
+          <img src="https://images.unsplash.com/photo-1535378437323-9555f3e7f5bb?w=600&h=400&fit=crop" alt="Tasks" class="card-bg-img" />
         </div>
         <div class="module-card" data-page="archive">
           <div class="card-icon">📦</div>
           <h3 class="card-title">АРХИВ</h3>
           <p class="card-desc">Завершённые операции</p>
-          <img src="https://images.unsplash.com/photo-1558494949-ef010cbdcc31?w=600&h=400&fit=crop" alt="Archive" class="card-bg-img" />
+          <img src="https://images.unsplash.com/photo-1550751827-4bd374c3f58b?w=600&h=400&fit=crop" alt="Archive" class="card-bg-img" />
         </div>
         <div class="module-card" data-page="mediaplan">
           <div class="card-icon">📅</div>
           <h3 class="card-title">МЕДИА ПЛАН</h3>
           <p class="card-desc">Общий календарь</p>
-          <img src="https://images.unsplash.com/photo-1518770660439-4636190af475?w=600&h=400&fit=crop" alt="Mediaplan" class="card-bg-img" />
+          <img src="https://images.unsplash.com/photo-1515628290377-bc816a3c4d7e?w=600&h=400&fit=crop" alt="Mediaplan" class="card-bg-img" />
         </div>
         <div class="module-card" data-page="logo">
           <div class="card-icon">📦</div>
@@ -174,6 +175,12 @@
           <h3 class="card-title">БАЗА ЗНАНИЙ</h3>
           <p class="card-desc">Инструкции и гайды</p>
           <img src="https://images.unsplash.com/photo-1518770660439-4636190af475?w=600&h=400&fit=crop" alt="Knowledge" class="card-bg-img" />
+        </div>
+        <div class="module-card" data-page="decision">
+          <div class="card-icon">🎲</div>
+          <h3 class="card-title">СЛУЧАЙНОЕ РЕШЕНИЕ</h3>
+          <p class="card-desc">Генератор выбора</p>
+          <img src="https://images.unsplash.com/photo-1518770660439-4636190af475?w=600&h=400&fit=crop" alt="Decision" class="card-bg-img" />
         </div>
       </div>
     </div>
@@ -397,6 +404,28 @@
           <button class="cyber-btn" id="rename-cancel" style="flex: 1">
             Отмена
           </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- 🔹 СЛУЧАЙНОЕ РЕШЕНИЕ -->
+    <div id="decision-page" class="hidden">
+      <div class="decision-container">
+        <div class="decision-box">
+          <h2 class="decision-title">🎲 ГЕНЕРАТОР РЕШЕНИЙ</h2>
+          <div class="decision-input-area">
+            <textarea 
+              id="decision-input" 
+              placeholder="Введите варианты через запятую (например: Да, Нет, Подумать)&#10;Минимум 2 варианта"></textarea>
+          </div>
+          <button id="generate-btn" class="generate-btn">ЗАПУСК ГЕНЕРАТОРА</button>
+          <div class="result-area">
+            <div id="result-display">ОЖИДАНИЕ ВВОДА...</div>
+          </div>
+          <div class="history-section">
+            <h3 class="history-title">📜 История решений:</h3>
+            <ul id="history-list"></ul>
+          </div>
         </div>
       </div>
     </div>
@@ -782,6 +811,7 @@
 
     <!-- 🔹 СКРИПТЫ -->
     <script type="module" src="nexus-js/main.js"></script>
+    <script type="module" src="nexus-js/decision.js"></script>
 
     <!-- 🔹 ЛОГИКА CYBERPUNK THEME ROTATOR -->
     <script>
