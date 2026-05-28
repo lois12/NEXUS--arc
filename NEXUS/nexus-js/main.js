@@ -94,8 +94,8 @@ function applyPageState(page) {
     .forEach((b) => b.classList.toggle("active", b.dataset.page === page));
 
   // Скрываем лендинг если не главная
-  document.getElementById("landing-page").style.display =
-    page === "home" ? "flex" : "none";
+  const landing = document.getElementById("landing-page");
+  if (landing) landing.style.display = page === "home" ? "flex" : "none";
   
   // Скрываем ВСЕ страницы кроме активной
   const allPages = ["home", "main", "archive", "mediaplan", "logo", "knowledge"];
@@ -105,7 +105,14 @@ function applyPageState(page) {
       if (p === "home") {
         el.style.display = p === page ? "flex" : "none";
       } else {
-        el.classList.toggle("hidden", p !== page);
+        // Важно: скрываем через display:none, а не только класс hidden
+        if (p === page) {
+          el.classList.remove("hidden");
+          el.style.display = "block";
+        } else {
+          el.classList.add("hidden");
+          el.style.display = "none";
+        }
       }
     }
   });
