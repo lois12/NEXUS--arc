@@ -1,10 +1,37 @@
 ```
+# Logs and temp files
+*.log
+server.log
+
+# Environment
+.env
+.env.local
+*.env.*
+
 # Dependencies
 node_modules/
+.venv/
+venv/
+__pycache__/
+.mypy_cache/
+.pytest_cache/
+.nyc_output/
+coverage/
 
-# Compiled and build artifacts
-*.css.map
+# Build artifacts
+dist/
+build/
+target/
+.out
 
 # Editors
 .vscode/
+.idea/
+*.swp
+*.swo
+*.tmp
+
+# System
+.DS_Store
+Thumbs.db
 ```

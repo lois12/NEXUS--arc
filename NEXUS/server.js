@@ -1233,7 +1233,7 @@ app.delete("/api/admin/notes/:id", adminMiddleware, async (req, res) => {
 // ============================================================================
 // 🔹 7. ДИАГНОСТИКА
 // ============================================================================
-app.get("/api/diagnostics/speed-test", authMiddleware, (req, res) => {
+app.get("/api/diagnostics/speed-test", adminMiddleware, (req, res) => {
   if (res.headersSent) return;
   res.set("Cache-Control", "no-store");
   res.send("x".repeat(1024 * 1024));
