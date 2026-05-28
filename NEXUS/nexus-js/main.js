@@ -98,7 +98,7 @@ function applyPageState(page) {
   if (landing) landing.style.display = page === "home" ? "flex" : "none";
   
   // Скрываем ВСЕ страницы кроме активной
-  const allPages = ["home", "main", "archive", "mediaplan", "logo", "knowledge"];
+  const allPages = ["home", "main", "archive", "mediaplan", "logo", "knowledge", "decision"];
   allPages.forEach((p) => {
     const el = document.getElementById(`${p}-page`);
     if (el) {
@@ -137,6 +137,9 @@ function loadPageData(page) {
       break;
     case "knowledge":
       loadKnowledge();
+      break;
+    case "decision":
+      // Decision page doesn't need data loading
       break;
   }
 }
