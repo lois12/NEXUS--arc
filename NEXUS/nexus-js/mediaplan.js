@@ -288,7 +288,7 @@ export function renderCalendar() {
 
       ["Пн", "Вт", "Ср", "Чт", "Пт", "Сб", "Вс"].forEach((d) => {
         const el = document.createElement("div");
-        el.className = "calendar-day-header";
+        el.className = "cal-day-name";
         el.textContent = d;
         calendarGrid.appendChild(el);
       });
@@ -302,8 +302,14 @@ export function renderCalendar() {
       for (let d = 1; d <= dim; d++) {
         const ds = `${calYear}-${String(calMonth + 1).padStart(2, "0")}-${String(d).padStart(2, "0")}`;
         const el = document.createElement("div");
-        el.className = "calendar-day";
-        el.textContent = d;
+        el.className = "cal-day";
+        
+        // Создаем элемент с номером дня
+        const dayNum = document.createElement("span");
+        dayNum.className = "day-num";
+        dayNum.textContent = d;
+        el.appendChild(dayNum);
+        
         el.dataset.date = ds;
         el.style.animationDelay = `${d * 0.012}s`;
         if (isCurrentMonth && d === t.getDate()) el.classList.add("today");
