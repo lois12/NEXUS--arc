@@ -84,7 +84,7 @@
   z-index: 1;
   
   .nexus-title {
-    font-size: 2.2rem;
+    font-size: 2.8rem;
     font-weight: 800;
     color: #fff;
     text-transform: uppercase;
@@ -245,4 +245,9 @@
   color: var(--neon-cyan);
   opacity: 1;
   transform: translateY(-1px);
+}
+/* 🔹 КУРСОР ПОСЛЕ НАЗВАНИЯ */
+@keyframes blink-cursor {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0; }
 }
