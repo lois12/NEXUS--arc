@@ -235,9 +235,9 @@
       <main>
         <div class="calendar-container">
           <div class="calendar-header">
-            <button id="cal-prev">◀</button>
+            <button id="cal-prev" class="cal-nav-btn">◀</button>
             <h2 id="cal-month-year"></h2>
-            <button id="cal-next">▶</button>
+            <button id="cal-next" class="cal-nav-btn">▶</button>
             <button
               id="open-logs-btn"
               class="cyber-btn"
@@ -245,6 +245,9 @@
             >
               📜 ЖУРНАЛ
             </button>
+            <span class="events-counter" style="margin-left: 15px; color: var(--text-secondary); font-size: 0.9rem;">
+              Всего постов: <b id="events-total-count" style="color: var(--accent-color);">0</b>
+            </span>
           </div>
           <div id="calendar-grid" class="calendar-grid"></div>
         </div>
