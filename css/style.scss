@@ -1,0 +1,222 @@
+/* ============================================================================
+   NEXUS CORE | style.scss (v10 - MODULAR SASS)
+   ============================================================================ */
+
+// Import modules
+@import "variables";
+@import "mixins";
+@import "base";
+@import "layout";
+@import "components";
+@import "tasks";
+@import "knowledge";
+@import "extras";
+@import "pages/decision";
+@import "pages/qr-generator";
+@import "documents";
+@import "calendar"; 
+@import "footer";
+
+/* 🔹 ФОН */
+#bg-canvas {
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+}
+
+.logo-item:empty {
+  display: none;
+}
+
+/* ============================================================================
+   RESPONSIVE
+   ============================================================================ */
+
+@media (max-width: 1024px) {
+  #main-page,
+  #archive-page,
+  #mediaplan-page,
+  #logo-page,
+  #knowledge-page {
+    padding: 0 16px !important;
+    max-width: 100% !important;
+  }
+}
+
+@media (max-width: 768px) {
+  #main-page,
+  #archive-page,
+ // #mediaplan-page,
+  #logo-page,
+  #knowledge-page {
+    padding: 0 12px !important;
+  }
+
+  #taskList,
+  #archiveList {
+    gap: 12px;
+  }
+
+  .dashboard,
+  .module-grid,
+  //.calendar-grid,
+  .knowledge-list {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .task-header {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .controls {
+    width: 100%;
+    justify-content: flex-end;
+  }
+
+  .add-task {
+    flex-direction: column;
+  }
+
+  .stage-fields {
+    flex-direction: column;
+  }
+
+  .stage-date-input {
+    width: 100%;
+  }
+
+  .sidebar-panel {
+    position: static;
+    margin-top: 10px;
+  }
+
+  .profile-fields {
+    grid-template-columns: 1fr;
+  }
+
+  .nexus-title {
+    font-size: 1.6rem !important;
+    letter-spacing: 3px !important;
+  }
+
+  .user-nickname {
+    display: none;
+  }
+}
+
+@media (max-width: 480px) {
+  .dashboard,
+  .module-grid,
+  //.calendar-grid,
+  .knowledge-list {
+    grid-template-columns: 1fr;
+  }
+
+  .modal-content {
+    width: 95%;
+    padding: 15px;
+  }
+}
+
+/* ═══════════════════════════════════════════════════════
+   MODAL SCAN-LINE ANIMATION — ONLY NEW STYLES
+   НЕ ПЕРЕПИСЫВАЕТ базовые .nexus-modal и .modal-content
+   ═══════════════════════════════════════════════════════ */
+
+@keyframes modal-scan {
+  0% {
+    transform: translateY(-100%);
+    opacity: 0;
+  }
+  10% {
+    opacity: 1;
+  }
+  90% {
+    opacity: 1;
+  }
+  100% {
+    transform: translateY(100%);
+    opacity: 0;
+  }
+}
+
+@keyframes modal-glow {
+  0%,
+  100% {
+    box-shadow: 0 0 30px rgba(0, 243, 255, 0.2);
+    border-color: rgba(0, 243, 255, 0.3);
+  }
+  50% {
+    box-shadow:
+      0 0 50px rgba(0, 243, 255, 0.5),
+      0 0 80px rgba(189, 0, 255, 0.3);
+    border-color: var(--neon-cyan, #00f3ff);
+  }
+}
+
+.modal-scan-line {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    var(--neon-cyan, #00f3ff),
+    transparent
+  );
+  box-shadow: 0 0 15px var(--neon-cyan, #00f3ff);
+  border-radius: 2px;
+  pointer-events: none;
+  z-index: 50;
+  opacity: 0;
+  transform: translateY(-100%);
+}
+
+.nexus-modal.animating .modal-scan-line {
+  opacity: 1;
+  animation: modal-scan 0.6s ease-out forwards;
+}
+
+.nexus-modal.animating .modal-content {
+  animation: modal-glow 0.6s ease-out forwards;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .modal-scan-line,
+  .nexus-modal.animating .modal-content {
+    animation: none !important;
+  }
+}
+
+.auth-overlay.locked #auth-form {
+  opacity: 0.5;
+  pointer-events: none;
+  filter: grayscale(0.8);
+}
+
+#auth-error {
+  color: #ff4444;
+  background: rgba(255, 0, 0, 0.1);
+  border: 1px solid rgba(255, 0, 0, 0.3);
+  padding: 8px;
+  border-radius: 6px;
+  margin-bottom: 10px;
+  font-family: var(--font-mono);
+  font-size: 0.9rem;
+  text-align: center;
+  animation: pulse-red 2s infinite;
+}
+
+@keyframes pulse-red {
+  0%,
+  100% {
+    box-shadow: 0 0 5px rgba(255, 0, 0, 0.2);
+  }
+  50% {
+    box-shadow: 0 0 15px rgba(255, 0, 0, 0.5);
+  }
+}

@@ -1,0 +1,411 @@
+/* ============================================================================
+   NEXUS CALENDAR MODULE
+   ============================================================================ */
+
+/* 🔹 КОНТЕЙНЕР КАЛЕНДАРЯ */
+.calendar-container {
+  background: var(--bg-panel);
+  border: 1px solid var(--border-glow);
+  border-radius: 12px;
+  padding: 20px;
+  margin-bottom: 20px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+  max-width: 100%;
+  width: 100%;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+/* 🔹 ШАПКА КАЛЕНДАРЯ */
+.calendar-header {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 15px;
+  margin-bottom: 20px;
+  padding-bottom: 15px;
+  border-bottom: 1px solid var(--border-glow);
+
+  h2 {
+    font-family: var(--font-heading);
+    color: var(--neon-cyan);
+    font-size: 1.4rem;
+    letter-spacing: 2px;
+  }
+
+  button#cal-prev,
+  button#cal-next {
+    background: rgba(0, 240, 255, 0.1);
+    border: 1px solid var(--border-glow);
+    color: var(--neon-cyan);
+    padding: 8px 16px;
+    border-radius: 6px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: 0.2s;
+
+    &:hover {
+      background: rgba(0, 240, 255, 0.2);
+      box-shadow: 0 0 10px rgba(0, 240, 255, 0.3);
+    }
+  }
+
+  /* 🔥 ПОДСВЕТКА ПРИ СВАЙПЕ */
+  &.swipe-highlight {
+    background: rgba(0, 240, 255, 0.05); /* 🔥 Лёгкий градиент */
+    border-radius: 8px;
+    transition: background 0.3s ease;
+  }
+}
+
+/* 🔹 СЕТКА КАЛЕНДАРЯ */
+.calendar-grid {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr); // 7 дней недели
+  gap: 10px;
+
+  .cal-day-name {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    color: var(--text-muted);
+    text-align: center;
+    padding: 6px 0;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    border-bottom: 1px solid var(--border-glow);
+  }
+
+  .cal-day {
+    aspect-ratio: 1; // 🔥 Квадратные ячейки
+    min-height: 60px; // 🔥 Высота ячейки (увеличенная)
+    background: linear-gradient(
+      145deg,
+      rgba(11, 16, 26, 0.95),
+      rgba(8, 12, 20, 0.85)
+    );
+    border: 1px solid rgba(136, 146, 176, 0.2);
+    border-radius: 8px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    position: relative;
+    overflow: hidden;
+
+    /* 3D объемный эффект */
+    box-shadow:
+      0 6px 12px rgba(0, 0, 0, 0.4),
+      inset 0 1px 0 rgba(255, 255, 255, 0.1),
+      inset 0 -2px 8px rgba(0, 0, 0, 0.3);
+
+    .day-num {
+      font-family: var(--font-heading);
+      font-size: 18px; // 🔥 Уменьшенный размер
+      color: var(--text-main);
+      font-weight: 700;
+      letter-spacing: 1.5px;
+    }
+
+    &:hover {
+      border-color: var(--neon-cyan);
+      background: linear-gradient(
+        145deg,
+        rgba(0, 240, 255, 0.12),
+        rgba(0, 180, 200, 0.08)
+      );
+      transform: scale(1.05);
+      box-shadow:
+        0 8px 20px rgba(0, 240, 255, 0.3),
+        inset 0 1px 0 rgba(255, 255, 255, 0.15),
+        inset 0 -2px 8px rgba(0, 0, 0, 0.2);
+    }
+
+    &.today {
+      border-color: var(--neon-green);
+      background: linear-gradient(
+        145deg,
+        rgba(0, 255, 157, 0.12),
+        rgba(0, 200, 130, 0.08)
+      );
+      box-shadow:
+        0 0 30px rgba(0, 255, 157, 0.4),
+        inset 0 1px 0 rgba(255, 255, 255, 0.2),
+        inset 0 -2px 8px rgba(0, 0, 0, 0.2);
+
+      .day-num {
+        color: var(--neon-green);
+        text-shadow: 0 0 12px rgba(0, 255, 157, 0.7);
+      }
+    }
+
+    &.has-event {
+      border-color: var(--neon-cyan);
+      box-shadow:
+        0 0 25px var(--neon-cyan),
+        inset 0 1px 0 rgba(255, 255, 255, 0.15),
+        inset 0 -2px 8px rgba(0, 0, 0, 0.2);
+
+      &::after {
+        content: "";
+        position: absolute;
+        bottom: 6px;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 8px;
+        height: 8px;
+        background: var(--neon-cyan);
+        border-radius: 50%;
+        box-shadow:
+          0 0 15px var(--neon-cyan),
+          0 0 30px var(--neon-cyan);
+        animation: pulse-event 2s ease-in-out infinite;
+      }
+
+      /* Киберпанк-тултип с названием события */
+      &::before {
+        content: attr(data-event-title);
+        position: absolute;
+        bottom: 120%;
+        left: 50%;
+        transform: translateX(-50%) translateY(10px);
+        background: rgba(5, 8, 15, 0.95);
+        border: 1px solid var(--neon-cyan);
+        border-radius: 6px;
+        padding: 6px 10px;
+        font-family: var(--font-mono);
+        font-size: 11px;
+        color: var(--neon-cyan);
+        white-space: nowrap;
+        opacity: 0;
+        visibility: hidden;
+        transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        box-shadow:
+          0 0 20px rgba(0, 240, 255, 0.3),
+          inset 0 0 10px rgba(0, 240, 255, 0.1);
+        z-index: 100;
+        letter-spacing: 1px;
+
+        &::after {
+          content: "";
+          position: absolute;
+          top: 0;
+          left: 0;
+          right: 0;
+          bottom: 0;
+          background: linear-gradient(
+            90deg,
+            transparent,
+            rgba(0, 240, 255, 0.1),
+            transparent
+          );
+          animation: glitch-scan 2s linear infinite;
+          pointer-events: none;
+        }
+      }
+
+      &:hover::before {
+        opacity: 1;
+        visibility: visible;
+        transform: translateX(-50%) translateY(0);
+      }
+    }
+  }
+}
+
+/* 🔹 АНИМАЦИИ */
+@keyframes glitch-scan {
+  0% {
+    transform: translateY(-100%);
+  }
+  100% {
+    transform: translateY(100%);
+  }
+}
+
+@keyframes pulse-event {
+  0%,
+  100% {
+    opacity: 1;
+    transform: translateX(-50%) scale(1);
+  }
+  50% {
+    opacity: 0.8;
+    transform: translateX(-50%) scale(1.15);
+  }
+}
+
+/* 🔹 БЛИЖАЙШИЙ ПОСТ */
+.next-post-card {
+  background: var(--bg-panel);
+  border: 1px solid var(--border-glow);
+  border-radius: 12px;
+  padding: 20px;
+  margin-top: 20px;
+  max-width: 100%;
+  width: 100%;
+
+  .sidebar-title {
+    margin-bottom: 12px;
+  }
+
+  #next-post-content {
+    font-family: var(--font-body);
+    color: var(--text-muted);
+    line-height: 1.6;
+  }
+}
+
+// ============================================================================
+// 🔹 RESPONSIVE CALENDAR & POST (Mobile → Tablet → Desktop)
+// ============================================================================
+
+// 📱 MOBILE: Календарь и пост — один под другим, календарь компактный (уменьшенные размеры)
+@media (max-width: 768px) {
+  .calendar-container {
+    padding: 12px;
+    margin: 0 8px;
+  }
+  .calendar-header {
+    flex-wrap: wrap;
+    gap: 8px;
+    padding-bottom: 10px;
+  }
+  .calendar-header h2 {
+    font-size: 1.1rem;
+  }
+  .calendar-header button#cal-prev,
+  .calendar-header button#cal-next {
+    padding: 6px 10px;
+    font-size: 14px;
+  }
+
+  .calendar-grid {
+    gap: 6px;
+  }
+
+  .cal-day-name {
+    font-size: 9px;
+    padding: 4px 0;
+  }
+
+  .cal-day {
+    aspect-ratio: 1; // 🔥 Сохраняем квадрат
+    min-height: 30px !important; // 🔥 Уменьшена высота
+    padding: 2px;
+    border-radius: 6px;
+
+    .day-num {
+      font-size: 14px; // 🔥 Уменьшен шрифт
+    }
+
+    &.has-event {
+      &::after {
+        // 🔥 УБИРАЕМ ТОЧКУ НА МОБИЛЬНЫХ
+        display: none;
+      }
+
+      // 🔥 УСИЛИВАЕМ СВЕЧЕНИЕ ВМЕСТО ТОЧКИ
+      box-shadow:
+        0 0 30px var(--neon-cyan),
+        // 🔥 Усилено с 25 до 30
+        inset 0 1px 0 rgba(255, 255, 255, 0.15),
+        inset 0 -2px 8px rgba(0, 0, 0, 0.2);
+    }
+  }
+
+  .cal-day.has-event::before {
+    display: none;
+  } // 🔥 Скрываем тултип на мобильных
+
+  .next-post-card {
+    padding: 14px;
+    margin-top: 12px;
+    width: 100%;
+  }
+}
+
+// 💻 DESKTOP: Календарь и пост — рядом по горизонтали
+@media (min-width: 769px) {
+  .calendar-and-posts {
+    // 🔥 ИСПРАВЛЕНО: теперь обёртка из HTML
+    display: flex;
+    gap: 20px;
+    width: 100%;
+  }
+
+  .calendar-container {
+    flex: 1;
+    max-width: 60%; // 🔥 Занимает 60% ширины
+  }
+
+  .next-post-card {
+    flex: 1;
+    max-width: 40%; // 🔥 Занимает 40% ширины
+    margin-top: 0; // 🔥 Убираем верхний отступ
+  }
+
+  .cal-day {
+    min-height: 60px !important; // 🔥 Возвращаем размер на ПК
+    padding: 4px;
+
+    .day-num {
+      font-size: 18px; // 🔥 Возвращаем размер шрифта
+    }
+
+    &.has-event {
+      &::after {
+        // 🔥 ТОЧКА ВЕРНУЛАСЬ НА ПК
+        display: block;
+      }
+
+      box-shadow: // 🔥 Обычное свечение вернулось
+        0 0 25px var(--neon-cyan),
+        inset 0 1px 0 rgba(255, 255, 255, 0.15),
+        inset 0 -2px 8px rgba(0, 0, 0, 0.2);
+    }
+  }
+}
+
+// 🖥 LARGE DESKTOP
+@media (min-width: 1200px) {
+  .calendar-container {
+    max-width: 65%;
+  }
+  .next-post-card {
+    max-width: 35%;
+  }
+
+  .cal-day {
+    min-height: 60px !important;
+    padding: 6px;
+  }
+  .cal-day .day-num {
+    font-size: 20px;
+  }
+}
+
+// 🖥 ULTRA WIDE SCREENS (≥ 1500px)
+@media (min-width: 1500px) {
+  .calendar-container {
+    max-width: 1150px;
+    padding: 32px;
+  }
+  .calendar-header h2 {
+    font-size: 1.6rem;
+  }
+
+  .cal-day {
+    min-height: 80px !important;
+    padding: 10px;
+    border-radius: 10px;
+  }
+  .cal-day .day-num {
+    font-size: 24px;
+  }
+
+  .next-post-card {
+    padding: 24px;
+  }
+}

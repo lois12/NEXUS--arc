@@ -1,0 +1,272 @@
+/* ============================================================================
+   NEXUS FOOTER
+   ============================================================================ */
+
+.nexus-footer {
+  position: fixed;
+  bottom: -60px; /* 🔥 Скрыто по умолчанию */
+  left: 0;
+  width: 100%;
+  background: rgba(5, 8, 15, 0.7); /* 🔥 70% прозрачности */
+  border-top: 1px solid var(--border-glow);
+  padding: 10px 20px;
+  z-index: 890; /* 🔥 Ниже модалок, FAB и других элементов */
+  box-sizing: border-box;
+  transition: bottom 0.4s ease;
+
+  .footer-content {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+
+  .footer-links-btn {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 6px;
+    cursor: pointer;
+    background: none;
+    border: none;
+    color: inherit;
+    padding: 0;
+  }
+
+  .nexus-3d-shape {
+    position: relative;
+    width: 40px;
+    height: 40px;
+    transform-style: preserve-3d;
+    animation: float3d 6s ease-in-out infinite;
+
+    span {
+      position: absolute;
+      width: 26px;
+      height: 26px;
+      background: rgba(0, 240, 255, 0.1);
+      border: 1px solid var(--neon-cyan);
+      border-radius: 6px;
+      box-shadow: 0 0 10px rgba(0, 240, 255, 0.3);
+
+      &:nth-child(1) {
+        transform: rotateY(0deg) translateZ(14px);
+        top: 7px;
+        left: 7px;
+      }
+      &:nth-child(2) {
+        transform: rotateY(60deg) translateZ(14px);
+        top: 7px;
+        left: 7px;
+      }
+      &:nth-child(3) {
+        transform: rotateY(120deg) translateZ(14px);
+        top: 7px;
+        left: 7px;
+      }
+    }
+  }
+
+  .nexus-label {
+    font-family: var(--font-mono);
+    font-size: 9px;
+    color: var(--neon-cyan);
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+  }
+
+  .footer-dev {
+    font-family: var(--font-mono);
+    font-size: 11px; /* 🔥 Увеличен для ПК */
+    color: var(--text-muted);
+    position: relative;
+    display: inline-block;
+    padding: 4px 8px;
+    border: 1px solid transparent;
+    border-radius: 4px;
+    transition: all 0.3s ease;
+
+    &::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: linear-gradient(
+        135deg,
+        rgba(0, 240, 255, 0.1),
+        rgba(189, 0, 255, 0.1)
+      );
+      border-radius: 4px;
+      z-index: -1;
+      opacity: 0;
+      transition: opacity 0.3s ease;
+    }
+
+    &:hover::before {
+      opacity: 1;
+    }
+
+    &:hover {
+      border-color: var(--neon-cyan);
+      color: var(--neon-cyan);
+      text-shadow: 0 0 8px var(--neon-cyan);
+      box-shadow: 0 0 15px rgba(0, 240, 255, 0.3);
+    }
+  }
+
+  .dev-link {
+    color: inherit;
+    text-decoration: none;
+    font-weight: 700;
+    position: relative;
+    cursor: pointer;
+
+    &::after {
+      content: "";
+      position: absolute;
+      bottom: -2px;
+      left: 0;
+      width: 0;
+      height: 1px;
+      background: var(--neon-cyan);
+      transition: width 0.3s ease;
+    }
+
+    &:hover::after {
+      width: 100%;
+    }
+
+    &:hover {
+      color: var(--neon-cyan);
+    }
+  }
+
+  &:hover .nexus-3d-shape {
+    animation-play-state: paused;
+    transform: scale(1.1);
+  }
+}
+
+@keyframes float3d {
+  0%,
+  100% {
+    transform: translateY(0) rotateX(0deg) rotateY(0deg);
+  }
+  50% {
+    transform: translateY(-6px) rotateX(10deg) rotateY(180deg);
+  }
+}
+
+/* 🔹 Отступ перед футером */
+body::after {
+  content: "";
+  display: block;
+  height: 20px; /* 🔥 Отступ 20px */
+}
+
+// ============================================================================
+// 🔹 RESPONSIVE FOOTER
+// ============================================================================
+
+@media (max-width: 768px) {
+  .nexus-footer {
+    padding: 8px 15px;
+  }
+
+  .footer-content {
+    gap: 10px;
+  }
+
+  .nexus-3d-shape {
+    width: 36px;
+    height: 36px;
+    span {
+      width: 24px;
+      height: 24px;
+      &:nth-child(1) {
+        transform: rotateY(0deg) translateZ(12px);
+        top: 6px;
+        left: 6px;
+      }
+      &:nth-child(2) {
+        transform: rotateY(60deg) translateZ(12px);
+        top: 6px;
+        left: 6px;
+      }
+      &:nth-child(3) {
+        transform: rotateY(120deg) translateZ(12px);
+        top: 6px;
+        left: 6px;
+      }
+    }
+  }
+
+  .nexus-label {
+    font-size: 8px;
+    letter-spacing: 1px;
+  }
+
+  .footer-dev {
+    font-size: 10px; /* 🔥 Уменьшен для планшета */
+    padding: 3px 6px;
+  }
+}
+
+@media (max-width: 480px) {
+  .nexus-footer {
+    padding: 6px 10px;
+  }
+
+  .footer-content {
+    flex-direction: column;
+    gap: 6px;
+    align-items: center; /* 🔥 Центрировано для мобильных */
+  }
+
+  .footer-links {
+    width: 100%;
+    justify-content: center;
+  }
+
+  .footer-dev {
+    align-self: center;
+    font-size: 9px;
+  } /* 🔥 Уменьшен для мобильных */
+
+  .nexus-3d-shape {
+    width: 32px;
+    height: 32px;
+    span {
+      width: 22px;
+      height: 22px;
+      &:nth-child(1) {
+        transform: rotateY(0deg) translateZ(10px);
+        top: 5px;
+        left: 5px;
+      }
+      &:nth-child(2) {
+        transform: rotateY(60deg) translateZ(10px);
+        top: 5px;
+        left: 5px;
+      }
+      &:nth-child(3) {
+        transform: rotateY(120deg) translateZ(10px);
+        top: 5px;
+        left: 5px;
+      }
+    }
+  }
+
+  .nexus-label {
+    font-size: 7px;
+  }
+}
+
+@media (min-width: 1200px) {
+  .footer-dev {
+    font-size: 13px;
+  } /* 🔥 Увеличен для больших экранов */
+}

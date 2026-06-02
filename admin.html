@@ -1,0 +1,634 @@
+<!doctype html>
+<html lang="ru">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>NEXUS | ADMIN PANEL</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&family=Orbitron:wght@400;700;900&family=Rajdhani:wght@300;400;500;600;700&subset=cyrillic,cyrillic-ext&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="nexus-admin-css/admin-main.css" />
+    <link rel="stylesheet" href="nexus-admin-css/cyber-flow.css" />
+  </head>
+  <body>
+    <div id="offline-msg" class="offline-overlay">⚠️ СЕРВЕР НЕ ОТВЕЧАЕТ</div>
+
+    <div id="admin-auth">
+      <div class="admin-login-card">
+        <h2>🔐 ADMIN ACCESS</h2>
+        <div id="admin-error"></div>
+        <form id="admin-login-form" class="admin-form">
+          <input
+            type="text"
+            id="admin-user"
+            placeholder="Login"
+            required
+            autocomplete="off"
+          />
+          <input
+            type="password"
+            id="admin-pass"
+            placeholder="Password"
+            required
+          />
+          <button type="submit">ВОЙТИ В СИСТЕМУ</button>
+        </form>
+      </div>
+    </div>
+
+    <div id="admin-dashboard" style="display: none">
+      <header class="admin-top">
+        <h1 class="admin-title">⚡ NEXUS ADMIN</h1>
+        <button class="logout-btn" onclick="logoutAdmin()">ВЫЙТИ</button>
+      </header>
+
+      <div class="stats-bar">
+        <div class="stat-item">
+          <span class="stat-label">СТАТУС</span
+          ><span
+            id="stat-status"
+            class="stat-value"
+            style="color: var(--neon-green)"
+            >● ONLINE</span
+          >
+        </div>
+        <div class="stat-item">
+          <span class="stat-label">ПИНГ</span
+          ><span id="stat-ping" class="stat-value">0 ms</span>
+        </div>
+        <div class="stat-item">
+          <span class="stat-label">СКОРОСТЬ</span
+          ><span id="stat-speed" class="stat-value">0 Мбит/с</span>
+        </div>
+        <div class="stat-item">
+          <span class="stat-label">ФАЙЛОВ</span
+          ><span id="stat-files" class="stat-value">0</span>
+        </div>
+        <div class="stat-item">
+          <span class="stat-label">ЮЗЕРОВ</span
+          ><span id="stat-users" class="stat-value">0</span>
+        </div>
+      </div>
+
+      <button class="cyber-trigger-btn" onclick="toggleSystemMonitor()">
+        🛰️ SYSTEM MONITOR
+      </button>
+
+      <div class="logs-section">
+        <h3
+          style="margin: 0 0 8px; color: var(--text-muted); font-size: 0.9rem"
+        >
+          📜 ЛОГИ УДАЛЕНИЯ ФАЙЛОВ
+        </h3>
+        <div style="max-height: 150px; overflow-y: auto">
+          <table class="logs-table">
+            <thead>
+              <tr>
+                <th>Время</th>
+                <th>Пользователь</th>
+                <th>Действие</th>
+                <th>Цель</th>
+              </tr>
+            </thead>
+            <tbody id="logs-body">
+              <tr>
+                <td
+                  colspan="4"
+                  style="text-align: center; color: var(--text-muted)"
+                >
+                  Загрузка...
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <div class="admin-grid">
+        <section class="admin-section users-section">
+          <div class="section-header">
+            <h2 class="section-title">👥 Пользователи</h2>
+            <span
+              id="users-count"
+              style="
+                font-size: 0.9rem;
+                color: var(--text-muted);
+                font-family: var(--font-mono);
+              "
+              >0</span
+            >
+          </div>
+          <div id="user-grid" class="user-grid"></div>
+        </section>
+        <section class="admin-section notes-section">
+          <div class="section-header">
+            <h2 class="section-title">📝 Заметки</h2>
+            <button
+              id="add-admin-note-btn"
+              class="cyber-btn"
+              style="padding: 4px 8px; font-size: 0.8rem"
+            >
+              + Новая
+            </button>
+          </div>
+          <div id="admin-notes-grid" class="notes-grid"></div>
+        </section>
+      </div>
+    </div>
+
+    <div id="user-modal" class="nexus-modal">
+      <div class="modal-content">
+        <button
+          onclick="
+            document.getElementById('user-modal').classList.remove('active')
+          "
+          class="modal-close"
+        >
+          ✕
+        </button>
+        <div id="viewing-indicator" class="viewing-badge">Загрузка...</div>
+        <h3 id="modal-username"></h3>
+        <div id="modal-details"></div>
+        <div class="role-editor">
+          <label>🛡️ НАЗНАЧИТЬ РОЛЬ:</label>
+          <select
+            id="role-select"
+            class="role-select"
+            onclick="event.stopPropagation()"
+          >
+            <option value="user">👤 Пользователь</option>
+            <option value="editor">✏️ Редактор</option>
+            <option value="moderator">⚖️ Модератор</option>
+            <option value="manager">📊 Менеджер</option>
+            <option value="admin">👑 Администратор</option>
+          </select>
+          <button id="save-role-btn">💾 Сохранить роль</button>
+        </div>
+      </div>
+    </div>
+
+    <div id="admin-note-modal" class="nexus-modal">
+      <div class="modal-content note-modal-content">
+        <button
+          onclick="
+            document
+              .getElementById('admin-note-modal')
+              .classList.remove('active')
+          "
+          class="modal-close"
+        >
+          ✕
+        </button>
+        <h3 id="note-modal-title">Заметка</h3>
+        <input type="text" id="note-title-input" placeholder="Заголовок" />
+        <select id="note-status-select">
+          <option value="Запланировано">📅 Запланировано</option>
+          <option value="Реализовано">✅ Реализовано</option>
+        </select>
+        <textarea
+          id="note-content-input"
+          placeholder="Текст заметки (шифруется)..."
+        ></textarea>
+        <div class="note-actions">
+          <button id="delete-note-btn">🗑️ Удалить</button>
+          <button id="save-note-btn">💾 Сохранить</button>
+        </div>
+      </div>
+    </div>
+
+    <div id="system-monitor-overlay" class="system-monitor-overlay">
+      <div class="monitor-header">
+        <h3>🛰️ NEXUS SYSTEM MONITOR</h3>
+        <button id="close-monitor" class="monitor-close-btn">✕ ЗАКРЫТЬ</button>
+      </div>
+      <div class="monitor-content">
+        <section class="monitor-section full-width">
+          <h4>🔗 Зависимости системы</h4>
+          <div class="dependency-graph" id="dependency-graph"></div>
+        </section>
+        <section class="monitor-section">
+          <h4>🖥️ System Resources</h4>
+          <div class="resource-bars">
+            <div class="resource-item">
+              <span>CPU</span>
+              <div class="progress-bar">
+                <div class="progress-fill" id="cpu-progress" style="width: 0%">
+                  0%
+                </div>
+              </div>
+            </div>
+            <div class="resource-item">
+              <span>RAM</span>
+              <div class="progress-bar">
+                <div class="progress-fill" id="ram-progress" style="width: 0%">
+                  0%
+                </div>
+              </div>
+            </div>
+            <div class="resource-item">
+              <span>DISK</span>
+              <div class="progress-bar">
+                <div class="progress-fill" id="disk-progress" style="width: 0%">
+                  0%
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+        <section class="monitor-section">
+          <h4>🩺 API Health Check</h4>
+          <div class="api-controls">
+            <button id="test-all-api" class="cyber-btn primary">
+              ▶ Test All Endpoints
+            </button>
+            <span id="api-test-status" class="test-status"></span>
+          </div>
+          <div class="api-list" id="api-list"></div>
+        </section>
+        <section class="monitor-section">
+          <h4>Live Activity Log</h4>
+          <div class="log-viewer" id="log-viewer">
+            <div class="log-empty">
+              Нет активности. Нажмите "Test All" для запуска.
+            </div>
+          </div>
+          <button id="clear-log" class="cyber-btn small">
+            🗑️ Очистить лог
+          </button>
+        </section>
+      </div>
+    </div>
+
+    <script src="nexus-admin-js/cyber-flow.js"></script>
+    <script>
+      const ADMIN_API = "http://192.168.31.5:5000/api/admin";
+      let currentUserId = null,
+        isOnline = true,
+        statsInterval,
+        networkInterval,
+        adminNotesCache = [],
+        currentNoteId = null;
+
+      if ("serviceWorker" in navigator)
+        navigator.serviceWorker.register("/sw.js").catch(console.error);
+
+      const checkAuth = () => {
+        if (localStorage.getItem("nexus_admin_token")) {
+          document.getElementById("admin-auth").classList.add("hidden");
+          document.getElementById("admin-dashboard").style.display = "block";
+          loadUsers();
+          loadAdminNotes();
+          startAdminMonitoring();
+          return true;
+        }
+        return false;
+      };
+
+      document.getElementById("admin-login-form").onsubmit = async (e) => {
+        e.preventDefault();
+        const btn = e.target.querySelector("button");
+        const err = document.getElementById("admin-error");
+        btn.disabled = true;
+        btn.textContent = "ПРОВЕРКА...";
+        err.textContent = "";
+        try {
+          const res = await fetch(`${ADMIN_API}/login`, {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({
+              username: document.getElementById("admin-user").value,
+              password: document.getElementById("admin-pass").value,
+            }),
+          });
+          const data = await res.json();
+          if (!res.ok) throw new Error(data.error);
+          localStorage.setItem("nexus_admin_token", data.token);
+          checkAuth();
+        } catch (err) {
+          err.textContent = err.message;
+        } finally {
+          btn.disabled = false;
+          btn.textContent = "ВОЙТИ В СИСТЕМУ";
+        }
+      };
+
+      function setOffline() {
+        if (isOnline) {
+          isOnline = false;
+          document.getElementById("offline-msg").style.display = "block";
+          document.getElementById("stat-status").textContent = "● OFFLINE";
+          document.getElementById("stat-status").style.color =
+            "var(--neon-red)";
+          document.getElementById("stat-ping").textContent = "---";
+          document.getElementById("stat-speed").textContent = "---";
+        }
+      }
+      function setOnline() {
+        isOnline = true;
+        document.getElementById("offline-msg").style.display = "none";
+        document.getElementById("stat-status").textContent = "● ONLINE";
+        document.getElementById("stat-status").style.color =
+          "var(--neon-green)";
+      }
+
+      async function updateServerStats() {
+        try {
+          const res = await fetch(`${ADMIN_API}/stats`, {
+            headers: {
+              Authorization:
+                "Bearer " + localStorage.getItem("nexus_admin_token"),
+            },
+          });
+          if (!res.ok) throw new Error();
+          const d = await res.json();
+          document.getElementById("stat-files").textContent =
+            d.files.toLocaleString();
+          document.getElementById("stat-users").textContent = d.users;
+          setOnline();
+        } catch {
+          setOffline();
+        }
+      }
+
+      async function loadFileLogs() {
+        try {
+          const res = await fetch(`${ADMIN_API}/file-logs`, {
+            headers: {
+              Authorization:
+                "Bearer " + localStorage.getItem("nexus_admin_token"),
+            },
+          });
+          if (!res.ok) throw new Error();
+          const logs = await res.json();
+          const tbody = document.getElementById("logs-body");
+          tbody.innerHTML = "";
+          if (!logs.length) {
+            tbody.innerHTML =
+              '<tr><td colspan="4" style="text-align:center;color:var(--text-muted)">Нет записей</td></tr>';
+            return;
+          }
+          logs.forEach((l) => {
+            const tr = document.createElement("tr");
+            tr.innerHTML = `<td>${new Date(l.timestamp).toLocaleString()}</td><td>${l.username}</td><td>${l.action}</td><td>${l.target}</td>`;
+            tbody.appendChild(tr);
+          });
+        } catch {}
+      }
+
+      async function checkNetwork() {
+        const token = localStorage.getItem("nexus_admin_token");
+        if (!token) return;
+        try {
+          const pStart = Date.now();
+          await fetch("http://192.168.31.5:5000/api/auth/me", {
+            method: "HEAD",
+            headers: { Authorization: "Bearer " + token },
+            cache: "no-store",
+            signal: AbortSignal.timeout(3000),
+          });
+          document.getElementById("stat-ping").textContent =
+            `${Date.now() - pStart} ms`;
+          const sStart = Date.now();
+          const sRes = await fetch(
+            "http://192.168.31.5:5000/api/diagnostics/speed-test",
+            {
+              headers: { Authorization: "Bearer " + token },
+              cache: "no-store",
+              signal: AbortSignal.timeout(5000),
+            },
+          );
+          if (sRes.ok) {
+            const blob = await sRes.blob();
+            const mbps = (
+              (blob.size * 8) /
+              1048576 /
+              ((Date.now() - sStart) / 1000)
+            ).toFixed(2);
+            document.getElementById("stat-speed").textContent =
+              `${mbps} Мбит/с`;
+          }
+          setOnline();
+        } catch {
+          setOffline();
+        }
+      }
+
+      function startAdminMonitoring() {
+        updateServerStats();
+        loadFileLogs();
+        checkNetwork();
+        statsInterval = setInterval(() => {
+          updateServerStats();
+          loadFileLogs();
+        }, 15000);
+        networkInterval = setInterval(checkNetwork, 500);
+      }
+
+      async function loadUsers() {
+        const grid = document.getElementById("user-grid");
+        if (!isOnline) return;
+        grid.innerHTML =
+          '<p style="grid-column:1/-1;text-align:center;color:var(--text-muted);">Загрузка...</p>';
+        try {
+          const res = await fetch(`${ADMIN_API}/users`, {
+            headers: {
+              Authorization:
+                "Bearer " + localStorage.getItem("nexus_admin_token"),
+            },
+          });
+          if (!res.ok) throw new Error("Нет доступа");
+          const users = await res.json();
+          grid.innerHTML = "";
+          document.getElementById("users-count").textContent = users.length;
+          users.forEach((u) => {
+            const card = document.createElement("div");
+            card.className = "user-card";
+            const r = u.role || "user";
+            const rLabel =
+              {
+                user: "Пользователь",
+                editor: "Редактор",
+                moderator: "Модератор",
+                manager: "Руководитель",
+                admin: "Администратор",
+              }[r] || r;
+            card.innerHTML = `<h3>${u.username}</h3><p>📧 ${u.email}</p><p>📅 ${new Date(u.createdAt).toLocaleDateString()}</p><span class="role-badge role-${r}">${rLabel}</span>`;
+            card.onclick = () => openModal(u);
+            grid.appendChild(card);
+          });
+        } catch {
+          setOffline();
+        }
+      }
+
+      const openModal = (user) => {
+        currentUserId = user.id;
+        const badge = document.getElementById("viewing-indicator");
+        if (badge) badge.textContent = `ПРОСМОТР: ${user.username}`;
+        document.getElementById("modal-username").textContent =
+          `👤 ${user.username}`;
+        const p = user.profile || {};
+        document.getElementById("modal-details").innerHTML =
+          `<div><span>Email</span><b style="color:#fff">${user.email}</b></div><div><span>Имя</span><b style="color:#fff">${p.firstName || "-"}</b></div><div><span>Фамилия</span><b style="color:#fff">${p.lastName || "-"}</b></div><div><span>Должность</span><b style="color:#fff">${p.position || "-"}</b></div>`;
+        document.getElementById("role-select").value = user.role || "user";
+        document.getElementById("user-modal").classList.add("active");
+      };
+
+      document.getElementById("save-role-btn").onclick = async () => {
+        const role = document.getElementById("role-select").value;
+        if (currentUserId) {
+          try {
+            await fetch(`${ADMIN_API}/users/${currentUserId}`, {
+              method: "PATCH",
+              headers: {
+                "Content-Type": "application/json",
+                Authorization: `Bearer ${localStorage.getItem("nexus_admin_token")}`,
+              },
+              body: JSON.stringify({ role }),
+            });
+            showAdminToast(`✅ Права изменены: ${role}`, "success");
+            loadUsers();
+          } catch (e) {
+            showAdminToast(`❌ Ошибка: ${e.message}`, "error");
+          }
+        }
+      };
+
+      function showAdminToast(msg, type = "success") {
+        const t = document.createElement("div");
+        const col = type === "success" ? "#00ff9d" : "#ff2a6d";
+        t.style.cssText = `position:fixed;bottom:24px;right:24px;padding:12px 18px;background:rgba(11,16,26,0.95);border-left:4px solid ${col};color:#fff;font-family:monospace;font-size:13px;border-radius:6px;z-index:10000;box-shadow:0 4px 15px rgba(0,0,0,0.4);animation:slideIn 0.3s forwards;pointer-events:none;`;
+        t.textContent = msg;
+        document.body.appendChild(t);
+        setTimeout(() => {
+          t.style.opacity = "0";
+          setTimeout(() => t.remove(), 300);
+        }, 3000);
+      }
+
+      function loadAdminNotes() {
+        fetch(`${ADMIN_API}/notes`, {
+          headers: {
+            Authorization:
+              "Bearer " + localStorage.getItem("nexus_admin_token"),
+          },
+        })
+          .then((r) => r.json())
+          .then((notes) => {
+            adminNotesCache = notes;
+            renderAdminNotes();
+          })
+          .catch(console.error);
+      }
+
+      function renderAdminNotes() {
+        const grid = document.getElementById("admin-notes-grid");
+        grid.innerHTML = "";
+        if (!adminNotesCache.length) {
+          grid.innerHTML =
+            '<p style="text-align:center;color:var(--text-muted);padding:20px 0;">Нет заметок</p>';
+          return;
+        }
+        adminNotesCache.forEach((n) => {
+          const cls = n.status === "Реализовано" ? "note-done" : "note-planned";
+          const card = document.createElement("div");
+          card.className = "note-card";
+          const preview =
+            (n.content || "").slice(0, 70) +
+            ((n.content || "").length > 70 ? "..." : "");
+          card.innerHTML = `<h3 style="margin:0 0 4px;font-size:1rem;color:#fff;">${n.title}</h3><div class="note-badge ${cls}">${n.status}</div><p style="color:var(--text-muted);font-size:0.8rem;margin:0;">${preview}</p><div class="note-meta"><span>🕒 ${new Date(n.updatedAt).toLocaleDateString()}</span></div>`;
+          card.onclick = () => openNoteModal(n);
+          grid.appendChild(card);
+        });
+      }
+
+      function openNoteModal(note = null) {
+        currentNoteId = note ? note.id : null;
+        document.getElementById("note-modal-title").textContent = note
+          ? "✏️ Редактирование"
+          : "📝 Новая заметка";
+        document.getElementById("note-title-input").value = note
+          ? note.title
+          : "";
+        document.getElementById("note-status-select").value = note
+          ? note.status
+          : "Запланировано";
+        document.getElementById("note-content-input").value = note
+          ? note.content
+          : "";
+        document.getElementById("delete-note-btn").style.display = note
+          ? "inline-block"
+          : "none";
+        document.getElementById("admin-note-modal").classList.add("active");
+      }
+
+      document.getElementById("add-admin-note-btn").onclick = () =>
+        openNoteModal();
+      document.getElementById("delete-note-btn").onclick = () => {
+        if (!confirm("Удалить заметку?")) return;
+        fetch(`${ADMIN_API}/notes/${currentNoteId}`, {
+          method: "DELETE",
+          headers: {
+            Authorization:
+              "Bearer " + localStorage.getItem("nexus_admin_token"),
+          },
+        })
+          .then((r) => r.json())
+          .then(() => {
+            document
+              .getElementById("admin-note-modal")
+              .classList.remove("active");
+            loadAdminNotes();
+          });
+      };
+
+      document.getElementById("save-note-btn").onclick = async () => {
+        const btn = document.getElementById("save-note-btn");
+        btn.disabled = true;
+        btn.textContent = "Сохранение...";
+        try {
+          const data = {
+            title: document.getElementById("note-title-input").value,
+            status: document.getElementById("note-status-select").value,
+            content: document.getElementById("note-content-input").value,
+          };
+          const method = currentNoteId ? "PATCH" : "POST";
+          const url = currentNoteId
+            ? `${ADMIN_API}/notes/${currentNoteId}`
+            : `${ADMIN_API}/notes`;
+          const res = await fetch(url, {
+            method,
+            headers: {
+              "Content-Type": "application/json",
+              Authorization:
+                "Bearer " + localStorage.getItem("nexus_admin_token"),
+            },
+            body: JSON.stringify(data),
+          });
+          if (!res.ok) throw new Error("Ошибка сохранения");
+          document
+            .getElementById("admin-note-modal")
+            .classList.remove("active");
+          loadAdminNotes();
+        } catch (e) {
+          alert(e.message);
+        } finally {
+          btn.disabled = false;
+          btn.textContent = "💾 Сохранить";
+        }
+      };
+
+      window.logoutAdmin = () => {
+        clearInterval(statsInterval);
+        clearInterval(networkInterval);
+        localStorage.removeItem("nexus_admin_token");
+        location.reload();
+      };
+      if (checkAuth()) {
+      }
+    </script>
+  </body>
+</html>

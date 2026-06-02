@@ -1,0 +1,558 @@
+/* ============================================================================
+   📄 DOCUMENTS MODULE
+   ============================================================================ */
+
+/* 🔹 Контейнер модуля */
+#documents-page {
+  display: none;
+  padding: 20px;
+  max-width: 1200px;
+  margin: 0 auto;
+
+  &.active {
+    display: block;
+    animation: slideIn 0.3s ease-out;
+  }
+}
+
+/* 🔹 Вкладки документов */
+.documents-tabs {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 20px;
+  flex-wrap: wrap;
+  padding: 10px;
+  background: var(--bg-panel);
+  border-radius: 12px;
+  border: 1px solid var(--border-glow);
+}
+
+.documents-tab-btn {
+  padding: 8px 16px;
+  background: rgba(15, 20, 30, 0.6);
+  border: 1px solid transparent;
+  border-radius: 6px;
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--text-muted);
+  cursor: pointer;
+  transition: var(--transition);
+  display: flex;
+  align-items: center;
+  gap: 6px;
+
+  &:hover,
+  &.active {
+    border-color: var(--neon-cyan);
+    background: rgba(0, 240, 255, 0.1);
+    color: var(--neon-cyan);
+    transform: translateY(-1px);
+  }
+
+  &.new-tab {
+    border-left: 3px solid var(--neon-green);
+  }
+
+  .tab-close {
+    margin-left: 4px;
+    opacity: 0.7;
+    font-size: 14px;
+    cursor: pointer;
+
+    &:hover {
+      opacity: 1;
+      color: var(--neon-red);
+    }
+  }
+}
+
+#documents-tabs-dynamic {
+  display: flex;
+  gap: 8px;
+}
+
+/* 🔹 Зона загрузки */
+.documents-drop-zone {
+  border: 2px dashed var(--border-glow);
+  border-radius: 12px;
+  padding: 30px;
+  text-align: center;
+  margin-bottom: 20px;
+  background: rgba(15, 20, 30, 0.4);
+  transition: var(--transition);
+  cursor: pointer;
+
+  &:hover,
+  &.drag-over {
+    border-color: var(--neon-cyan);
+    background: rgba(0, 240, 255, 0.05);
+    box-shadow: 0 0 20px rgba(0, 240, 255, 0.1);
+  }
+
+  .drop-icon {
+    font-size: 3rem;
+    margin-bottom: 10px;
+    display: block;
+  }
+
+  .drop-text {
+    font-size: 14px;
+    color: var(--text-muted);
+    margin-bottom: 5px;
+  }
+
+  .drop-hint {
+    font-size: 11px;
+    color: var(--text-muted);
+    opacity: 0.7;
+  }
+}
+
+/* 🔹 Галерея документов */
+.documents-gallery {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: 15px;
+  margin-top: 15px;
+}
+
+.doc-item {
+  background: var(--bg-panel);
+  border: 1px solid var(--border-glow);
+  border-radius: 12px;
+  padding: 15px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  transition: var(--transition);
+  position: relative;
+  cursor: pointer;
+
+  &:hover {
+    border-color: var(--neon-cyan);
+    transform: translateY(-3px);
+    box-shadow: 0 5px 20px rgba(0, 240, 255, 0.15);
+  }
+
+  .doc-icon {
+    font-size: 2.5rem;
+    margin-bottom: 10px;
+
+    &.pdf {
+      color: #ff4444;
+    }
+    &.doc {
+      color: #4488ff;
+    }
+    &.xls {
+      color: #22aa44;
+    }
+    &.ppt {
+      color: #ff8822;
+    }
+    &.txt {
+      color: var(--text-muted);
+    }
+    &.zip {
+      color: #aa66ff;
+    }
+    &.other {
+      color: var(--neon-cyan);
+    }
+  }
+
+  .doc-name {
+    font-size: 13px;
+    color: var(--text-main);
+    margin-bottom: 8px;
+    word-break: break-all;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+
+    /* 🔹 Line clamp: стандарт + вебкит-префикс для совместимости */
+    line-clamp: 2; /* стандарт (будущее) */
+    -webkit-line-clamp: 2; /* текущая поддержка во всех браузерах */
+  }
+
+  .doc-meta {
+    font-size: 10px;
+    color: var(--text-muted);
+    margin-bottom: 10px;
+    font-family: var(--font-mono);
+  }
+
+  .doc-actions {
+    display: flex;
+    gap: 6px;
+
+    .doc-btn {
+      padding: 4px 8px;
+      font-size: 11px;
+      border-radius: 4px;
+      border: 1px solid var(--border-glow);
+      background: transparent;
+      color: var(--text-muted);
+      cursor: pointer;
+      transition: 0.2s;
+
+      &:hover {
+        border-color: var(--neon-cyan);
+        color: var(--neon-cyan);
+        background: rgba(0, 240, 255, 0.1);
+      }
+
+      &.delete {
+        border-color: var(--neon-red);
+        color: var(--neon-red);
+
+        &:hover {
+          background: var(--neon-red);
+          color: #fff;
+        }
+      }
+    }
+  }
+}
+
+/* 🔹 Контекстное меню */
+.documents-context-menu {
+  display: none;
+  position: fixed;
+  background: var(--bg-panel);
+  border: 1px solid var(--border-glow);
+  border-radius: 8px;
+  padding: 8px 0;
+  min-width: 180px;
+  z-index: 10000;
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.5);
+
+  &.active {
+    display: block;
+    animation: fadeIn 0.15s ease-out;
+  }
+
+  .ctx-item {
+    padding: 8px 16px;
+    font-size: 13px;
+    color: var(--text-main);
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    transition: 0.2s;
+
+    &:hover {
+      background: rgba(0, 240, 255, 0.1);
+      color: var(--neon-cyan);
+    }
+
+    &.danger {
+      color: var(--neon-red);
+
+      &:hover {
+        background: rgba(255, 42, 109, 0.1);
+      }
+    }
+  }
+
+  .ctx-divider {
+    height: 1px;
+    background: var(--border-glow);
+    margin: 6px 0;
+    opacity: 0.5;
+  }
+
+  .ctx-icon {
+    font-size: 14px;
+    width: 18px;
+    text-align: center;
+  }
+}
+
+/* 🔹 Модальные окна */
+#documents-tab-modal,
+#rename-doc-modal {
+  .modal-content {
+    max-width: 450px;
+  }
+
+  .form-group {
+    margin-bottom: 15px;
+
+    label {
+      display: block;
+      font-size: 11px;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      margin-bottom: 6px;
+      font-family: var(--font-mono);
+    }
+
+    input {
+      width: 100%;
+      padding: 10px;
+      background: rgba(15, 20, 30, 0.8);
+      border: 1px solid var(--border-glow);
+      color: var(--text-main);
+      border-radius: 6px;
+      font-size: 14px;
+
+      &:focus {
+        border-color: var(--neon-cyan);
+        box-shadow: 0 0 0 2px rgba(0, 240, 255, 0.2);
+      }
+    }
+  }
+
+  .modal-actions {
+    display: flex;
+    gap: 10px;
+    justify-content: flex-end;
+    margin-top: 20px;
+
+    .btn-cancel {
+      padding: 10px 20px;
+      background: transparent;
+      border: 1px solid var(--border-glow);
+      color: var(--text-muted);
+      border-radius: 6px;
+      cursor: pointer;
+      transition: 0.2s;
+
+      &:hover {
+        border-color: var(--neon-red);
+        color: var(--neon-red);
+      }
+    }
+
+    .btn-confirm {
+      padding: 10px 20px;
+      background: var(--neon-cyan);
+      color: #05080f;
+      border: none;
+      border-radius: 6px;
+      font-weight: 700;
+      cursor: pointer;
+      transition: 0.2s;
+
+      &:hover {
+        background: #00d9e6;
+        transform: translateY(-1px);
+      }
+    }
+  }
+}
+
+/* 🔹 Счётчик документов */
+.documents-count {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  color: var(--text-muted);
+  margin-left: auto;
+  padding: 4px 10px;
+  background: rgba(0, 240, 255, 0.1);
+  border-radius: 10px;
+  border: 1px solid var(--border-glow);
+}
+
+/* 🔹 Адаптив */
+@media (max-width: 768px) {
+  .documents-gallery {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .documents-tabs {
+    overflow-x: auto;
+    flex-wrap: nowrap;
+    padding-bottom: 5px;
+
+    &::-webkit-scrollbar {
+      height: 4px;
+    }
+  }
+}
+// ============================================================================
+// 🔹 RESPONSIVE DOCUMENTS (Mobile → Tablet → Large Desktop)
+// ============================================================================
+
+// 📱 iPhone 13 Pro & узкие телефоны (≤ 480px)
+@media (max-width: 480px) {
+  #documents-page {
+    padding: 12px;
+  }
+  .documents-tabs {
+    gap: 6px;
+    padding: 8px;
+    margin-bottom: 15px;
+  }
+  .documents-tab-btn {
+    padding: 10px 12px;
+    font-size: 13px;
+    min-height: 44px;
+  } // 🔥 Apple HIG
+  .documents-tab-btn .tab-close {
+    font-size: 18px;
+    margin-left: 6px;
+  } // Увеличен для тача
+
+  .documents-drop-zone {
+    padding: 20px 16px;
+    border-width: 2px;
+  }
+  .drop-icon {
+    font-size: 2.4rem;
+    margin-bottom: 8px;
+  }
+  .drop-text {
+    font-size: 13px;
+  }
+  .drop-hint {
+    font-size: 10px;
+  }
+
+  .documents-gallery {
+    grid-template-columns: 1fr;
+    gap: 12px;
+    margin-top: 12px;
+  }
+  .doc-item {
+    padding: 12px;
+    border-radius: 10px;
+  }
+  .doc-icon {
+    font-size: 2.2rem;
+    margin-bottom: 8px;
+  }
+  .doc-name {
+    font-size: 12px;
+    line-height: 1.4;
+  }
+  .doc-meta {
+    font-size: 9px;
+  }
+  .doc-actions .doc-btn {
+    padding: 6px 10px;
+    font-size: 10px;
+  }
+
+  .documents-context-menu {
+    min-width: 160px;
+  } // Компактнее на узких экранах
+  .ctx-item {
+    padding: 10px 14px;
+    font-size: 12px;
+  }
+
+  .documents-count {
+    font-size: 10px;
+    padding: 3px 8px;
+    margin-left: 0;
+  }
+
+  #documents-tab-modal .modal-content,
+  #rename-doc-modal .modal-content {
+    max-width: 95%;
+    width: 95%;
+  }
+
+  // 🔥 Блокируем зум Safari при фокусе на инпуты
+  #documents-tab-modal input,
+  #rename-doc-modal input {
+    font-size: 16px;
+    padding: 12px 10px;
+  }
+}
+
+// 📱 Планшеты / Широкие телефоны (481px – 768px)
+@media (min-width: 481px) and (max-width: 768px) {
+  #documents-page {
+    padding: 16px;
+  }
+  .documents-tabs {
+    padding: 10px;
+    gap: 7px;
+    margin-bottom: 18px;
+  }
+  .documents-tab-btn {
+    padding: 9px 14px;
+    font-size: 12px;
+    min-height: 46px;
+  }
+  .documents-gallery {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 14px;
+  }
+  .doc-item {
+    padding: 14px;
+  }
+  .doc-name {
+    font-size: 12.5px;
+  }
+  .documents-count {
+    margin-left: auto;
+  }
+}
+
+// 🖥 Стандартные ПК (769px – 1499px) → Легкая полировка
+@media (min-width: 769px) and (max-width: 1499px) {
+  .documents-gallery {
+    grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+    gap: 14px;
+  }
+  .doc-item {
+    padding: 16px;
+  }
+  .doc-name {
+    font-size: 13px;
+  }
+  .documents-count {
+    margin-left: auto;
+  }
+}
+
+// 🖥 Большие мониторы / Ультравайды (≥ 1500px)
+@media (min-width: 1500px) {
+  #documents-page {
+    padding: 30px;
+    max-width: 1400px;
+  }
+  .documents-tabs {
+    padding: 14px;
+    gap: 10px;
+    margin-bottom: 24px;
+    border-radius: 16px;
+  }
+  .documents-tab-btn {
+    padding: 10px 20px;
+    font-size: 13px;
+  }
+  .documents-gallery {
+    grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+    gap: 20px;
+    margin-top: 20px;
+  }
+  .doc-item {
+    padding: 20px;
+    border-radius: 14px;
+  }
+  .doc-icon {
+    font-size: 2.8rem;
+  }
+  .doc-name {
+    font-size: 14px;
+  }
+  .doc-meta {
+    font-size: 11px;
+  }
+  .doc-actions .doc-btn {
+    padding: 5px 10px;
+    font-size: 11px;
+  }
+  .documents-count {
+    font-size: 12px;
+    padding: 5px 12px;
+  }
+}

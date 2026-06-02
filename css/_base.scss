@@ -1,0 +1,302 @@
+/* ============================================================================
+   NEXUS BASE STYLES
+   ============================================================================ */
+
+/* 🔹 БАЗА & СКРОЛЛБАРЫ */
+* {
+  box-sizing: border-box;
+  outline: none;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  scroll-behavior: smooth;
+  overflow-x: hidden;
+}
+
+body {
+  font-family: var(--font-body);
+  font-weight: 500;
+  background: var(--bg-deep);
+  color: var(--text-main);
+  line-height: 1.5;
+  min-height: 100vh;
+  padding-bottom: 40px;
+}
+
+@include custom-scrollbar;
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+button {
+  cursor: pointer;
+  font-family: inherit;
+  border: none;
+  background: none;
+}
+
+ul,
+ol {
+  list-style: none;
+}
+
+img {
+  max-width: 100%;
+  display: block;
+}
+
+.hidden {
+  display: none;
+}
+
+/* 🔹 ТИПОГРАФИКА */
+%heading-font {
+  font-family: var(--font-heading) !important;
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+  font-weight: 700;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+.glitch-text,
+.auth-title,
+.modal-title,
+.card-title,
+.module-card h3,
+.header-center,
+.dashboard .dash-label,
+.nav-btn {
+  @extend %heading-font;
+}
+
+%mono-font {
+  font-family: var(--font-mono) !important;
+}
+
+.mono-text,
+.log-line,
+.toast,
+.logs-table th,
+.logs-table td,
+.task-name,
+.dash-value,
+.deadline-text,
+.auth-input,
+input,
+select,
+textarea,
+.wysiwyg-editor,
+.code-block,
+.sidebar-title,
+.link-btn {
+  @extend %mono-font;
+}
+// ============================================================================
+// 🔹 RESPONSIVE BASE (Mobile → Tablet → Large Desktop)
+// ============================================================================
+
+// 📱 iPhone 13 Pro & узкие телефоны (≤ 480px)
+@media (max-width: 480px) {
+  html {
+    font-size: 14px;
+  } // 🔥 Уменьшаем базовый размер для компактности
+  body {
+    padding-bottom: 20px; // 🔥 Уменьшаем отступ внизу
+    font-size: 0.9rem; // 🔥 Уменьшаем основной шрифт
+  }
+
+  // 🔍 Блокируем зум Safari при фокусе на инпуты/контенте
+  input,
+  textarea,
+  select,
+  .auth-input,
+  .wysiwyg-editor,
+  .deadline-input,
+  #newTaskInput,
+  #searchInput,
+  #knowledge-search,
+  #decision-input,
+  .storage-search-input,
+  #documents-search-input,
+  #qr-text {
+    font-size: 16px !important; // 🔥 Apple Human Interface Guidelines
+  }
+
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6,
+  .glitch-text,
+  .auth-title,
+  .modal-title,
+  .card-title,
+  .module-card h3,
+  .header-center,
+  .dashboard .dash-label,
+  .nav-btn {
+    letter-spacing: 1px; // 🔥 Уменьшаем межсимвольный интервал
+    font-size: calc(1rem + 0.5vw); // 🔥 Адаптивный размер
+  }
+
+  .mono-text,
+  .log-line,
+  .toast,
+  .logs-table th,
+  .logs-table td,
+  .task-name,
+  .dash-value,
+  .deadline-text,
+  .auth-input,
+  input,
+  select,
+  textarea,
+  .wysiwyg-editor,
+  .code-block,
+  .sidebar-title,
+  .link-btn {
+    font-size: 0.85rem; // 🔥 Уменьшаем моноширинный шрифт
+  }
+}
+
+// 📱 Планшеты / Широкие телефоны (481px – 768px)
+@media (min-width: 481px) and (max-width: 768px) {
+  html {
+    font-size: 15px;
+  }
+  body {
+    padding-bottom: 25px;
+    font-size: 0.95rem;
+  }
+  .glitch-text,
+  .auth-title,
+  .modal-title,
+  .card-title,
+  .module-card h3,
+  .header-center,
+  .dashboard .dash-label,
+  .nav-btn {
+    letter-spacing: 1.2px;
+  }
+  .mono-text,
+  .log-line,
+  .toast,
+  .logs-table th,
+  .logs-table td,
+  .task-name,
+  .dash-value,
+  .deadline-text,
+  .auth-input,
+  input,
+  select,
+  textarea,
+  .wysiwyg-editor,
+  .code-block,
+  .sidebar-title,
+  .link-btn {
+    font-size: 0.9rem;
+  }
+}
+
+// 🖥 Стандартные ПК (769px – 1499px) → Легкая полировка
+@media (min-width: 769px) and (max-width: 1499px) {
+  html {
+    font-size: 16px;
+  }
+  body {
+    padding-bottom: 40px;
+    font-size: 1rem;
+  }
+}
+
+// 🖥 Большие мониторы / Ультравайды (≥ 1500px)
+@media (min-width: 1500px) {
+  html {
+    font-size: 17px;
+  }
+  body {
+    padding-bottom: 60px;
+    font-size: 1.05rem;
+  }
+  .glitch-text,
+  .auth-title,
+  .modal-title,
+  .card-title,
+  .module-card h3,
+  .header-center,
+  .dashboard .dash-label,
+  .nav-btn {
+    letter-spacing: 2px; // 🔥 Увеличиваем интервал на широких экранах
+  }
+  .mono-text,
+  .log-line,
+  .toast,
+  .logs-table th,
+  .logs-table td,
+  .task-name,
+  .dash-value,
+  .deadline-text,
+  .auth-input,
+  input,
+  select,
+  textarea,
+  .wysiwyg-editor,
+  .code-block,
+  .sidebar-title,
+  .link-btn {
+    font-size: 1rem;
+  }
+}
+/* ============================================================================
+   NEXUS CORE | SCROLL FIXES (Mobile Zoom Drag Prevention)
+   ============================================================================ */
+
+/* 🔹 Запрет бокового сдвига при зуме на уровне документа */
+html,
+body {
+  /* 🔥 Позволяем только вертикальный скролл */
+  overflow-x: hidden; /* 🔥 Блокирует боковой скролл */
+  overflow-y: auto; /* 🔥 Оставляет вертикальный скролл */
+  /* 🔥 Убираем "резиновость" на iOS */
+  -webkit-overflow-scrolling: touch;
+  /* 🔥 Запрещаем перетаскивание в стороны */
+  touch-action: pan-y; /* 🔥 Только вертикальный скролл */
+}
+
+/* 🔹 Для конкретных зум-элементов (например, canvas, img) */
+.zoomable-element,
+.canvas-container,
+.logo-item img,
+.storage-item img,
+.qr-canvas-container canvas,
+.zoom-modal img {
+  /* 🔥 Предотвратить "вынос" при зуме */
+  max-width: 100vw; /* 🔥 Не выходит за ширину вьюпорта */
+  height: auto;
+  object-fit: contain;
+  /* 🔥 Запретить любое перетаскивание на зум-элементе */
+  touch-action: none;
+}
+
+/* 🔹 Контейнеры с зумом (модалки, галереи) */
+.zoom-container,
+.modal-content,
+.gallery-wrapper {
+  /* 🔥 Ограничиваем размер */
+  max-width: 100vw;
+  max-height: 100vh;
+  /* 🔥 Запретить сдвиг */
+  overflow: hidden;
+  /* 🔥 Внутри модалки: только вертикальный скролл, если контент выходит за пределы */
+  touch-action: pan-y;
+}

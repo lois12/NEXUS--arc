@@ -1,0 +1,45 @@
+[
+  {
+    "id": "1777965163332",
+    "username": "Liberty",
+    "email": "89135267702@mail.ru",
+    "password": "$2b$10$9kTcVCh7mW6XGU6ufrO/8.gCFwc.uYRh/NwUEhLOQ8MS3CpbVUg3K",
+    "createdAt": "2026-05-05T07:12:43.333Z",
+    "profile": {
+      "firstName": "Илья",
+      "lastName": "Буханченко",
+      "address": "1",
+      "phone": "89135267702",
+      "position": "Начальник отдела ИС",
+      "avatar": "/api/auth/avatar/1777965163332/1778036075545-img_20231122_1542421.jpg"
+    },
+    "role": "editor"
+  },
+  {
+    "id": "1778882974264",
+    "username": "leroi",
+    "email": "918@mail.ru",
+    "password": "$2b$10$GRybcFqWp/H..WUqbPmIPumnAf9FaUwBJF.89MjQiz03LgrYgvJ.W",
+    "role": "moderator",
+    "createdAt": "2026-05-15T22:09:34.264Z",
+    "profile": {}
+  },
+  {
+    "id": "1780203372113",
+    "username": "Valery",
+    "email": "valery290193@yandex.ru",
+    "password": "$2b$10$x3m97dtBjjnK2F/yPpvzLed0vmb4JXY.PUZwqeCKmz8nuvrqhCAiS",
+    "role": "user",
+    "createdAt": "2026-05-31T04:56:12.113Z",
+    "profile": {}
+  },
+  {
+    "id": "1780204517478",
+    "username": "Test",
+    "email": "test@mail.ru",
+    "password": "$2b$10$IacaqnZiqblp9BXo9iXDxe0yHiEWumapoKvbRnCgrBEf.eJiNKXYu",
+    "role": "manager",
+    "createdAt": "2026-05-31T05:15:17.478Z",
+    "profile": {}
+  }
+]

@@ -1,0 +1,24 @@
+[
+  {
+    "id": "1780204536409",
+    "userId": "1780204517478",
+    "name": "Привет",
+    "progress": 0,
+    "deadline": "2026-05-21",
+    "stages": [],
+    "priority": "normal",
+    "pinned": false,
+    "archived": false,
+    "files": [
+      {
+        "id": "1780204576983voq8v",
+        "name": "717E234B-4DF3-4F2A-A34B-519B71346053-original.jpeg",
+        "serverName": "717E234B-4DF3-4F2A-A34B-519B71346053-original.jpeg",
+        "url": "/api/tasks/files/1780204517478/1780204536409/main/717E234B-4DF3-4F2A-A34B-519B71346053-original.jpeg",
+        "size": 3110251
+      }
+    ],
+    "comment": "",
+    "createdAt": "2026-05-31T05:15:36.409Z"
+  }
+]

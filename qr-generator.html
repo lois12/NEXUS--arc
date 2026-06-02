@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NEXUS CORE | QR ГЕНЕРАТОР</title>
+    <link rel="stylesheet" href="css/style.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+</head>
+<body class="theme-cyberpunk">
+    <div class="app-container">
+        <!-- ❌ УДАЛЕНО: <header class="main-header">... -->
+        
+        <!-- Основной контент -->
+        <main class="qr-main-content">
+            <div class="qr-generator-wrapper">
+                <div class="qr-panel settings-panel">
+                    <h2 class="panel-title">НАСТРОЙКИ КОДА</h2>
+                    
+                    <div class="form-group">
+                        <label>ДАННЫЕ ДЛЯ КОДИРОВКИ</label>
+                        <textarea id="qr-text" placeholder="Введите ссылку или текст..." rows="3">https://nexus-core.io</textarea>
+                    </div>
+
+                    <div class="controls-grid">
+                        <div class="form-group">
+                            <label>ЦВЕТ КОДА</label>
+                            <input type="color" id="qr-color" value="#000000">
+                        </div>
+                        <div class="form-group">
+                            <label>ЦВЕТ ФОНА</label>
+                            <input type="color" id="qr-bg-color" value="#ffffff">
+                        </div>
+                        <div class="form-group">
+                            <label>РАЗМЕР (PX)</label>
+                            <input type="number" id="qr-size" value="300" min="100" max="1000">
+                        </div>
+                        <div class="form-group">
+                            <label>ОТСТУПЫ</label>
+                            <input type="number" id="qr-margin" value="10" min="0" max="50">
+                        </div>
+                    </div>
+
+                    <button id="generate-btn" class="cyber-btn full-width">
+                        <span class="btn-text">ГЕНЕРИРОВАТЬ</span>
+                    </button>
+                </div>
+
+                <div class="qr-panel preview-panel">
+                    <h2 class="panel-title">РЕЗУЛЬТАТ</h2>
+<!-- Область превью с анимацией генерации -->
+<div class="qr-canvas-container" id="qr-container">
+    <!-- ✅ Анимация загрузки (скрыта по умолчанию) -->
+    <div class="qr-loader" id="qr-loader" aria-hidden="true">
+        <div class="loader-core">
+            <div class="core-ring ring-1"></div>
+            <div class="core-ring ring-2"></div>
+            <div class="core-ring ring-3"></div>
+            <div class="core-pulse"></div>
+            <div class="core-text">
+                <span class="scan-line"></span>
+                <span class="loader-label">ГЕНЕРАЦИЯ</span>
+                <span class="loader-percent" id="loader-percent">0%</span>
+            </div>
+        </div>
+        <div class="loader-glitch"></div>
+    </div>
+    
+    <!-- ✅ Контейнер для QR (скрыт до завершения) -->
+    <div id="qr-output"></div>
+    
+    <!-- ✅ Плейсхолдер -->
+    <div class="placeholder-text" id="qr-placeholder">ОЖИДАНИЕ ГЕНЕРАЦИИ...</div>
+</div>
+                    
+                    <div class="action-buttons">
+                        <button id="download-png" class="cyber-btn secondary" disabled>СКАЧАТЬ PNG</button>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <!-- Скрипты -->
+    <!-- ❌ Убираем main.js/utils.js — они уже загружены в родительском окне -->
+    <script src="nexus-js/qr-generator.js"></script>
+    
+    <!-- Скрипт для связи с родительским окном -->
+    <script>
+        // Кнопка "Назад" — закрывает вкладку через родителя
+        document.getElementById('back-to-home')?.addEventListener('click', () => {
+            if (window.parent) {
+                // Сообщаем родителю переключиться на главную
+                window.parent.postMessage({ action: 'navigate', page: 'home' }, '*');
+                // Или напрямую, если функция доступна:
+                if (typeof window.parent.applyPageState === 'function') {
+                    window.parent.applyPageState('home');
+                }
+            }
+        });
+
+        // Слушаем сообщения от родителя (для синхронизации темы)
+        window.addEventListener('message', (event) => {
+            if (event.data?.action === 'theme-change') {
+                document.body.className = `theme-${event.data.theme}`;
+            }
+        });
+    </script>
+</body>
+</html>

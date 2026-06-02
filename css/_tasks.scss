@@ -1,0 +1,636 @@
+/* ============================================================================
+   NEXUS TASKS MODULE
+   ============================================================================ */
+
+/* 🔹 ЗАДАЧИ (ТАКТИЧЕСКИЙ UI) */
+.task-list {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.task-item {
+  position: relative;
+  background: linear-gradient(
+    145deg,
+    rgba(11, 16, 26, 0.95),
+    rgba(8, 12, 20, 0.85)
+  );
+  border: 1px solid var(--border-glow);
+  border-radius: 10px;
+  overflow: hidden;
+  transition: var(--transition);
+
+  &:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.4);
+    border-color: rgba(0, 240, 255, 0.4);
+  }
+
+  &::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    width: 4px;
+    background: var(--neon-green);
+    transition: background 0.3s;
+  }
+
+  &.priority-important::before {
+    background: var(--neon-yellow);
+  }
+
+  &.priority-critical::before {
+    background: var(--neon-red);
+  }
+
+  &.pinned::before {
+    background: var(--neon-purple);
+  }
+
+  &.archived::before {
+    opacity: 0.4;
+  }
+
+  &.collapsed .task-details {
+    display: none;
+  }
+}
+
+.task-header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 14px 16px 10px;
+  border-bottom: 1px solid rgba(136, 146, 176, 0.1);
+  background: rgba(0, 0, 0, 0.15);
+}
+
+.collapse-btn {
+  width: 28px;
+  height: 28px;
+  background: rgba(0, 0, 0, 0.3);
+  border: 1px solid rgba(136, 146, 176, 0.2);
+  border-radius: 6px;
+  @include flex-center;
+  color: var(--text-muted);
+  transition: 0.2s;
+
+  &:hover {
+    border-color: var(--neon-cyan);
+    color: var(--neon-cyan);
+  }
+}
+
+.task-name {
+  flex: 1;
+  font-size: 1.15rem;
+  font-weight: 700;
+  color: #fff;
+  padding: 4px 8px;
+  border-radius: 4px;
+  border-bottom: 1px solid transparent;
+
+  &[contenteditable="true"] {
+    background: rgba(0, 240, 255, 0.05);
+    border-bottom-color: var(--neon-cyan);
+  }
+}
+
+.controls {
+  display: flex;
+  gap: 6px;
+  align-items: center;
+  flex-wrap: wrap;
+
+  button,
+  select {
+    font-size: 12px;
+    padding: 5px 10px;
+    border-radius: 6px;
+    background: rgba(0, 0, 0, 0.3);
+    border: 1px solid rgba(136, 146, 176, 0.2);
+    color: var(--text-muted);
+    transition: 0.2s;
+
+    &:hover {
+      border-color: var(--neon-cyan);
+      color: var(--neon-cyan);
+    }
+  }
+}
+
+.priority-select {
+  font-family: var(--font-mono) !important;
+  font-size: 11px !important;
+  padding: 4px 8px !important;
+}
+
+.task-details {
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  background: rgba(0, 0, 0, 0.15);
+}
+
+.task-meta-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+  align-items: flex-start;
+}
+
+.meta-block {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.meta-label {
+  opacity: 0.6;
+  font-size: 10px;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.meta-value {
+  color: #fff;
+  font-weight: 500;
+}
+
+.deadline-input {
+  background: rgba(10, 15, 25, 0.6);
+  border: 1px solid rgba(136, 146, 176, 0.2);
+  border-radius: 4px;
+  padding: 4px 8px;
+  color: #fff;
+  width: 140px;
+}
+
+.progress-wrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex: 1;
+  min-width: 160px;
+}
+
+.progress-track {
+  flex: 1;
+  height: 6px;
+  background: rgba(136, 146, 176, 0.15);
+  border-radius: 3px;
+  overflow: hidden;
+  position: relative;
+}
+
+.progress-fill {
+  height: 100%;
+  width: var(--progress, 0%);
+  background: linear-gradient(90deg, var(--neon-cyan), var(--neon-green));
+  box-shadow: 0 0 8px rgba(0, 255, 157, 0.4);
+  transition: width 0.3s;
+}
+
+.progress-slider {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 100%;
+  height: 100%;
+  background: transparent;
+  cursor: pointer;
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 2;
+  margin: 0;
+  padding: 0;
+
+  &::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    width: 14px;
+    height: 14px;
+    border-radius: 50%;
+    background: var(--neon-cyan);
+    border: 2px solid #fff;
+    box-shadow: 0 0 5px var(--neon-cyan);
+    opacity: 0;
+    transition: 0.2s;
+  }
+
+  &::-moz-range-thumb {
+    width: 14px;
+    height: 14px;
+    border-radius: 50%;
+    border: none;
+    background: var(--neon-cyan);
+    border: 2px solid #fff;
+    box-shadow: 0 0 5px var(--neon-cyan);
+    opacity: 0;
+    transition: 0.2s;
+  }
+
+  &:hover::-webkit-slider-thumb,
+  &:hover::-moz-range-thumb {
+    opacity: 1;
+  }
+}
+
+.stages-block,
+.files-block {
+  margin-top: 8px;
+  padding-top: 12px;
+  border-top: 1px dashed rgba(136, 146, 176, 0.15);
+}
+
+.add-stage-btn {
+  background: rgba(255, 165, 0, 0.1) !important;
+  border: 1px solid rgba(255, 165, 0, 0.4) !important;
+  color: #ff9800 !important;
+  font-size: 12px !important;
+  padding: 6px 14px !important;
+  border-radius: 6px;
+  transition: 0.2s;
+
+  &:hover {
+    background: rgba(255, 165, 0, 0.2) !important;
+  }
+}
+
+.stage-list {
+  margin: 10px 0 0;
+}
+
+.stage-item {
+  background: rgba(15, 20, 30, 0.6);
+  border: 1px solid rgba(136, 146, 176, 0.1);
+  border-left: 3px solid var(--neon-purple);
+  border-radius: 8px;
+  padding: 12px;
+  margin-bottom: 8px;
+}
+
+.stage-fields {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+  align-items: flex-start;
+
+  input,
+  textarea {
+    height: 38px;
+    padding: 8px 12px;
+    font-size: 13px;
+    font-family: var(--font-body);
+    line-height: 20px;
+    background: rgba(10, 15, 25, 0.4);
+    border: 1px solid rgba(136, 146, 176, 0.15);
+    border-radius: 6px;
+    color: #fff;
+    box-sizing: border-box;
+    margin: 0;
+    vertical-align: middle;
+
+    &::placeholder {
+      color: rgba(136, 146, 176, 0.5);
+      opacity: 1;
+      line-height: 20px;
+    }
+  }
+}
+
+.stage-name-input {
+  flex: 1;
+  min-width: 120px;
+}
+
+.stage-comment-input {
+  flex: 2;
+  min-width: 200px;
+  resize: vertical;
+}
+
+.stage-date-input {
+  width: 140px;
+  flex-shrink: 0;
+}
+
+.stage-actions {
+  display: flex;
+  gap: 8px;
+  justify-content: flex-end;
+  margin-top: 10px;
+
+  button {
+    padding: 6px 12px;
+    font-size: 11px;
+    border-radius: 4px;
+    cursor: pointer;
+    border: none;
+    font-weight: 600;
+  }
+}
+
+.stage-save-btn {
+  background: var(--neon-green);
+  color: #05080f;
+}
+
+.stage-edit-btn {
+  background: var(--neon-blue);
+  color: #fff;
+}
+
+.stage-delete-btn {
+  background: var(--neon-red);
+  color: #fff;
+}
+
+.files-block {
+  margin-top: 8px;
+}
+
+.file-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background: rgba(10, 15, 25, 0.4);
+  padding: 8px 12px;
+  border-radius: 6px;
+  margin-bottom: 6px;
+  font-size: 13px;
+  border: 1px solid rgba(136, 146, 176, 0.05);
+}
+
+.file-link {
+  color: var(--neon-cyan);
+  text-decoration: none;
+  flex: 1;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+
+  &:hover {
+    text-decoration: underline;
+  }
+}
+
+.file-delete {
+  color: var(--neon-red);
+  font-size: 16px;
+  padding: 0;
+}
+
+.btn-upload {
+  background: transparent;
+  border: 1px dashed var(--neon-blue);
+  color: var(--neon-blue);
+  padding: 8px 14px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 12px;
+  font-weight: 600;
+  margin-top: 6px;
+  transition: 0.2s;
+
+  &:hover {
+    background: rgba(58, 134, 255, 0.1);
+  }
+}
+
+.hidden-file-input {
+  display: none;
+}
+
+input[type="date"]::-webkit-datetime-edit-text,
+input[type="date"]::-webkit-datetime-edit-day-field,
+input[type="date"]::-webkit-datetime-edit-month-field,
+input[type="date"]::-webkit-datetime-edit-year-field {
+  color: rgba(136, 146, 176, 0.5) !important;
+}
+
+input[type="date"]::placeholder,
+.deadline-input::placeholder,
+#newTaskDeadline::placeholder {
+  color: rgba(136, 146, 176, 0.5) !important;
+}
+// ============================================================================
+// 🔹 RESPONSIVE TASKS (Mobile → Tablet → Large Desktop)
+// ============================================================================
+
+// 📱 iPhone 13 Pro & узкие телефоны (≤ 480px)
+@media (max-width: 480px) {
+  .task-list {
+    gap: 10px;
+  }
+  .task-item {
+    margin: 0 4px;
+  }
+
+  .task-header {
+    padding: 10px 12px 8px;
+    gap: 8px;
+    flex-wrap: wrap;
+  }
+  .collapse-btn {
+    width: 34px;
+    height: 34px;
+  } // 🔥 Увеличен для пальца
+
+  .task-name {
+    font-size: 1rem;
+    line-height: 1.3;
+    padding: 2px 6px;
+    word-break: break-word; // 🔥 Предотвращает горизонтальный скролл
+  }
+
+  .controls {
+    gap: 6px;
+    flex-wrap: wrap;
+  }
+  .controls button,
+  .controls select {
+    padding: 8px 10px;
+    font-size: 12px;
+    min-height: 38px; // 🔥 Apple Human Interface Guidelines
+  }
+
+  .task-details {
+    padding: 12px;
+    gap: 12px;
+  }
+  .task-meta-row {
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  // 🔥 Фикс зума Safari при фокусе на дату
+  .deadline-input,
+  .stage-date-input {
+    width: 100%;
+    padding: 12px;
+    font-size: 16px;
+  }
+
+  .progress-wrapper {
+    min-width: 100%;
+    gap: 8px;
+  }
+  .progress-track {
+    height: 10px;
+  }
+
+  // 🔥 Слайдер всегда виден на тач-устройствах (нет hover)
+  .progress-slider::-webkit-slider-thumb,
+  .progress-slider::-moz-range-thumb {
+    width: 22px;
+    height: 22px;
+    opacity: 1;
+  }
+
+  .stages-block,
+  .files-block {
+    margin-top: 6px;
+    padding-top: 10px;
+  }
+  .add-stage-btn,
+  .btn-upload {
+    width: 100%;
+    padding: 12px;
+    margin-top: 8px;
+  }
+
+  .stage-item {
+    padding: 10px;
+  }
+  .stage-fields {
+    flex-direction: column;
+    gap: 8px;
+  }
+  .stage-name-input,
+  .stage-comment-input {
+    flex: none;
+    width: 100%;
+    min-width: auto;
+  }
+  .stage-comment-input {
+    height: auto;
+    min-height: 80px;
+  }
+  .stage-date-input {
+    width: 100%;
+  }
+
+  .stage-actions {
+    margin-top: 8px;
+  }
+  .stage-actions button {
+    padding: 8px 12px;
+    font-size: 12px;
+    min-height: 38px;
+  }
+
+  .file-item {
+    flex-wrap: wrap;
+    gap: 6px;
+    padding: 10px;
+  }
+  .file-link {
+    min-width: 0;
+    font-size: 12px;
+  }
+}
+
+// 📱 Планшеты / Широкие телефоны (481px – 768px)
+@media (min-width: 481px) and (max-width: 768px) {
+  .task-header {
+    padding: 12px 14px 10px;
+  }
+  .task-meta-row {
+    gap: 15px;
+  }
+  .deadline-input,
+  .stage-date-input {
+    width: 100%;
+    min-width: 120px;
+  }
+
+  .stage-fields {
+    flex-wrap: wrap;
+  }
+  .stage-comment-input {
+    flex: 1 1 100%;
+  }
+
+  .progress-slider::-webkit-slider-thumb,
+  .progress-slider::-moz-range-thumb {
+    width: 16px;
+    height: 16px;
+  }
+}
+
+// 🖥 Стандартные ПК (769px – 1499px) → Легкая полировка
+@media (min-width: 769px) and (max-width: 1499px) {
+  .task-list {
+    gap: 16px;
+  }
+  .task-header {
+    padding: 16px 18px 12px;
+  }
+  .task-details {
+    padding: 18px;
+  }
+}
+
+// 🖥 Большие мониторы / Ультравайды (≥ 1500px)
+@media (min-width: 1500px) {
+  .task-list {
+    gap: 22px;
+  }
+  .task-item {
+    border-radius: 14px;
+  }
+
+  .task-header {
+    padding: 20px 24px 14px;
+  }
+  .task-name {
+    font-size: 1.35rem;
+  }
+  .task-details {
+    padding: 24px;
+    gap: 20px;
+  }
+
+  .task-meta-row {
+    gap: 30px;
+  }
+  .deadline-input,
+  .stage-date-input {
+    padding: 8px 12px;
+    font-size: 14px;
+  }
+
+  .progress-track {
+    height: 8px;
+  }
+  .progress-slider::-webkit-slider-thumb,
+  .progress-slider::-moz-range-thumb {
+    width: 18px;
+    height: 18px;
+  }
+
+  .stage-item {
+    padding: 16px;
+  }
+  .stage-fields {
+    gap: 14px;
+  }
+  .file-item {
+    padding: 10px 16px;
+  }
+}

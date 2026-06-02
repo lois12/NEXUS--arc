@@ -1,0 +1,82 @@
+[
+  {
+    "id": "1778626446431",
+    "userId": "1777965163332",
+    "name": "123",
+    "progress": 51,
+    "deadline": "0123-03-12",
+    "stages": [
+      {
+        "id": "new_1778632590101",
+        "name": "",
+        "comment": "",
+        "date": null
+      }
+    ],
+    "priority": "normal",
+    "pinned": false,
+    "archived": false,
+    "files": [
+      {
+        "id": "1778626453254hopo5",
+        "name": "11.jpg",
+        "serverName": "11.jpg",
+        "url": "/api/tasks/files/1777965163332/1778626446431/main/11.jpg",
+        "size": 1165686
+      }
+    ],
+    "comment": "",
+    "createdAt": "2026-05-12T22:54:06.431Z"
+  },
+  {
+    "id": "1778689013441",
+    "userId": "1777965163332",
+    "name": "123ывот задача",
+    "progress": 99,
+    "deadline": "0123-03-12",
+    "stages": [
+      {
+        "id": "new_1778689018723",
+        "name": "вот этап",
+        "comment": "",
+        "date": null
+      }
+    ],
+    "priority": "normal",
+    "pinned": false,
+    "archived": false,
+    "files": [
+      {
+        "id": "17786890332671k5df",
+        "name": "outdoor-travel-equipment-planning-mountain-trekking-camping-trip.jpg",
+        "serverName": "outdoor-travel-equipment-planning-mountain-trekking-camping-trip.jpg",
+        "url": "/api/tasks/files/1777965163332/1778689013441/main/outdoor-travel-equipment-planning-mountain-trekking-camping-trip.jpg",
+        "size": 4248162
+      }
+    ],
+    "comment": "",
+    "createdAt": "2026-05-13T16:16:53.441Z"
+  },
+  {
+    "id": "1778853316302",
+    "userId": "1777965163332",
+    "name": "привкет",
+    "progress": 0,
+    "deadline": null,
+    "stages": [],
+    "priority": "normal",
+    "pinned": false,
+    "archived": false,
+    "files": [
+      {
+        "id": "17788533255149ru8h",
+        "name": "ÐÐ Ð´Ð»Ñ Ð¦Ð Ð¢ Ð¾Ñ ÐÐ ÐÐ¾ÑÐ¾Ð»Ð°Ð¿Ð¾Ð² Ð.Ð..pdf",
+        "serverName": "__________________________________________________.__..pdf",
+        "url": "/api/tasks/files/1777965163332/1778853316302/main/__________________________________________________.__..pdf",
+        "size": 444030
+      }
+    ],
+    "comment": "",
+    "createdAt": "2026-05-15T13:55:16.302Z"
+  }
+]

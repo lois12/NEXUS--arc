@@ -1,0 +1,67 @@
+[
+  {
+    "id": "1778626552474",
+    "date": "2026-05-07",
+    "name": "123",
+    "comment": "123",
+    "channels": {
+      "site": false,
+      "telegram": false,
+      "vk": false,
+      "max": false
+    },
+    "eventNum": 1,
+    "createdAt": "2026-05-12T22:55:52.474Z",
+    "userId": "1777965163332",
+    "username": "Liberty"
+  },
+  {
+    "id": "1778628395685",
+    "date": "2026-05-13",
+    "name": "12фывфыв",
+    "comment": "фывфывфвфвфывфывфывфыв",
+    "channels": {
+      "site": true,
+      "telegram": true,
+      "vk": true,
+      "max": true
+    },
+    "eventNum": 1,
+    "createdAt": "2026-05-12T23:26:35.685Z",
+    "userId": "1777965163332",
+    "username": "Liberty",
+    "updatedAt": "2026-05-12T23:33:37.907Z"
+  },
+  {
+    "id": "1778681745997",
+    "date": "2026-05-15",
+    "name": "123",
+    "comment": "1123123123123",
+    "channels": {
+      "site": true,
+      "telegram": true,
+      "vk": true,
+      "max": true
+    },
+    "eventNum": 1,
+    "createdAt": "2026-05-13T14:15:45.997Z",
+    "userId": "1777965163332",
+    "username": "Liberty"
+  },
+  {
+    "id": "1780186470256",
+    "date": "2026-06-04",
+    "name": "я тоже событие",
+    "comment": "<h2 class=\"qwen-markdown-heading\" style=\"margin-top: 1rem; margin-bottom: 1rem; border-width: 0px; border-style: solid; border-color: rgb(227, 227, 227); unicode-bidi: plaintext; font-size: 1.25rem; line-height: 1.875rem; letter-spacing: -0.02em; color: rgb(29, 29, 31); font-family: system-ui, ui-sans-serif, -apple-system, BlinkMacSystemFont, Inter, NotoSansHans, sans-serif; text-transform: none; white-space-collapse: preserve-breaks; background-color: rgb(255, 255, 255);\"><span class=\"qwen-markdown-text\" data-spm-anchor-id=\"a2ty_o01.29997173.0.i2.46e255fbROBIMQ\" style=\"border-width: 0px; border-style: solid; border-color: rgb(227, 227, 227);\">⚠️ Важные ограничения бесплатных сервисов:</span></h2><ul class=\"qwen-markdown-list\" dir=\"auto\" style=\"margin-top: 1rem; margin-bottom: 1rem; padding-left: 1.625em; border-width: 0px; border-style: solid; border-color: rgb(227, 227, 227); color: rgb(29, 29, 31); font-family: system-ui, ui-sans-serif, -apple-system, BlinkMacSystemFont, Inter, NotoSansHans, sans-serif; font-size: 16px; white-space-collapse: preserve-breaks; background-color: rgb(255, 255, 255);\"><li style=\"border-width: 0px; border-style: solid; border-color: rgb(227, 227, 227); unicode-bidi: plaintext;\"><span class=\"qwen-markdown-strong\" style=\"border-width: 0px; border-style: solid; border-color: rgb(227, 227, 227); font-weight: 600;\">Номера публичные</span><span class=\"qwen-markdown-text\" style=\"border-width: 0px; border-style: solid; border-color: rgb(227, 227, 227);\"> — СМС видны всем пользователям сайта</span></li><li style=\"border-width: 0px; border-style: solid; border-color: rgb(227, 227, 227); unicode-bidi: plaintext;\"><span class=\"qwen-markdown-strong\" style=\"border-width: 0px; border-style: solid; border-color: rgb(227, 227, 227); font-weight: 600;\">Номера часто «заезженные»</span><span class=\"qwen-markdown-text\" style=\"border-width: 0px; border-style: solid; border-color: rgb(227, 227, 227);\"> — многие сервисы (Telegram, WhatsApp, Google) могут их блокировать</span></li><li style=\"border-width: 0px; border-style: solid; border-color: rgb(227, 227, 227); unicode-bidi: plaintext;\"><span class=\"qwen-markdown-strong\" style=\"border-width: 0px; border-style: solid; border-color: rgb(227, 227, 227); font-weight: 600;\">Не для важных аккаунтов</span><span class=\"qwen-markdown-text\" style=\"border-width: 0px; border-style: solid; border-color: rgb(227, 227, 227);\"> — не используйте для банков, почты или основных соцсетей</span></li><li style=\"border-width: 0px; border-style: solid; border-color: rgb(227, 227, 227); unicode-bidi: plaintext;\"><span class=\"qwen-markdown-strong\" style=\"border-width: 0px; border-style: solid; border-color: rgb(227, 227, 227); font-weight: 600;\">Финансовые СМС не приходят</span><span class=\"qwen-markdown-text\" style=\"border-width: 0px; border-style: solid; border-color: rgb(227, 227, 227);\"> — платежные системы обычно блокируют виртуальные номера </span><span class=\"qwen-markdown-citation\" style=\"margin-left: 0.25rem; border-width: 0px; border-style: solid; border-color: rgb(227, 227, 227); position: relative; top: 0.125rem; display: inline-flex; justify-content: center; align-items: center; min-width: 1rem; height: 1rem; font-size: 0.75rem; vertical-align: text-top; border-radius: 62.4375rem; cursor: pointer; color: rgb(97, 92, 237); background-color: transparent !important;\"><div class=\"qwen-chat-markdown-tokens\" aria-describedby=\"_r_i3_\" style=\"padding-right: 6px; padding-left: 6px; box-sizing: content-box; border-width: 0px; border-style: solid; border-color: rgb(227, 227, 227); border-radius: 18px; background: none 0% 0% / auto repeat scroll padding-box border-box rgb(241, 242, 248); max-width: 112px; font-size: 12px; line-height: 16px; text-align: center; color: rgb(140, 141, 155); cursor: pointer; display: flex; flex-flow: row; align-items: center;\"><div class=\"qwen-chat-markdown-tokens-hostname \" style=\"border-width: 0px; border-style: solid; border-color: rgb(227, 227, 227); white-space: nowrap; text-overflow: ellipsis; overflow: hidden; min-width: 0px; flex: 1 1 0%;\">smsverified.com</div></div></span></li><li style=\"border-width: 0px; border-style: solid; border-color: rgb(227, 227, 227); unicode-bidi: plaintext;\"><span class=\"qwen-markdown-strong\" style=\"border-width: 0px; border-style: solid; border-color: rgb(227, 227, 227); font-weight: 600;\">Номера могут переиспользоваться</span><span class=\"qwen-markdown-text\" style=\"border-width: 0px; border-style: solid; border-color: rgb(227, 227, 227);\"> — через 2-3 месяца номер может получить другой пользователь </span><span class=\"qwen-markdown-citation\" style=\"margin-left: 0.25rem; border-width: 0px; border-style: solid; border-color: rgb(227, 227, 227); position: relative; top: 0.125rem; display: inline-flex; justify-content: center; align-items: center; min-width: 1rem; height: 1rem; font-size: 0.75rem; vertical-align: text-top; border-radius: 62.4375rem; cursor: pointer; color: rgb(97, 92, 237); background-color: transparent !important;\"><div class=\"qwen-chat-markdown-tokens\" aria-describedby=\"_r_i5_\" style=\"padding-right: 6px; padding-left: 6px; box-sizing: content-box; border-width: 0px; border-style: solid; border-color: rgb(227, 227, 227); border-radius: 18px; background: none 0% 0% / auto repeat scroll padding-box border-box rgb(241, 242, 248); max-width: 112px; font-size: 12px; line-height: 16px; text-align: center; color: rgb(140, 141, 155); cursor: pointer; display: flex; flex-flow: row; align-items: center;\"><div class=\"qwen-chat-markdown-tokens-hostname \" style=\"border-width: 0px; border-style: solid; border-color: rgb(227, 227, 227); white-space: nowrap; text-overflow: ellipsis; overflow: hidden; min-width: 0px; flex: 1 1 0%;\">in-scale.ru</div></div></span></li></ul>",
+    "channels": {
+      "site": false,
+      "telegram": true,
+      "vk": true,
+      "max": false
+    },
+    "eventNum": 1,
+    "createdAt": "2026-05-31T00:14:30.256Z",
+    "userId": "1777965163332",
+    "username": "Liberty"
+  }
+]

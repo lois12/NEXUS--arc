@@ -1,0 +1,68 @@
+/* ============================================================================
+   NEXUS MIXINS
+   ============================================================================ */
+
+/* 🔹 FLEX CENTER */
+@mixin flex-center {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* 🔹 GLASS EFFECT */
+@mixin glass-effect {
+  background: rgba(11, 16, 26, 0.85);
+  backdrop-filter: blur(8px);
+}
+
+/* 🔹 NEON BORDER */
+@mixin neon-border($color: var(--neon-cyan)) {
+  border: 1px solid $color;
+  box-shadow: 0 0 10px rgba($color, 0.3);
+}
+
+/* 🔹 GRADIENT TEXT */
+@mixin gradient-text($from, $to) {
+  background: linear-gradient(90deg, $from, $to);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+/* 🔹 TRANSITION */
+@mixin transition-fast {
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* 🔹 RESPONSIVE BREAKPOINTS */
+@mixin breakpoint($point) {
+  @if $point == 'tablet' {
+    @media (max-width: 768px) { @content; }
+  }
+  @if $point == 'mobile' {
+    @media (max-width: 480px) { @content; }
+  }
+  @if $point == 'desktop' {
+    @media (max-width: 1024px) { @content; }
+  }
+}
+
+/* 🔹 SCROLLBAR */
+@mixin custom-scrollbar {
+  ::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+  }
+  ::-webkit-scrollbar-track {
+    background: rgba(0, 0, 0, 0.2);
+    border-radius: 4px;
+  }
+  ::-webkit-scrollbar-thumb {
+    background: var(--neon-cyan);
+    border-radius: 4px;
+    border: 2px solid var(--bg-deep);
+  }
+  ::-webkit-scrollbar-thumb:hover {
+    background: var(--neon-blue);
+  }
+}
